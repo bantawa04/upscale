@@ -1,0 +1,103 @@
+.footer-2 {
+
+    background-color: $secondary;
+    color: #ffffff;
+    padding: 26px 0 60px;
+    font-size: rem-calc(15px);
+    line-height: line-height(15px, 25px);
+    margin-top: $section-gap;
+
+    .footer-recommended-wrapper {
+        .footer-recommended {
+            @extend .d-flex,
+            .h-100,
+            .align-items-center,
+            .justify-content-center;
+            min-width: 200px;
+
+            img {
+                width: auto;
+                max-height: 40px;
+                opacity: 0.6
+            }
+        }
+    }
+
+    a {
+        color: #ffffff;
+    }
+
+    .social-link-wrapper {
+        margin-top: 20px;
+        letter-spacing: 8px;
+
+        .social-link {
+            @include social-link();
+        }
+
+        .social-icon {
+            @include social-icon();
+        }
+    }
+
+    .footer-divider {
+        border-top: 1px solid #707070;
+        opacity: 0.6;
+    }
+
+    .footer-content .footer-heading-2 {
+        font-weight: bold;
+        padding-bottom: 1rem;
+    }
+
+    .footer-content .footer-link-wrapper {
+        margin: 0.5rem 0rem;
+    }
+
+    .footer-content.footer-details {
+        background-color: #1d292e;
+    }
+
+    .footer-content.footer-details .footer-address p {
+        padding: unset;
+        margin: 0.2rem 0;
+    }
+
+    .newsletter-form input {
+        background-color: rgb(63, 87, 97);
+        border-color: rgb(63, 87, 97);
+        color: white;
+    }
+
+    .newsletter-form ::placeholder {
+        color: #fff;
+        opacity: 0.6;
+    }
+
+    .social-link-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .social-link-wrapper .social-link {
+        margin: 10px;
+        background-color: #45606c !important;
+        transition: opacity .4s ease;
+        height: 35px !important;
+        width: 35px !important;
+    }
+
+    .social-link-wrapper .social-link:hover {
+        background-color: #fff !important;
+    }
+
+    .social-link-wrapper .social-link .social-icon {
+        color: #243238;
+    }
+
+    .copyright-text {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .copyright-text p {}
+}

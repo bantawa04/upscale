@@ -1,0 +1,66 @@
+.template-frontend-booking {
+    .heading-wrapper-main {
+        background-color: $white;
+
+        .container {
+            @extend .text-center;
+
+            .heading-main {
+                @extend .my-5;
+                position: relative;
+
+                &:after {
+                    position: absolute;
+                    content: '';
+                    height: 3px;
+                    bottom: -4px;
+                    margin: 0 auto;
+                    left: 0;
+                    right: 0;
+                    width: 10%;
+                    background: $primary;
+                }
+            }
+        }
+    }
+
+    .section-content {
+        .container {
+
+            .book-trip-wrapper {
+                &__card {
+                    @extend .card;
+                }
+
+                &__meta {
+                    @extend .card-body;
+                    padding: 10px 20px;
+
+                    &--name {
+                        @extend .card-title;
+                        margin: 10px 0px;
+                    }
+
+                    &--days,
+                    &--price {
+                        margin: 10px 0px !important;
+                    }
+                }
+            }
+
+            .book-trip-form {
+                @extend .card;
+            }
+        }
+    }
+}
+
+.datepicker--cell.-selected-, .datepicker--cell.-selected-.-current-{
+    background-color: $primary !important;
+}
+.datepicker--cell.-selected-.-focus-{
+    background-color: #278e5f !important;
+}
+.datepicker--day-name{
+    color: #2b9b68;
+}

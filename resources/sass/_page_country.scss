@@ -1,0 +1,88 @@
+.template-frontend-country, 
+.template-frontend-destinations, 
+.template-frontend-category, 
+.template-frontend-category-with-trips, 
+.template-frontend-category-region, 
+.template-frontend-category-country, 
+.template-frontend-contact , 
+.template-frontend-page, 
+.template-frontend-packages{
+
+  .heading-wrapper-main {
+    @include heading-wrapper-main();
+
+    > div {
+      @include heading-wrapper-main-inner-div();
+      padding-top: 100% * 124 / 1920;
+      padding-bottom: 100% * 172 / 1920;
+    }
+
+    .heading-main {
+      @include heading-main();
+    }
+
+    .description-main {
+      @include description-main();
+    }
+  }
+
+  .section-trip-categories {
+    @include margin-vertical(rem-calc(24px));
+
+    .trip-category-list {
+
+      .trip-category {
+        @include margin-vertical(rem-calc(24px));
+
+        a {
+          display: block;
+          padding-top: (240% / 358 * 100);
+          position: relative;
+          overflow: hidden;
+
+          .image-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            transition: all ease 0.2s;
+
+            img {
+              @include object-fit-cover-backport();
+            }
+          }
+
+          .image-caption-wrapper {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transition: all 0.2s ease;
+
+            .image-caption {
+              text-align: center;
+              padding: rem-calc(20px) 15px;
+              font-size: rem-calc(24px);
+              line-height: line-height(32px, 27px);
+              color: #ffffff;
+              text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+              background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+              transition: all 0.2s ease;
+            }
+          }
+
+          &:hover {
+            box-shadow: 0 0 15px #888888;
+
+            .image-wrapper {
+              transform: scale(1.05);
+            }
+          }
+        }
+      }
+    }
+  }
+}

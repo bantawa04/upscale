@@ -1,0 +1,78 @@
+#search-filter {
+  border: 1px solid rgba(0,0,0,0.125);
+  margin-bottom: 24px;
+
+  form {
+    border-top: 1px solid rgba(0,0,0,0.125);
+
+    .btn-search {
+      max-width: 50%;
+    }
+  }
+}
+
+#result-summary {
+  border: 1px solid rgba(0,0,0,0.125);
+}
+
+.result-list {
+
+  .result-item {
+    border: 1px solid rgba(0,0,0,0.125);
+
+    .trip-title {
+      font-family: Fortescue, serif;
+      font-size: 24px;
+      line-height: 31px;
+    }
+
+    .trip-description {
+
+      $line-height: $line-height-base;
+
+      @include media-breakpoint-up(xl) {
+        max-height: $line-height * 2em;
+        overflow: hidden;
+      }
+
+      @include media-breakpoint-down(lg) {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+
+    .price-label {
+      display: block;
+      font-size: 14px;
+      line-height: 19px;
+      color: #333333;
+    }
+
+    .price {
+      font-size: 28px;
+      line-height: 35px;
+      font-family: Fortescue, serif;
+      color: $secondary;
+    }
+
+    .img-holder {
+      height: 250px;
+      width: auto;
+      background-color: #eee;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+}
+
+.pagination-search {
+
+  &.pagination {
+
+    .page-item {
+      @include margin-horizontal(5px);
+    }
+  }
+}

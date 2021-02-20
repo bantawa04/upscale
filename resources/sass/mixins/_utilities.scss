@@ -1,0 +1,34 @@
+@mixin margin-vertical($value) {
+  margin-top: $value;
+  margin-bottom: $value;
+}
+
+@mixin margin-horizontal($value) {
+  margin-left: $value;
+  margin-right: $value;
+}
+
+@mixin padding-vertical($value) {
+  padding-top: $value;
+  padding-bottom: $value;
+}
+
+@mixin padding-horizontal($value) {
+  padding-left: $value;
+  padding-right: $value;
+}
+
+@mixin padding-all($value) {
+  @include padding-horizontal($value);
+  @include padding-vertical($value);
+}
+
+@mixin border-horizontal($value) {
+  border-left: $value;
+  border-right: $value;
+}
+
+@mixin border-vertical($value) {
+  border-top: $value;
+  border-bottom: $value;
+}

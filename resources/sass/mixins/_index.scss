@@ -1,0 +1,91 @@
+@import "utilities";
+
+@mixin section-title($font-size: $title-font-size, $font-size-small: $title-font-size-small, $font-family: $font-family-title, $color: #333333, $text-align: center, $line-height: $title-line-height) {
+  font-size: $font-size-small;
+  font-family: $font-family;
+  line-height: $line-height;
+  text-align: $text-align;
+  color: $color;
+  margin-top: rem-calc(10px);
+  margin-bottom: rem-calc(10px);
+
+  @include media-breakpoint-up(md) {
+    font-size: $font-size;
+  }
+}
+
+@mixin section-subtitle($color: $primary, $font-weight: 600, $font-size: rem-calc(18px), $line-height: line-height(18px, 24px)) {
+  color: $color;
+  font-weight: $font-weight;
+  font-size: $font-size;
+  line-height: $line-height;
+}
+
+@mixin section-summary($text-align: center) {
+  text-align: $text-align;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 536px;
+}
+
+@mixin section-gap() {
+  @include margin-vertical(70px);
+}
+
+@mixin heading-wrapper-main() {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  text-shadow: 0 0 2px #000000;
+}
+
+@mixin heading-wrapper-main-inner-div() {
+  background-color: #0000004d;
+}
+
+@mixin heading-main() {
+  margin: 0;
+  font-size: rem-calc(58px);
+  line-height: line-height(58px, 78px);
+  font-weight: 700;
+}
+
+@mixin description-main() {
+  font-size: rem-calc(16px);
+  line-height: line-height(16px, 25px);
+  margin-top: rem-calc(16px);
+}
+
+@mixin object-fit-cover-backport() {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin social-link() {
+  letter-spacing: normal;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: rem-calc(30px);
+  width: rem-calc(30px);
+  background: $primary;
+  border-radius: 50%;
+  text-align: center;
+  text-decoration: none;
+
+  &:hover {
+    background-color: darken($primary, 7.5%);
+  }
+}
+
+@mixin social-icon() {
+  color: #ffffff;
+  font-size: rem-calc(18px);
+}

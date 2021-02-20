@@ -1,0 +1,47 @@
+.template-frontend-post-detail {
+
+  .section-article {
+    margin-top: rem-calc(48px);
+    margin-bottom: rem-calc(100px);
+
+    .article-heading {
+      font-weight: bold;
+      font-size: 26px;
+      line-height: 39px;
+    }
+
+    .metas {
+      font-size: rem-calc(14px);
+      line-height: line-height(14px, 20px);
+    }
+
+    .image-wrapper {
+      margin-top: rem-calc(16px);
+    }
+
+    .text-content {
+      margin-top: rem-calc(30px);
+    }
+
+    .section-share {
+      margin-top: 1.5rem;
+
+      .share-title {
+        font-size: rem-calc(26px);
+        line-height: line-height(26px, 39px);
+      }
+
+      .social-link-wrapper {
+        letter-spacing: rem-calc(4px);
+
+        .social-link {
+          @include social-link();
+
+          .social-icon {
+            @include social-icon();
+          }
+        }
+      }
+    }
+  }
+}

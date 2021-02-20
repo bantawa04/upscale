@@ -1,0 +1,29 @@
+$font-family-base: Poppins, sans-serif;
+
+$primary: #32B67A;
+$secondary: #243238;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1600px
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1518px
+);
+
+$btn-border-radius: 0;
+$btn-border-radius-lg: 0;
+$btn-border-radius-sm: 0;
+
+$input-border-radius: 0;
+$nav-pills-border-radius: 0;
+$enable-shadows: true;

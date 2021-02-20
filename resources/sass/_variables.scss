@@ -1,0 +1,19 @@
+$container-triple-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px,
+    xxl: 1518px
+);
+
+$title-font-size: rem-calc(57px);
+$title-font-size-small: rem-calc(28px);
+$title-line-height: line-height(57px, 73px);
+
+$font-family-title: Fortescue, serif;
+
+
+// colors
+$white: #ffffff;
+
+$section-gap: 70px;

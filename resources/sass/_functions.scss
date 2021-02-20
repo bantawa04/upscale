@@ -1,0 +1,8 @@
+@function rem-calc($value, $base: 16px) {
+  $remSize: $value / $base;
+  @return #{$remSize}rem;
+}
+
+@function line-height($font-size, $value) {
+  @return $value / $font-size;
+}

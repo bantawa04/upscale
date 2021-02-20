@@ -1,0 +1,35 @@
+#navbar {
+  transition: all 0.2s linear;
+
+  &.top {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  &:not(.top) {
+    background-color: $primary;
+    box-shadow: 0 0 10px #00000088;
+    @include padding-vertical(rem-calc(2px));
+  }
+
+  .logo {
+    width: 180px;
+  }
+
+  .nav-link {
+    color: #ffffff;
+  }
+}
+
+.mm-wrapper_opened {
+
+  #navbar {
+    background-color: $primary;
+  }
+}
+
+#navbar-menu {
+
+  &:not(.mm-menu) {
+    display: none;
+  }
+}

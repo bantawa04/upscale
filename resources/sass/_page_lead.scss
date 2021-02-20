@@ -1,0 +1,139 @@
+.template-frontend-lead {
+
+    .section-main {
+        background-size: cover;
+
+        .content-wrapper {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding-top: rem-calc(30px);
+            padding-bottom: rem-calc(30px);
+
+            .col-text {
+                margin-top: rem-calc(46px);
+                color: #ffffff;
+
+                .logo-wrapper {
+                    margin-top: 60px;
+
+                    img.logo {
+                        max-height: 60px;
+                        max-width: 264px;
+                    }
+                }
+
+                .message-main {
+                    font-weight: bold;
+                    font-size: rem-calc(50px);
+                    line-height: line-height(50px, 76px);
+                    margin-top: 20px;
+                }
+
+                .message-discount {
+                    font-size: rem-calc(38px);
+                    line-height: line-height(38px, 57px);
+                }
+            }
+
+            .col-form {
+                margin-top: rem-calc(46px);
+                margin-bottom: rem-calc(34px);
+
+                form {
+                    background-color: #ffffff;
+                    @include padding-horizontal(38px);
+                    @include padding-vertical(30px);
+
+                    .form-title {
+                        text-align: center;
+                        font-weight: bold;
+                        font-size: rem-calc(20px);
+                        margin-bottom: rem-calc(20px);
+
+                        &::after {
+                            content: "";
+                            border-top: 2px solid $primary;
+                            display: block;
+                            width: 35px;
+                            @include margin-horizontal(auto);
+                            margin-top: rem-calc(5px);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .section-recommendation {
+        background-color: #efefef;
+        @include padding-vertical(rem-calc(45px));
+
+        .section-title {
+            font-family: Fortescue, serif;
+            font-size: rem-calc(28px);
+            line-height: line-height(28px, 35px);
+            text-align: center;
+        }
+
+        .recommended-by-brand {
+            img {
+                filter: invert(80%);
+                width: auto;
+                max-height: 40px;
+            }
+        }
+    }
+
+    .section-trips {
+        @include padding-vertical(rem-calc(84px));
+
+        .trip-list {
+
+            .trip-list-item {
+                border: 1px solid #DCE0E0;
+                margin-top: 20px;
+
+                .image-holder {
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    padding-top: (358 / 537) * 100%;
+                }
+
+                .col-text {
+
+                    .text-wrapper {
+                        @include padding-vertical(rem-calc(13px));
+
+                        .trip-title {
+                            font-family: Fortescue, serif;
+                            font-size: rem-calc(24px);
+                        }
+
+                        .text-price {
+                            font-size: rem-calc(20px);
+                            margin-top: rem-calc(13px);
+
+                            .price {
+                                font-family: Fortescue, serif;
+                            }
+                        }
+
+                        .plan-btn-wrapper {
+                            margin-top: rem-calc(20px);
+                            max-width: 260px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .section-footer {
+        margin-top: 66px;
+        padding-top: rem-calc(20px);
+        padding-bottom: rem-calc(20px);
+        font-size: rem-calc(10px);
+        line-height: line-height(10px, 16px);
+        background-color: $secondary;
+        color: #ffffff;
+    }
+}
