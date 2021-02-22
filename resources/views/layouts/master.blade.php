@@ -309,6 +309,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{ route('newsletter.index') }}" class="nav-link">
+                <i class="far fa-envelope nav-icon"></i>
+                <p>
+                  Newsletters
+                </p>
+              </a>
+            </li>
             <li class="nav-header">Config</li>
             <li class="nav-item">
               <a href="{{ route('setting.index') }}" class="nav-link">
