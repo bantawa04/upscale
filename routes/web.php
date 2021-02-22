@@ -75,7 +75,7 @@ Route::prefix('manage')->group(function () {
         // Route::PATCH('profile/{profile}', 'ProfilesController@update')->name('profile.update');
         Route::resource('profile', 'ProfilesController');
         Route::resource('links', 'LinksController');
-
+        Route::resource('newsletter', 'NewsletterController',['only' => ['index','destroy']]);
     });
 });
 
@@ -130,6 +130,10 @@ Route::middleware('web')->group(function () {
 
     Route::name('sub-page.')->prefix('page')->group(function () {
         Route::get('/{slug}', 'FrontendController@getPage')->name('get');       
+    });
+
+    Route::prefix('newsletter')->group(function () {
+        Route::post('/', 'NewsletterController@store');
     });
 
 });
