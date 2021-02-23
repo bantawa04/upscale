@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="row">
-                        {{ Form::submit('Create', ['class'=> 'btn btn-success btn-block mt-3'])}}
+                        {{ Form::submit('Update', ['class'=> 'btn btn-success btn-block mt-3'])}}
                     </div>
 
                     {!! Form::close() !!}

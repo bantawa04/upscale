@@ -195,7 +195,7 @@ $(document).ready(function() {
                     "_method": 'DELETE'
                 },
                 success: function (data) {
-                    $('.item' + data['id']).remove();
+                    $('.row' + id).remove();
                     Toast.fire({
                         type: 'success',
                         title: 'Deleted  successfully'
