@@ -363,4 +363,18 @@ class TourController extends Controller
 
         return redirect()->route('tour.promote');
     }
+
+    public function removePromote($id)
+    {
+        $tour = Tour::find($id);
+        if ($tour) {
+            $tour->promote = 0;
+            $tour->save();    
+            return response()->json(200);
+        }
+        else {
+            return response()->json(['message' => 'Invalid request!'],400);
+        }
+
+    }
 }
