@@ -38,7 +38,8 @@ Route::prefix('manage')->group(function () {
         Route::PUT('tour/remove-feature/{feature}', 'TourController@removeFeature');
         Route::get('tours/promote', 'TourController@getPromoteds')->name('tour.promote');
         Route::PUT('tours/promote', 'TourController@promoteTour')->name('promote.store');
-
+        Route::PUT('tours/remove-promote/{id}', 'TourController@removePromote')->name('promote.remove');
+        
         Route::resource('page', 'PageController');
         Route::PUT('page/publish/{publish}', 'PageController@publish');
         Route::PUT('page/unpublish/{publish}', 'PageController@unpublish');

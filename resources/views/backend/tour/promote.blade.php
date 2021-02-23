@@ -31,16 +31,22 @@
                                 <th>Name</th>
                                 <th>Day</th>
                                 <th>Price</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($promoteds as $item)
-                            <tr>
+                            <tr class="item{{$item->id}}">
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->days}} Day(s)</td>
                                 <td>
                                     USD {{$item->price}}
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-block btn-sm remove mt-2" data-id="{{$item->id}}">
+                                        <i class="far fa-trash-alt"></i>
+                                        Remove</button>
                                 </td>
                             </tr>
                             @endforeach
@@ -65,6 +71,40 @@
         maxHeight: 600,
         buttonWidth: '100%'
     });
+    $(document).ready(function() {
+    $(document).on('click', '.remove', function(){
+        
+        let id = $(this).data('id');     
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, remove it!'
+      }).then((result) => {
+        if (result.value) {
+            $.ajax({                    
+                type: "POST",
+                url: '/manage/tours/remove-promote/' + id,
+                data: {
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                    'id': id,
+                    "_method": 'PUT'
+                },
+                success: function (data) {
+                    $('.item' + id).remove();
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Removed  successfully'
+                    })  
+                }              
+            });        
+        }
+      })                
+    });
+});
 </script>
 @stop
 @section('styles')
