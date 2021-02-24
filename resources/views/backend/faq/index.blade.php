@@ -51,7 +51,7 @@
 
                     <div class="col-12">
                         {{ Form::label('answer', 'Answer:')}}
-                        {{ Form::textarea('answer', null, array("class"=>'form-control', 'row' =>'5')) }}
+                        {{ Form::textarea('answer', null, array("class"=>'form-control', "id" => 'tinymce', 'row' =>'5')) }}
                     </div>
 
                     <div class="col-12">
@@ -66,27 +66,51 @@
 </div>
 @endsection
 @section('scripts')
+<script src="https://cdn.tiny.cloud/1/8t3cusqbsgxjxtrx0cesy6fo1sdkesg3rsg41aky7y8m430h/tinymce/5/tinymce.min.js"></script>
 <script>
     $('.delete').click(function() {
-                let id = $(this).data('id');      
-                
-                $.ajax({
-                    
-                    type: "POST",
-                    url: '/manage/faq/' + id,
-                    data: {
-                        '_token': $('meta[name="csrf-token"]').attr('content'),
-                        'id': id,
-                        "_method": 'DELETE'
-                    },
-                    success: function (data) {
-                        $('.item' + id).remove();
-                        Toast.fire({
-                        type: data.type,
-                        title:data.message
-                    })                          
+            let id = $(this).data('id');      
+            Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            
+                            type: "POST",
+                            url: '/manage/faq/' + id,
+                            data: {
+                                '_token': $('meta[name="csrf-token"]').attr('content'),
+                                'id': id,
+                                "_method": 'DELETE'
+                            },
+                            success: function (data) {
+                                $('.item' + id).remove();
+                                Toast.fire({
+                                type: data.type,
+                                title:data.message
+                            })                          
+                            }
+                        });
                     }
-                });
-            });
+            })
+
+    });
+tinymce.init({
+  selector: 'textarea#tinymce',
+  height: 350,
+  menubar: false,
+  plugins: [
+    'lists',
+  ],
+  toolbar: 
+  'bullist numlist outdent indent |  bold italic underline strikethrough' +
+  'help',
+});
 </script>
 @endsection

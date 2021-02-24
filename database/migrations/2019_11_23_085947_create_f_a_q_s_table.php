@@ -17,7 +17,7 @@ class CreateFAQSTable extends Migration
             $table->bigIncrements('id');
             $table->integer('tour_id');
             $table->string('question');
-            $table->string('answer');
+            $table->text('answer');
             $table->timestamps();
         });
     }
