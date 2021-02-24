@@ -435,16 +435,16 @@
                                             {{$faq->question}}
                                         </div>
                                         <a href="#" class="collapsed col-auto px-0" data-toggle="collapse"
-                                            data-target="#faqCollapseOne">
+                                            data-target="#faqCollapse{{$loop->iteration}}">
                                             <span>
                                                 <span class="fa fa-plus icon"></span>
                                                 <span class="fa fa-minus icon"></span>
                                             </span>
                                         </a>
                                     </div>
-                                    <div id="faqCollapseOne" class="collapse" aria-labelledby="faqHeadingOne">
+                                    <div id="faqCollapse{{$loop->iteration}}" class="collapse" aria-labelledby="faqHeadingOne">
                                         <div class="px-4 py-3">
-                                            {{$faq->answer}}
+                                            {!!$faq->answer!!}
                                         </div>
                                     </div>
                                 </div>
