@@ -82,15 +82,9 @@
                         </label>
                         <textarea name="messageBody" rows="6" class="form-control" id="input-message"></textarea>
                     </div>
-                    {{-- <div class="form-group">
-                        <div class="g-recaptcha" data-sitekey="6LchwMcUAAAAABMJDoJJSsRIwTsoQy6T73hu0ctQ"></div>
-                    </div> --}}
                     <div class="form-group">
-                        <label for="input-answer">
-                            Value of <strong>!5</strong>:
-                        </label>
-                        <input name="answer" class="form-control" type="number" id="input-answer">
-                    </div>  
+                        <div class="g-recaptcha" data-sitekey="6LchwMcUAAAAABMJDoJJSsRIwTsoQy6T73hu0ctQ"></div>
+                    </div> 
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block mx-auto btn-send">Send</button>
                     </div>
@@ -196,6 +190,6 @@
 
 
 @endsection
-{{-- @push('scripts')
+@push('scripts')
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-@endpush --}}
+@endpush
