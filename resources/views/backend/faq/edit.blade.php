@@ -22,7 +22,7 @@
 
                     <div class="col-12">
                         {{ Form::label('answer', 'Answer:')}}
-                        {{ Form::textarea('answer', null, array("class"=>'form-control')) }}
+                        {{ Form::textarea('answer', null, array("class"=>'form-control', 'id' =>'tinymce')) }}
                     </div>
 
                     <div class="col-12">
@@ -37,6 +37,18 @@
 </div>
 @endsection
 @section('scripts')
+<script src="https://cdn.tiny.cloud/1/8t3cusqbsgxjxtrx0cesy6fo1sdkesg3rsg41aky7y8m430h/tinymce/5/tinymce.min.js"></script>
 <script>
+    tinymce.init({
+    selector: 'textarea#tinymce',
+    height: 350,
+    menubar: false,
+    plugins: [
+        'lists',
+    ],
+    toolbar: 
+    'bullist numlist outdent indent |  bold italic underline strikethrough' +
+    'help',
+});
 </script>
 @endsection
