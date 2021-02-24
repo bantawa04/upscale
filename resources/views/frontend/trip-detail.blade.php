@@ -340,11 +340,10 @@
                         </div>
                         <form class="my-4 search-form">
                             <div class="row align-items-center mt-3">
-                                <div class="col-md">
-                                    <p>
-                                        Please Check Available Dates for The Year of:
-                                    </p>
-                                </div>
+                                <p class="mb-1 px-3">
+                                    Please Check Available Dates for The Year of:
+                                  </p>                            </div>
+                            <div class="row align-items-center mt-1">
                                 <div class="col-md">
                                     <div class="row">
                                         <div class="col-md col-6">
