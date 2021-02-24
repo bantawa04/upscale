@@ -22,7 +22,9 @@ class MailController extends Controller
             'messageBody' => 'required',
             'answer'      => 'required'
         ]);
-        if ($request->answer == 125) {
+        
+        $token = $request->input('g-recaptcha-response');
+        if (strlen($token) > 0) {
             $user_info = $this->getLocation($request->ip());
 
             $data = array(
