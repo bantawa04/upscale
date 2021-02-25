@@ -5,6 +5,7 @@
 /vendor
 /public/img/*
 /public/sitemap.xml
+composer.lock
 .env
 .env.backup
 .phpunit.result.cache

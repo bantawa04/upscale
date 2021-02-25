@@ -43,7 +43,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://ik.imagekit.io/azq00gyzbcp/css/app.css" rel="stylesheet">
     @stack('styles')
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153503827-1"></script>
@@ -65,7 +65,7 @@
     @include('frontend.partials.footer-2')
     @endif
 </body>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="https://ik.imagekit.io/azq00gyzbcp/js/app.js"></script>
 @stack('scripts')
 
 </html>
