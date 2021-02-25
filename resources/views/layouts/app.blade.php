@@ -15,7 +15,6 @@
     <meta name="language" content="English">
     <meta name="revisit-after" content="1 days">
     <meta name="author" content="Upscale Adventures">
-    <link rel="canonical" hreflang="en-us" href="{{ addWwwToUrl( url()->current() )}}" />
     
     <link rel="apple-touch-icon" sizes="57x57" href="{{asset('apple-icon-57x57.png')}}">
     <link rel="apple-touch-icon" sizes="60x60" href="{{asset('apple-icon-60x60.png')}}">
