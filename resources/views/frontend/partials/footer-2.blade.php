@@ -6,17 +6,17 @@
 
                     <div class="col-sm-auto my-3">
                         <div class="footer-recommended">
-                            <img src="{{ asset('images/tripadvisor.png') }}" alt="tripadvisor upscale adventures" />
+                            <img src="https://ik.imagekit.io/azq00gyzbcp/images/tripadvisor.png" alt="tripadvisor upscale adventures" />
                         </div>
                     </div>
                     <div class="col-sm-auto my-3">
                         <div class="footer-recommended">
-                            <img src="{{ asset('images/bokun.png') }}" alt="bukon upscale adventures" />
+                            <img src="https://ik.imagekit.io/azq00gyzbcp/images/bokun.png" alt="bukon upscale adventures" />
                         </div>
                     </div>
                     <div class="col-sm-auto my-3">
                         <div class="footer-recommended">
-                            <img src="{{ asset('images/inspirock.png') }}" alt="inspirock upscale adventures" />
+                            <img src="https://ik.imagekit.io/azq00gyzbcp/images/inspirock.png" alt="inspirock upscale adventures" />
                         </div>
                     </div>
                 </div>

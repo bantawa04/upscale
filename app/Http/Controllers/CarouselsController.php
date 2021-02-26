@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Carousel;
 use Illuminate\Http\Request;
 use App\UploadManager;
+use App\Traits\UploadImageKit;
 
 class CarouselsController extends Controller
 {
+    use UploadImageKit;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $path = "img/";
-    private $thumb = "img/";
+    private $path = "img/test/";
+    private $thumb = "img/test/";
 
     public function index()
     {
@@ -44,10 +46,16 @@ class CarouselsController extends Controller
             'photo' => 'required|mimes:jpg,jpeg,JPG,JPGE|max:10000'
         ]);
         $photo = UploadManager::uploadImage($request->photo, $this->path, $this->thumb,1024,768);
-        return Carousel::create([
+        Carousel::create([
             'thumb' => $photo[1],
             'path' => $photo[0]            
         ]);
+        //thumb
+        $thumbResponse = $this->uploadToImageKit(url()->full().$photo[1], $photo[3]);  
+        //path
+        $pathResponse = $this->uploadToImageKit(url()->full().$photo[0], $photo[2]);
+
+        return $thumbResponse->success;
     }
 
     /**

@@ -12,9 +12,10 @@ class UploadManager extends Model
     public static function  uploadImage($file, $path, $thumb, $width=null, $height=null)
     {
         $filename = md5($file->getClientOriginalName().time()) .'.'. $file->getClientOriginalExtension();
-        
-		$path = $path . "car_" . $filename;
-        $thumb = $thumb ."car_thumb_". $filename;
+        $thubFilename = "car_" . $filename;;
+		$pathFilename = "car_thumb_". $filename;
+		$path = $path . $thubFilename;
+        $thumb = $thumb . $pathFilename;
         
 		Image::make($file)
 		->resize($width, $height, function ($constraint) {
@@ -26,7 +27,7 @@ class UploadManager extends Model
         
 		ImageOptimizer::optimize($path);
 		ImageOptimizer::optimize($thumb);
-		return array($path, $thumb);
+		return array($path, $thumb, $thubFilename, $pathFilename);
     } 
     
 	public static function  uploadImageFull($file, $path, $thumb)
