@@ -41,6 +41,7 @@ $(function () {
         items: 1,
         loop: true,
         autoplay: true,
+        lazyLoad:true,
         autoplayTimeout: 5000,
         dots: false,
         mouseDrag: true,
