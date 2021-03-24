@@ -114,10 +114,48 @@
 @endsection
 @section('scripts')
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-<script src="{{ asset('js/editor.js') }}"></script>
-@endsection
+<script src="https://cdn.tiny.cloud/1/8t3cusqbsgxjxtrx0cesy6fo1sdkesg3rsg41aky7y8m430h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
+<script>
+    var editor_config = {
+      path_absolute : "/manage/",
+      selector: "textarea#my-editor",
+      relative_urls: false,
+      plugins: [
+        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        "insertdatetime media nonbreaking save table directionality",
+        "emoticons template paste textpattern"
+      ],
+      toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+      file_picker_callback : function(callback, value, meta) {
+        var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
+        var y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
+  
+        var cmsURL = editor_config.path_absolute + 'laravel-filemanager?editor=' + meta.fieldname;
+        if (meta.filetype == 'image') {
+          cmsURL = cmsURL + "&type=Images";
+        } else {
+          cmsURL = cmsURL + "&type=Files";
+        }
+  
+        tinyMCE.activeEditor.windowManager.openUrl({
+          url : cmsURL,
+          title : 'Filemanager',
+          width : x * 0.8,
+          height : y * 0.8,
+          resizable : "yes",
+          close_previous : "no",
+          onMessage: (api, message) => {
+            callback(message.content);
+          }
+        });
+      }
+    };
+  
+    tinymce.init(editor_config);
+  </script>
+@endsection
 @section('styles')
 <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
