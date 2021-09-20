@@ -15,33 +15,34 @@
 <div class="navbar-gap"></div>
 
 <div>
-    @isset($featured)
-    <div class="featured-article">
-        <div class="row no-gutters">
-            <div class="col-lg-6 align-self-stretch">
-                {{--<img src="http://unsplash.it/926/521" alt="" width="926" height="521" class="img-fluid w-100">--}}
-                <img src="{{ asset($featured->thumb) }}" alt="" width="780" height="440" class="article-image">
-            </div>
-            <div class="col-lg-6 col-text align-self-center">
-                <div class="article-category">
-                    Featured Article
+    @if( request()->query('page') )          
+        @isset($featured)
+        <div class="featured-article">
+            <div class="row no-gutters">
+                <div class="col-lg-6 align-self-stretch">
+                    {{--<img src="http://unsplash.it/926/521" alt="" width="926" height="521" class="img-fluid w-100">--}}
+                    <img src="{{ asset($featured->thumb) }}" alt="" width="780" height="440" class="article-image">
                 </div>
-                <div class="article-title">
-                    <a href="{{ route('blog.singlePost',[$featured->category->slug, $featured->slug]) }}">
-                        {{$featured->title}}
-                    </a>
-                </div>
-                <div class="read-more">
-                    <a href="{{ route('blog.singlePost',[$featured->category->slug, $featured->slug]) }}"
-                        class="btn-read-more btn btn-primary">
-                        Read More
-                    </a>
+                <div class="col-lg-6 col-text align-self-center">
+                    <div class="article-category">
+                        Featured Article
+                    </div>
+                    <div class="article-title">
+                        <a href="{{ route('blog.singlePost',[$featured->category->slug, $featured->slug]) }}">
+                            {{$featured->title}}
+                        </a>
+                    </div>
+                    <div class="read-more">
+                        <a href="{{ route('blog.singlePost',[$featured->category->slug, $featured->slug]) }}"
+                            class="btn-read-more btn btn-primary">
+                            Read More
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    @endisset
-
+        @endisset
+    @endif
     <div class="container">
         <div class="article-list">
             @foreach($posts as $post)
