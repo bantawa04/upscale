@@ -28,14 +28,15 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <img class="card-img-top" src="{{ asset($tour->image->path) }}" alt="Card image cap">
+                            {{-- {{dd($tour->image->path)}} --}}
+                            <img class="card-img-top" loading="lazy" src="{{ asset($tour->image->path) }}" alt="Card image cap">
                         </div>
                         <div class="col-12 pt-3">
                             <div class="row">
                                 @foreach($tour->slides as $slide)
                                 <div class="col-3">
                                     <a href="{{ url($slide->path) }}" data-lity>
-                                        <img class="img-fluid" src="{{asset($slide->thumb)}}" alt="">
+                                        <img class="img-fluid" loading="lazy" src="{{asset($slide->thumb)}}" alt="">
                                     </a>
                                 </div>
                                 @endforeach

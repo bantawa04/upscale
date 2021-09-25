@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\TourCategory;
 use Illuminate\Http\Request;
-use App\UploadManager;
+use App\Traits\ImageKitUtility;
 use App\Media;
 
 class TourCategoryController extends Controller
 {
+    use ImageKitUtility;
     /**
      * Display a listing of the resource.
      *
@@ -20,14 +21,14 @@ class TourCategoryController extends Controller
     function __construct()
     {
         $this->medias = Media::all();
-    }    
+    }
 
     public function index()
     {
         $categories = TourCategory::all();
         return view('backend.tour-category.index')
-        ->withImages($this->medias)
-        ->withCategories($categories);
+            ->withImages($this->medias)
+            ->withCategories($categories);
     }
 
     /**
@@ -52,16 +53,13 @@ class TourCategoryController extends Controller
             'name' => 'required'
         ]);
 
-        if(!empty($request->featured)){
-            $image = Media::findOrFail($request->featured);                
-            $path = UploadManager::fromMedia($image->path, 1024, 512, "cat_");
-            $thumb = UploadManager::fromMedia($image->path, 500, 500, "cat_thumb_");
-            $thumb1 = UploadManager::fromMedia($image->path, 344, 534, "cat_thumb1_");
+        if (!empty($request->featured)) {
+            $media = Media::findOrFail($request->featured);
             $request->merge([
-                'path' => $path,
-                'thumb' => $thumb,
-                'thumb1' => $thumb1
-                ]);
+                'path' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tCatThumb1', $media->url),
+                'thumb' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tCatLg', $media->url),
+                'thumb1' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tCatThumb2', $media->url)
+            ]);
         }
 
         $category = new TourCategory;
@@ -97,8 +95,8 @@ class TourCategoryController extends Controller
     public function edit(TourCategory $tourCategory)
     {
         return view('backend.tour-category.edit')
-        ->withImages($this->medias)
-        ->withCategory($tourCategory);
+            ->withImages($this->medias)
+            ->withCategory($tourCategory);
     }
 
     /**
@@ -110,31 +108,21 @@ class TourCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required',
             'description' => 'required'
         ]);
-        
+
         $category = TourCategory::findOrFail($id);
         $category->name = $request->name;
         $category->description = $request->description;
         $category->meta_title = $request->meta_title;
         $category->meta_description = $request->meta_description;
-        if(!empty($request->featured)){
-            $oldImage= $category->path;
-            $oldThumb= $category->thumb;
-            $oldThumb1= $category->thumb1;
-            $image = Media::findOrFail($request->featured);                
-            $path = UploadManager::fromMedia($image->path, 1024, 512, "cat_");
-            $thumb = UploadManager::fromMedia($image->path, 500, 500, "cat_thumb_");
-            $thumb1 = UploadManager::fromMedia($image->path, 344, 534, "cat_thumb1_");
-            $category->path = $path;
-            $category->thumb = $thumb;
-            $category->thumb1 = $thumb1;
-            
-            @unlink($oldImage);
-            @unlink($oldThumb);
-            @unlink($oldThumb1);
+        if (!empty($request->featured)) {
+            $media = Media::findOrFail($request->featured);
+            $category->path = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tCatThumb1', $media->url);
+            $category->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tCatLg', $media->url);
+            $category->thumb1 = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tCatThumb2', $media->url);
         }
         $category->save();
         return redirect()->route('tour-category.index');
@@ -148,10 +136,18 @@ class TourCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = TourCategory::findOrFail($id);
-        @unlink($category->image);
-        @unlink($category->thumb);
-        $category->delete();
-        return response()->json($category);
+        try {
+            $category = TourCategory::findOrFail($id);
+            $category->delete();
+            return response()->json($category);
+        } catch (\Exception $e) {
+            $msg = [
+                'id' => $id,
+                'code' => $e->getCode(),
+                'errMsg' => $e->getCode(),
+                'msg' => 'Item cannot be delted'
+            ];
+            return json_encode($msg);
+        }
     }
 }

@@ -8,9 +8,10 @@ use Cviebrock\EloquentSluggable\Sluggable;
 
 class Country extends Model
 {
+    use Sluggable;
     protected $table = 'countries';
 
-    protected $fillable = ['name', 'description', 'path', 'thumb'];
+    protected $fillable = ['name', 'description', 'path', 'thumb','map', 'fileID'];
 
     public function sluggable()
     {

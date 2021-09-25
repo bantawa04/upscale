@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Carousel;
 use Illuminate\Http\Request;
-use App\UploadManager;
-use App\Traits\UploadImageKit;
+use App\Traits\ImageKitUtility;
+use App\Traits\LocalUpload;
 
 class CarouselsController extends Controller
 {
-    use UploadImageKit;
+    use ImageKitUtility;
+    use LocalUpload;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private $path = "img/test/";
-    private $thumb = "img/test/";
+    private $path = "img/";
 
     public function index()
     {
@@ -45,17 +45,14 @@ class CarouselsController extends Controller
         $this->validate($request, [
             'photo' => 'required|mimes:jpg,jpeg,JPG,JPGE|max:10000'
         ]);
-        $photo = UploadManager::uploadImage($request->photo, $this->path, $this->thumb,1024,768);
-        Carousel::create([
-            'thumb' => $photo[1],
-            'path' => $photo[0]            
-        ]);
-        //thumb
-        $thumbResponse = $this->uploadToImageKit(url()->full().$photo[1], $photo[3]);  
-        //path
-        $pathResponse = $this->uploadToImageKit(url()->full().$photo[0], $photo[2]);
 
-        return $thumbResponse->success;
+        $thumbnail = $this->uploadThumbnail($request->photo, $this->path, 'car_thumb_', 391, 220);
+        $response = $this->uploadToImageKit($request->file('photo'), 'car_.jpg', 'carousel', 2080, 1170);
+        return Carousel::create([
+            'thumb' => $thumbnail,
+            'url'   => $response->success->url,
+            'fileID'   => $response->success->fileId,
+        ]);
     }
 
     /**
@@ -107,9 +104,9 @@ class CarouselsController extends Controller
      */
     public function destroy($id)
     {
-        $carousel = Carousel::findorFail($id);      
-        @unlink($carousel->path); 
-        @unlink($carousel->thumb); 
+        $carousel = Carousel::findorFail($id);
+        @unlink($carousel->thumb);
+        $this->deleteImage($carousel->fileID);
         $carousel->delete();
         return response()->json($carousel);
     }

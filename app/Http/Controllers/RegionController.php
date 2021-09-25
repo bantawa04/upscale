@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Region;
 use Illuminate\Http\Request;
-use App\UploadManager;
+use App\Traits\ImageKitUtility;
 use App\Media;
 
 class RegionController extends Controller
 {
+    use ImageKitUtility;
     /**
      * Display a listing of the resource.
      *
@@ -19,15 +20,15 @@ class RegionController extends Controller
 
     function __construct()
     {
-        $this->medias = Media::all();
-    }   
+        $this->medias = Media::orderBy('created_at', 'desc')->get();
+    }
 
     public function index()
     {
         $region = Region::all();
         return view('backend.region.index')
-        ->withImages($this->medias)
-        ->withRegions($region);
+            ->withImages($this->medias)
+            ->withRegions($region);
     }
 
     /**
@@ -52,24 +53,22 @@ class RegionController extends Controller
             'name' => 'required'
         ]);
 
-        if(!empty($request->featured)){
-            $image = Media::findOrFail($request->featured);                
-            $path = UploadManager::fromMedia($image->path, 1024, 512, "reg_");
-            $thumb = UploadManager::fromMedia($image->path, 400, 300, "reg_thumb_");
+        if (!empty($request->featured)) {
+            $image = Media::findOrFail($request->featured);
             $request->merge([
-                'path' => $path,
-                'thumb' => $thumb
-                ]);
+                'path' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $image->url), //1024x512
+                'thumb' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $image->url) //400x300
+            ]);
         }
 
-       $region = new Region;
-       $region->name = $request->name;
-       $region->description = $request->description;
-       $region->path = $request->path;
-       $region->thumb = $request->thumb;
-       $region->meta_title = $request->meta_title;
-       $region->meta_description = $request->meta_description;
-       $region->save();
+        $region = new Region;
+        $region->name = $request->name;
+        $region->description = $request->description;
+        $region->path = $request->path;
+        $region->thumb = $request->thumb;
+        $region->meta_title = $request->meta_title;
+        $region->meta_description = $request->meta_description;
+        $region->save();
 
         return redirect()->route('region.index');
     }
@@ -94,8 +93,8 @@ class RegionController extends Controller
     public function edit(Region $region)
     {
         return view('backend.region.edit')
-        ->withImages($this->medias)
-        ->withRegion($region);
+            ->withImages($this->medias)
+            ->withRegion($region);
     }
 
     /**
@@ -107,22 +106,16 @@ class RegionController extends Controller
      */
     public function update(Request $request, Region $region)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required',
             'description' => 'required'
         ]);
-        if(!empty($request->featured)){
-            $oldImage= $region->image;
-            $oldThumb= $region->thumb;
-            $image = Media::findOrFail($request->featured);                
-            $path = UploadManager::fromMedia($image->path, 1024, 512, "con_");
-            $thumb = UploadManager::fromMedia($image->path, 400, 300, "con_thumb_");
+        if (!empty($request->featured)) {
+            $image = Media::findOrFail($request->featured);
             $request->merge([
-                'path' => $path,
-                'thumb' => $thumb
-                ]);
-            @unlink($oldImage);
-            @unlink($oldThumb);
+                'path' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $image->url), //1024x512
+                'thumb' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $image->url) //400x300
+            ]);
         }
         $region->update($request->all());
         return redirect()->route('region.index');
@@ -136,10 +129,18 @@ class RegionController extends Controller
      */
     public function destroy($id)
     {
-        $region = Region::findOrFail($id);
-        @unlink($region->image);
-        @unlink($region->thumb);
-        $region->delete();
-        return response()->json($region);
+        try {
+            $region = Region::findOrFail($id);
+            $region->delete();
+            return response()->json($region);
+        } catch (\Exception $e) {
+            $msg = [
+                'id' => $id,
+                'code' => $e->getCode(),
+                'errMsg' => $e->getCode(),
+                'msg' => 'Item cannot be delted'
+            ];
+            return json_encode($msg);
+        }
     }
 }

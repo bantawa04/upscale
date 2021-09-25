@@ -1,33 +1,29 @@
 <?php
 
 namespace App;
-use Image;
-use ImageOptimizer;
+use Intervention\Image\Facades\Image;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use File;
 
 use Illuminate\Database\Eloquent\Model;
 
 class UploadManager extends Model
 {
-    public static function  uploadImage($file, $path, $thumb, $width=null, $height=null)
+    public static function  uploadThumbnail($file, $localPath,$type, $width, $height)
     {
-        $filename = md5($file->getClientOriginalName().time()) .'.'. $file->getClientOriginalExtension();
-        $thubFilename = "car_" . $filename;;
-		$pathFilename = "car_thumb_". $filename;
-		$path = $path . $thubFilename;
-        $thumb = $thumb . $pathFilename;
+		$fileName = $type.$file->getClientOriginalName().'_'.time().'.'.$file->getClientOriginalExtension();
+
+        $thumbPath = $localPath. $fileName;
         
 		Image::make($file)
 		->resize($width, $height, function ($constraint) {
 			$constraint->aspectRatio();
 			$constraint->upsize();
 		})
-		->save($path);
-		Image::make($file)->fit(375,563)->save($thumb);
-        
-		ImageOptimizer::optimize($path);
-		ImageOptimizer::optimize($thumb);
-		return array($path, $thumb, $thubFilename, $pathFilename);
+		->save($thumbPath);
+
+		ImageOptimizer::optimize($thumbPath);
+		return $thumbPath;
     } 
     
 	public static function  uploadImageFull($file, $path, $thumb)
@@ -55,4 +51,14 @@ class UploadManager extends Model
 		ImageOptimizer::optimize($location);
 		return $location;
 	} 	
+
+	private static function toBase64($file, $width, $height){
+		$base64 = Image::make($file)
+		->resize($width, $height, function ($constraint) {
+			$constraint->aspectRatio();
+			$constraint->upsize();
+		})->encode('data-url');
+
+		return $base64;
+	}
 }
