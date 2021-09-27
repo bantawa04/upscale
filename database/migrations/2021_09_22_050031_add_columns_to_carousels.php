@@ -14,7 +14,6 @@ class AddColumnsToCarousels extends Migration
     public function up()
     {
         Schema::table('carousels', function (Blueprint $table) {
-            $table->dropColumn('path');
             $table->string('fileID')->after('thumb');
             $table->string('url')->after('fileID');
         });

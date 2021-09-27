@@ -37,15 +37,19 @@
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="main" name="main" checked
                                         value="1">
-                                    <label for="main" class="custom-control-label">Main</label>
+                                    <label for="main" class="custom-control-label">Parent</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             {!! Form::number('position', null, array('class' => 'form-control' , 'placeholder' =>
                             'Position')) !!}
                         </div>
-                        <div class="col-6">
+                        <div class="col-2">
+                            {!! Form::number('status', null, array('class' => 'form-control' ,'min' =>'0', 'max' => '1', 'placeholder' =>
+                            'Status')) !!}
+                        </div>
+                        <div class="col-4">
                             @include('backend.partials._media')
                             @error('featured')
                             <span class="text-danger">{{ $message }}</span>

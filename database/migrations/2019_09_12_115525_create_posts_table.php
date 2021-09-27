@@ -22,7 +22,7 @@ class CreatePostsTable extends Migration
             $table->text('thumb');
             $table->text('path');
             $table->boolean('status');
-            $table->text('title_tag');
+            $table->text('title_tag')->nullable();
             $table->text('meta_title');
             $table->text('meta_description');
 

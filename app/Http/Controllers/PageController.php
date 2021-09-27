@@ -6,9 +6,11 @@ use App\Page;
 use App\Media;
 use App\UploadManager;
 use Illuminate\Http\Request;
+use App\Traits\ImageKitUtility;
 
 class PageController extends Controller
 {
+    use ImageKitUtility;
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +19,8 @@ class PageController extends Controller
 
     public function __construct()
     {
-        $this->images = Media::all();
-    }     
+        $this->images = Media::orderBy('created_at', 'desc')->get();
+    }
 
     public function index()
     {
@@ -34,7 +36,7 @@ class PageController extends Controller
     public function create()
     {
         return view('backend.page.create')
-        ->withImages($this->images);
+            ->withImages($this->images);
     }
 
     /**
@@ -46,7 +48,7 @@ class PageController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $this->validate( $request, [
+        $this->validate($request, [
             'title' => 'required|required',
             'position' => 'required|numeric',
             'content' => 'required',
@@ -59,16 +61,17 @@ class PageController extends Controller
         $page->content = $request->content;
         $page->main = $request->main;
         $page->position = $request->position;
+        $page->status = $request->status;
 
         if (!empty($request->featured)) {
-            $image = Media::findOrFail($request->featured);
-            $path = UploadManager::fromMedia($image->path, 1136, 640,"test");
-            $page->banner = $path;
-        }   
+            $media = Media::findOrFail($request->featured);
+            // $path = UploadManager::fromMedia($image->path, 1136, 640,"test");            
+            $page->banner = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-pBanner', $media->url);
+        }
 
         $page->meta_title = $request->meta_title;
         $page->meta_description = $request->meta_description;
-        $page->save();    
+        $page->save();
         return redirect()->route('page.show', $page->id);
     }
 
@@ -81,8 +84,7 @@ class PageController extends Controller
     public function show(Page $page)
     {
         return view('backend.page.show')
-        ->withPage($page);
-        
+            ->withPage($page);
     }
 
     /**
@@ -94,8 +96,8 @@ class PageController extends Controller
     public function edit(Page $page)
     {
         return view('backend.page.edit')
-        ->withPage($page)
-        ->withImages($this->images);
+            ->withPage($page)
+            ->withImages($this->images);
     }
 
     /**
@@ -107,7 +109,7 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
-        $this->validate( $request, [
+        $this->validate($request, [
             'title' => 'required|required',
             'position' => 'required|numeric',
             'content' => 'required',
@@ -121,17 +123,14 @@ class PageController extends Controller
         $page->position = $request->position;
 
         if (!empty($request->featured)) {
-            $oldBanner = $page->banner;
-            $image = Media::findOrFail($request->featured);
-            $path = UploadManager::fromMedia($image->path, 1136, 640,"test");
-            $page->banner = $path;
-
-            @unlink($oldBanner);
-        }   
+            $media = Media::findOrFail($request->featured);
+            // $path = UploadManager::fromMedia($image->path, 1136, 640,"test");
+            $page->banner = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-pBanner', $media->url);
+        }
 
         $page->meta_title = $request->meta_title;
         $page->meta_description = $request->meta_description;
-        $page->save();    
+        $page->save();
         return redirect()->route('page.show', $page->id);
     }
 
@@ -143,26 +142,34 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        $page = Page::find($id);
-        @unlink($page->banner);
-        $page->delete();
-
-        return ['type'=>'info','message' => 'Tour deleted sucessfully.'];
+        try {
+            $page = Page::find($id);
+            $page->delete();
+            return response()->json($page);
+        } catch (\Exception $e) {
+            $msg = [
+                'id' => $id,
+                'code' => $e->getCode(),
+                'errMsg' => $e->getCode(),
+                'msg' => 'Item cannot be delted'
+            ];
+            return json_encode($msg);
+        }
     }
 
     public function publish($id)
     {
-        $page= Page::find($id);
+        $page = Page::find($id);
         $page->status = 1;
         $page->save();
-        return ['type'=>'success','message' => 'Page published'];
+        return ['type' => 'success', 'message' => 'Page published'];
     }
 
     public function unpublish($id)
     {
-        $page= Page::find($id);
+        $page = Page::find($id);
         $page->status = 0;
         $page->save();
-        return ['type'=>'info','message' => 'Page unpublished'];
-    }     
+        return ['type' => 'info', 'message' => 'Page unpublished'];
+    }
 }

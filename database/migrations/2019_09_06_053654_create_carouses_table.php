@@ -28,6 +28,6 @@ class CreateCarousesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carouses');
+        Schema::dropIfExists('carousels');
     }
 }

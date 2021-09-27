@@ -42,6 +42,7 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $settings = Setting::all();
         if ($settings->count() < 1) {
                 $setting = new Setting;
