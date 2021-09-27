@@ -118,7 +118,7 @@
 
 <script>
     var editor_config = {
-        height: 400,
+      height: 400,
       path_absolute : "/manage/",
       selector: "textarea#my-editor",
       relative_urls: false,
