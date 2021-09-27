@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Country;
 use Illuminate\Http\Request;
-use App\UploadManager;
 use App\Media;
-use Image;
+use App\Traits\ImageKitUtility;
 
 class CountryController extends Controller
 {
+    use ImageKitUtility;
     private $path = "img/";
     private $thumb = "img/";
     /**
@@ -47,37 +47,35 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'map' => 'required|mimes:png'
         ]);
 
         if (!empty($request->featured)) {
             $image = Media::findOrFail($request->featured);
-            $path = UploadManager::fromMedia($image->path, 1024, 512, "con_");
-            $thumb = UploadManager::fromMedia($image->path, 400, 300, "con_thumb_");
+
             $request->merge([
-                'path' => $path,
-                'thumb' => $thumb
+                'thumb' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $image->url), //400x300
+                'path' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $image->url), //1024x512
             ]);
         }
 
         if (!empty($request->map)) {
-
-            $file = $request->file('map');
-            $filename = time() . '-' . $file->getClientOriginalName();
-            $location = $this->path . $filename;
-            Image::make($file)->save($location);
+            $response = $this->uploadToImageKit($request->file('map'), $request->name . '_map_.png', 'map', null, null);
             $request->merge([
-                'location' => $location,
+                'mapURL' => $response->success->url,
+                'fileID' => $response->success->fileId
             ]);
         }
-
         $country = new Country;
         $country->name = $request->name;
         $country->description = $request->description;
         $country->path = $request->path;
-        $country->map = $request->location;
+        $country->map = $request->mapURL;
         $country->thumb = $request->thumb;
+        $country->fileID = $request->fileID;
         $country->meta_title = $request->meta_title;
         $country->meta_description = $request->meta_description;
         $country->save();
@@ -120,30 +118,20 @@ class CountryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'map' => 'required|mimes:png'
         ]);
         if (!empty($request->featured)) {
-            $oldImage = $country->image;
-            $oldThumb = $country->thumb;
             $image = Media::findOrFail($request->featured);
-            $path = UploadManager::fromMedia($image->path, 1024, 512, "con_");
-            $thumb = UploadManager::fromMedia($image->path, 400, 300, "con_thumb_");
-            $country->path = $path;        
-            $country->thumb = $thumb;
+            $country->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $image->url); //400x300
+            $country->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $image->url); //1024x512
 
-            @unlink($oldImage);
-            @unlink($oldThumb);
-            
         }
 
         if (!empty($request->map)) {
-            $oldMap = $country->map;
-            $file = $request->file('map');
-            $filename = time() . '-' . $file->getClientOriginalName();
-            $location = $this->path . $filename;
-            Image::make($file)->save($location);
-            @unlink($oldMap);
-            $country->map = $location;
+            $response = $this->uploadToImageKit($request->file('map'), $request->name . '_map.png', 'map', null, null);
+            $country->map = $response->success->url;
+            $country->fileID = $response->success->fileId;
         }
         $country->name = $request->name;
         $country->description = $request->description;
@@ -161,11 +149,19 @@ class CountryController extends Controller
      */
     public function destroy($id)
     {
-        $country = Country::findOrFail($id);
-        @unlink($country->image);
-        @unlink($country->thumb);
-        @unlink($country->map);
-        $country->delete();
-        return response()->json($country);
+        try {
+            $country = Country::findOrFail($id);
+            $this->deleteImage($country->fileID);
+            $country->delete();
+            return response()->json($country);
+        } catch (\Exception $e) {
+            $msg = [
+                'id' => $id,
+                'code' => $e->getCode(),
+                'errMsg' => $e->getCode(),
+                'msg' => 'Item cannot be delted'
+            ];
+            return json_encode($msg);
+        }
     }
 }

@@ -19,6 +19,7 @@ class CreateTourCategoriesTable extends Migration
             $table->string('slug');
             $table->text('path');
             $table->text('thumb');
+            $table->text('thumb1');
             $table->text('description');          
             $table->timestamps();
         });

@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Media extends Model
 {
     protected $table = 'medias';
-    protected $fillable = ['path', 'thumb', 'name'];
+    protected $fillable = ['path', 'thumb', 'name','url','fileID'];
 }

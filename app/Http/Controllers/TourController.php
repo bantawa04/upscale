@@ -46,7 +46,7 @@ class TourController extends Controller
      */
     public function index()
     {
-        $tours = Tour::all();
+        $tours = Tour::orderBy('created_at', 'desc')->get();
         return view('backend.tour.index')->withTours($tours);
     }
 
@@ -123,22 +123,23 @@ class TourController extends Controller
 
         if (!empty($request->featured)) {
             $image = Media::findOrFail($request->featured);
-            $path = UploadManager::fromMedia($image->path, 1024, 512, "tou_");
-            $thumb = UploadManager::fromMedia($image->path, 400, 300, "tou_thumb_");
+            $thumbnail = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $image->url);
+            $path = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $image->url);
             $tour->image()->save(new FeaturedImage([
                 'path' => $path,
-                'thumb' => $thumb
+                'thumb' => $thumbnail
             ]));
         }
 
         if (!empty($request->slides)) {
             $medias = Media::whereIn('id', $request->slides)->get();
+            // dd($medias);
             foreach ($medias as $media) {
                 $slide = new Slide;
                 $slide->tour_id = $tour->id;
                 $slide->media_id = $media->id;
-                $slide->path = UploadManager::fromMedia($media->path, 1920, 1080, "slide_");
-                $slide->thumb = UploadManager::fromMedia($media->path, 375, 563, "slide_thumb_");
+                $slide->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tSliThumb', $media->url);
+                $slide->path  = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tSlide', $media->url);
                 $slide->name = $media->name;
                 $slide->save();
             }
@@ -234,29 +235,22 @@ class TourController extends Controller
         $tour->meta_title = $request->meta_title;
         $tour->meta_description = $request->meta_description;
         $tour->save();
-
+            // dd($request->all());
         if (!empty($request->featured)) {
-            $oldImage = $tour->image->path;
-            $oldThumb = $tour->image->thumb;
 
             $image = $tour->image;
 
             $media = Media::findOrFail($request->featured);
-            $image->path = UploadManager::fromMedia($media->path, 1024, 512, "tou_");
-            $image->thumb = UploadManager::fromMedia($media->path, 400, 300, "tou_thumb_");
-
+            $image->path = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $media->url);
+            $image->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $media->url);
             $tour->image()->save($image);
 
-            @unlink($oldImage);
-            @unlink($oldThumb);
         }
 
         if (isset($request->slides)) {
             $oldIds = Slide::where('tour_id', '=', $tour->id)->get();
             $oldIds->whenNotEmpty(function ($oldIds) {
                 foreach ($oldIds as $oldId) {
-                    @unlink($oldId->path);
-                    @unlink($oldId->thumb);
                     $oldId->delete();
                 }
             });
@@ -265,8 +259,8 @@ class TourController extends Controller
                 $slide = new Slide;
                 $slide->tour_id = $tour->id;
                 $slide->media_id = $media->id;
-                $slide->path = UploadManager::fromMedia($media->path, 1920, 1080, "slide_");
-                $slide->thumb = UploadManager::fromMedia($media->path, 375, 563, "slide_thumb_");
+                $slide->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tSliThumb', $media->url);
+                $slide->path  = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tSlide', $media->url);
                 $slide->name = $media->name;
                 $slide->save();
             }
@@ -295,13 +289,9 @@ class TourController extends Controller
         //     $departure->delete();
         // }
         if ($tour->image) {
-            @unlink($tour->image->thumb);
-            @unlink($tour->image->banner);
             $tour->image->delete();
         }
         foreach ($tour->slides as $slide) {
-            @unlink($slide->path);
-            @unlink($slide->thumb);
             $slide->delete();
         }
         if ($test = $tour->includes()->count() != null) {

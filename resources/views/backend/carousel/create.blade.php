@@ -9,7 +9,7 @@
                     {{ csrf_field() }}
                     <div class="dz-message">
                         <h4>Drop files here or click to upload.</h4>
-                        <h5>Resolution: 1920x1080</h5>
+                        <h5>Aspect ratio: 16:9</h5>
                     </div>
                 </form>
                 <a href="{{ route('carousel.index') }}" class="btn btn-block btn-primary">Save</a>

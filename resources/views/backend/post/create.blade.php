@@ -75,7 +75,7 @@
                     <h3>SEO Entities</h3>
                     <div class="row mt-3">
                         <div class="col">
-                            {{ Form::text('title', null, array("class"=>'form-control', 'placeholder' => 'Title')) }}
+                            {{ Form::text('titleTag', null, array("class"=>'form-control', 'placeholder' => 'Page Title (Optional)')) }}
                             @error('title')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -118,6 +118,7 @@
 
 <script>
     var editor_config = {
+      height: 400,
       path_absolute : "/manage/",
       selector: "textarea#my-editor",
       relative_urls: false,
