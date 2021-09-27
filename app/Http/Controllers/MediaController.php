@@ -4,22 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Media;
 use Illuminate\Http\Request;
-use App\UploadManager;
+// use App\UploadManager;
+use App\Traits\LocalUpload;
+use App\Traits\ImageKitUtility;
 
 class MediaController extends Controller
 {
+    use LocalUpload;
+    use ImageKitUtility;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     private $path = "img/";
-    private $thumb = "img/";
     public function index()
     {
         $medias = Media::latest()->paginate(18);
         return view('backend.media.index')
-        ->withMedias($medias);
+            ->withMedias($medias);
     }
 
     /**
@@ -40,14 +43,22 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'photo' => 'required|mimes:jpg,jpeg,JPG,JPGE|max:10000'
-        ]);
-        $photo = UploadManager::uploadImageFull($request->photo, $this->path, $this->thumb);
-        return Media::create([
-            'thumb' => $photo[1],
-            'path' => $photo[0]            
-        ]);
+        try {
+            $this->validate($request, [
+                'photo' => 'required|mimes:jpg,jpeg,JPG,JPGE|max:10000'
+            ]);
+
+            $response = $this->uploadToImageKit($request->file('photo'), 'med_.jpg', 'media', 2080, 1170);
+            $thumb = $this->uploadThumbnail($request->file('photo'), $this->path, 'med_thumb_', 286, 180);
+            // return json_encode($response);
+            return Media::create([
+                'thumb' => $thumb,
+                'url' => $response->success->url,
+                'fileID' => $response->success->fileId,
+            ]);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -58,7 +69,6 @@ class MediaController extends Controller
      */
     public function show(Media $media)
     {
-        
     }
 
     /**
@@ -71,7 +81,6 @@ class MediaController extends Controller
     {
         $media = Media::findOrFail($id);
         return view('backend.media.edit')->withMedia($media);
-        
     }
 
     /**
@@ -100,10 +109,14 @@ class MediaController extends Controller
      */
     public function destroy($id)
     {
-        $media = Media::findOrFail($id);
-        @unlink($media->path); 
-        @unlink($media->thumb); 
-        $media->delete();
-        return response()->json($media);
+        try {
+            $media = Media::findOrFail($id);
+            @unlink($media->thumb);
+            $this->deleteImage($media->fileID);
+            $media->delete();
+            return response()->json($media);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

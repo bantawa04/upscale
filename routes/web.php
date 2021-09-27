@@ -81,7 +81,8 @@ Route::prefix('manage')->group(function () {
 });
 
 Route::middleware('web')->group(function () {
-    // Route::get('/lead', 'FrontendController@lead')->name('lead');
+    // Route::get('/lead', 'FrontendController@lead')->name('lead');    
+
     Route::name('page.')->group(function () {
         Route::get('/', 'FrontendController@index');
         Route::get('/search', 'FrontendController@search')->name('search');

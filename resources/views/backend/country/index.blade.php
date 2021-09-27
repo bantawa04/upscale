@@ -105,6 +105,7 @@
                     "_method": 'DELETE'
                 },
                 success: function (data) {
+                    console.log(data);
                     $('.item' + data['id']).remove();
                     Toast.fire(
                     'Deleted!',

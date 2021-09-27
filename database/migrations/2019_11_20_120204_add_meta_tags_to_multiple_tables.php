@@ -17,18 +17,10 @@ class AddMetaTagsToMultipleTables extends Migration
             $table->text('meta_title')->after('description');
             $table->text('meta_description')->after('description');
         });
-        Schema::table('regions', function (Blueprint $table) {
-            $table->text('meta_title')->after('description');
-            $table->text('meta_description')->after('description');
-        });
         Schema::table('tourcategories', function (Blueprint $table) {
             $table->text('meta_title')->after('description');
             $table->text('meta_description')->after('description');
-        });
-        Schema::table('blogCateogries', function (Blueprint $table) {
-            $table->text('meta_title')->after('slug');
-            $table->text('meta_description')->after('slug');
-        });        
+        });  
     }
 
     /**
@@ -42,17 +34,9 @@ class AddMetaTagsToMultipleTables extends Migration
             $table->dropColumn('meta_title');
             $table->dropColumn('meta_description');
         });
-        Schema::table('regions', function (Blueprint $table) {
-            $table->dropColumn('meta_title');
-            $table->dropColumn('meta_description');
-        });
         Schema::table('tourcategories', function (Blueprint $table) {
             $table->dropColumn('meta_title');
             $table->dropColumn('meta_description');
-        });
-        Schema::table('blogCateogries', function (Blueprint $table) {
-            $table->dropColumn('meta_title');
-            $table->dropColumn('meta_description');
-        });        
+        });     
     }
 }

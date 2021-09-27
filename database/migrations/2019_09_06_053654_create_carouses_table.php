@@ -15,10 +15,8 @@ class CreateCarousesTable extends Migration
     {
         Schema::create('carousels', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('path');
             $table->text('thumb');
             $table->string('name')->nullable();
-            $table->string('heading')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateCarousesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carouses');
+        Schema::dropIfExists('carousels');
     }
 }

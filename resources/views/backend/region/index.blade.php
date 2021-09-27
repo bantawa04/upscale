@@ -25,7 +25,7 @@
                                 <td class="text-right">
                                     <a href="{{ route('region.edit',$item->id) }}" class="btn btn-primary btn-sm"><i
                                             class="far fa-edit"></i></a>
-                                    <button class="btn btn-sm btn-danger delete" data-id={{$item->id}} ><i
+                                    <button class="btn btn-sm btn-danger delete" data-id={{$item->id}}><i
                                             class="far fa-trash-alt"></i></button>
                                 </td>
                             </tr>
@@ -73,9 +73,17 @@
 @section('scripts')
 <script>
     $('.delete').click(function() {
-                let id = $(this).data('id');      
-                console.log(id);
-                
+    let id = $(this).data('id');          
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
                 $.ajax({
                     
                     type: "POST",
@@ -86,9 +94,15 @@
                         "_method": 'DELETE'
                     },
                     success: function (data) {
-                        $('.item' + id).remove();
+                        $('.item' + data['id']).remove();
+                        Toast.fire({
+                                type: 'success',
+                                title: 'Item deleted.'
+                            })  
                     }
                 });
-            });
+            }
+        })
+    });
 </script>
 @endsection

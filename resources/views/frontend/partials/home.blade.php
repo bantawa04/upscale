@@ -4,7 +4,7 @@
         @foreach($carousels as $item)
         <div class="embed-responsive embed-responsive-banner">
             <div class="embed-responsive-item">
-                <img src="{{ asset($item->path)}}" alt="{{$item->heading}}" title="{{$item->subheading}}" width="1920"
+                <img src="{{ asset($item->url)}}" alt="{{$item->heading}}" title="{{$item->subheading}}" width="1920"
                     height="1080" class="">
             </div>
         </div>

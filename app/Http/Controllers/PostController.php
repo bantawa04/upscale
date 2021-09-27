@@ -24,7 +24,7 @@ class PostController extends Controller
         $this->tags = $this->selectOption(Tag::all());
         $this->medias = Media::all();
         $this->categories = $this->selectOption(BlogCategory::all());
-    }    
+    }
     public function index()
     {
         $posts = Post::all();
@@ -39,9 +39,9 @@ class PostController extends Controller
     public function create()
     {
         return view('backend.post.create')
-        ->withTags($this->tags)
-        ->withCategories($this->categories)
-        ->withImages($this->medias);
+            ->withTags($this->tags)
+            ->withCategories($this->categories)
+            ->withImages($this->medias);
     }
 
     /**
@@ -52,40 +52,41 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $this->validate($request, [
-            'title' => 'required',
-            'featured' => 'required',
-            'title' => 'required',
-            'meta_title' => 'required',
-            'meta_description' => 'required'
-        ]);
-        $post = new Post;
-        $post->title = $request->title;
-        $post->category_id = $request->category_id;
-        $post->status = $request->status;
-        $post->content = $request->content;
-        $post->title = $request->title;
-        $post->meta_title = $request->meta_title;
-        $post->meta_description = $request->meta_description;
-
-        if (!empty($request->featured)) {
-            $image = Media::findOrFail($request->featured);
-            $path = UploadManager::fromMedia($image->path, 1200,394, "post_");
-            $thumb = UploadManager::fromMedia($image->path, 780, 440, "post_thumb_");
-            $request->merge([
-                'path' => $path,
-                'thumb' => $thumb
+        try {
+            $this->validate($request, [
+                'title' => 'required',
+                'featured' => 'required',
+                'title' => 'required',
+                'meta_title' => 'required',
+                'meta_description' => 'required'
             ]);
-            $post->path = $request->path;
-            $post->thumb = $request->thumb;      
+            $post = new Post;
+            $post->title = $request->title;
+            $post->category_id = $request->category_id;
+            $post->status = $request->status;
+            $post->content = $request->content;
+            $post->title = $request->titleTag;
+            $post->meta_title = $request->meta_title;
+            $post->meta_description = $request->meta_description;
+
+            if (!empty($request->featured)) {
+                $media = Media::findOrFail($request->featured);
+                $request->merge([
+                    'path' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogImg', $media->url), //1200x394
+                    'thumb' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogThumb', $media->url) //780x440
+                ]);
+                $post->path = $request->path;
+                $post->thumb = $request->thumb;
+            }
+
+            $post->save();
+
+            $post->tags()->sync($request->tags, false);
+
+            return redirect()->route('post.show', $post->id);
+        } catch (\Exception $th) {
+            return $th->getMessage();
         }
-  
-        $post->save();
-
-        $post->tags()->sync($request->tags, false);
-
-        return redirect()->route('post.show', $post->id);
     }
 
     /**
@@ -108,10 +109,10 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         return view('backend.post.edit')
-        ->withPost($post)
-        ->withTags($this->tags)
-        ->withCategories($this->categories)
-        ->withImages($this->medias);
+            ->withPost($post)
+            ->withTags($this->tags)
+            ->withCategories($this->categories)
+            ->withImages($this->medias);
     }
 
     /**
@@ -134,24 +135,15 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
         $post->status = $request->status;
         $post->content = $request->content;
-        $post->title = $request->title;
+        $post->title = $request->titleTag;
         $post->meta_title = $request->meta_title;
         $post->meta_description = $request->meta_description;
 
-        if(!empty($request->featured)){
-            $oldImage= $post->path;
-            $oldThumb= $post->thumb;
-            $image = Media::findOrFail($request->featured);                
-            $path = UploadManager::fromMedia($image->path, 1200,394, "con_");
-            $thumb = UploadManager::fromMedia($image->path, 780, 440, "con_thumb_");
-            $request->merge([
-                'path' => $path,
-                'thumb' => $thumb
-                ]);
-            @unlink($oldImage);
-            @unlink($oldThumb);
-            $post->path = $path;
-            $post->thumb = $thumb;
+        if (!empty($request->featured)) {
+            $media = Media::findOrFail($request->featured);
+
+            $post->path = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogImg', $media->url); //1200x394
+            $post->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogThumb', $media->url); //780x440
         }
         $post->save();
         $post->tags()->sync($request->tags);
@@ -167,7 +159,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->tags()->detach();
-        
+
         $post->delete();
 
         return redirect()->route('post.index');
@@ -176,37 +168,36 @@ class PostController extends Controller
 
     public function publish($id)
     {
-        $post= Post::find($id);
+        $post = Post::find($id);
         $post->status = 1;
         $post->save();
-        return ['type'=>'success','message' => 'Post published'];
+        return ['type' => 'success', 'message' => 'Post published'];
     }
 
     public function unpublish($id)
     {
-        $post= Post::find($id);
+        $post = Post::find($id);
         $post->status = 0;
         $post->save();
-        return ['type'=>'info','message' => 'Post unpublished'];
-    }    
+        return ['type' => 'info', 'message' => 'Post unpublished'];
+    }
 
     public function feature($id)
     {
-        $post= Post::find($id);
+        $post = Post::find($id);
         $post->featured = 1;
         $post->save();
         DB::table('posts')
-        ->where('id','<>', $id)
-        ->update(['featured' => 1]);
-        return ['type'=>'success','message' => 'Post set as featured.'];
+            ->where('id', '<>', $id)
+            ->update(['featured' => 1]);
+        return ['type' => 'success', 'message' => 'Post set as featured.'];
     }
 
     public function removeFeature($id)
     {
-        $post= Post::find($id);
+        $post = Post::find($id);
         $post->featured = 0;
         $post->save();
-        return ['type'=>'info','message' => 'Post removed from featured'];
-    }  
-
+        return ['type' => 'info', 'message' => 'Post removed from featured'];
+    }
 }

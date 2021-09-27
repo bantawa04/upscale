@@ -15,7 +15,7 @@
 
 <div class="navbar-gap"></div>
 
-<div class="heading-wrapper-main" style="background-image: url('/images/contact.jpg');">
+<div class="heading-wrapper-main" style="background-image: url('https://ik.imagekit.io/azq00gyzbcp/images/contact.jpg');">
     <div>
         <div class="container">
             <div class="row">
