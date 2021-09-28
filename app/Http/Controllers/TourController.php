@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Tour;
 use Illuminate\Http\Request;
 use App\Media;
-use App\UploadManager;
 use App\Accomodation;
 use App\Meal;
 use App\Country;

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Recommended;
 use Illuminate\Http\Request;
-use App\UploadManager;
 use Image;
 use ImageOptimizer;
 
