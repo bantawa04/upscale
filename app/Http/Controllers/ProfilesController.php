@@ -85,7 +85,9 @@ class ProfilesController extends Controller
         try {
             $user = User::find($id);
             $user->name = $request->name;
-
+            $this->validate($request, [
+                'avatar' => 'max:1024',
+            ]);
             if (!empty($request->avatar)) {
                 // Image::make($file)->resize(180,180)->save($location);
                 $response = $this->uploadToImageKit($request->file('avatar'), 'usr_.jpg', 'user', null, null);
