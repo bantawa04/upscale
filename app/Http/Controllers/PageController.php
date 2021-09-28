@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Page;
 use App\Media;
-use App\UploadManager;
 use Illuminate\Http\Request;
 use App\Traits\ImageKitUtility;
 
