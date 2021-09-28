@@ -48,9 +48,9 @@ trait ImageKitUtility
     }
     private function init(){
         return new ImageKit(
-            "public_xee63DZd+a56dsNTMWm7zBJEkvA=",
-            "private_n+iBK4c7XBx9Bdvc73hRQquDo6E=",
-            "https://ik.imagekit.io/azq00gyzbcp"
+            env('IMAGE_KIT_PUBLIC'),
+            env('IMAGE_KIT_PRIVATE'),
+            env('IMAGE_KIT_URL')
         );
     }
 }
