@@ -25,6 +25,10 @@ class AddColumnsToCarousels extends Migration
         Schema::table('countries', function (Blueprint $table) {
             $table->string('fileID')->after('map');
         });     
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('fileID')->after('avatar')->nullable();
+            $table->string('type')->after('fileID');
+        });   
         
     }
 
@@ -45,6 +49,10 @@ class AddColumnsToCarousels extends Migration
         });
         Schema::table('countries', function (Blueprint $table) {
             $table->dropColumn('fileID');
+        });
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('fileID');
+            $table->dropColumn('type');
         });
     }
 }

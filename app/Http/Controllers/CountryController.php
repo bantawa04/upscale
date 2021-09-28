@@ -10,8 +10,6 @@ use App\Traits\ImageKitUtility;
 class CountryController extends Controller
 {
     use ImageKitUtility;
-    private $path = "img/";
-    private $thumb = "img/";
     /**
      * Display a listing of the resource.
      *

@@ -6,7 +6,6 @@ use App\BlogCategory;
 use App\Media;
 use App\Post;
 use App\Tag;
-use App\UploadManager;
 use DB;
 use App\Traits\SelectOption;
 use Illuminate\Http\Request;
