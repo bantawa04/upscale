@@ -23,6 +23,7 @@ class CreatePostsTable extends Migration
             $table->text('path');
             $table->boolean('status');
             $table->text('title_tag')->nullable();
+            $table->boolean('featured')->nullable();
             $table->text('meta_title');
             $table->text('meta_description');
 
