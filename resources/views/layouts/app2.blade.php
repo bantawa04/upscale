@@ -24,22 +24,22 @@
         content="@yield('description','Upscale Adventures is a unique and independent travel partner; we wish to Empower, Educate, and Encourage you to have real-life experiences.')">
     <meta itemprop="image" content="@yield('ogImage',asset('apple-icon-180x180.png"'))">  
 
-    <link rel="apple-touch-icon" sizes="57x57" href="{{asset('apple-icon-57x57.png')}}">
-    <link rel="apple-touch-icon" sizes="60x60" href="{{asset('apple-icon-60x60.png')}}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{asset('apple-icon-72x72.png')}}">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{asset('apple-icon-76x76.png')}}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{asset('apple-icon-114x114.png')}}">
-    <link rel="apple-touch-icon" sizes="120x120" href="{{asset('apple-icon-120x120.png')}}">
-    <link rel="apple-touch-icon" sizes="144x144" href="{{asset('apple-icon-144x144.png')}}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{asset('apple-icon-152x152.png')}}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('apple-icon-180x180.png')}}">
+    <link rel="apple-touch-icon" sizes="57x57" href="{{env('IMAGE_KIT_URL')}}/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{env('IMAGE_KIT_URL')}}/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{env('IMAGE_KIT_URL')}}/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{env('IMAGE_KIT_URL')}}/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{env('IMAGE_KIT_URL')}}/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{env('IMAGE_KIT_URL')}}/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{env('IMAGE_KIT_URL')}}/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{env('IMAGE_KIT_URL')}}/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{env('IMAGE_KIT_URL')}}/apple-icon-180x180.png">
     <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('android-icon-192x192.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{asset('favicon-96x96.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon-16x16.png')}}">
-    <link rel="manifest" href="{{asset('manifest.json')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{env('IMAGE_KIT_URL')}}/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{env('IMAGE_KIT_URL')}}/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{env('IMAGE_KIT_URL')}}/favicon-16x16.png">
+    <link rel="manifest" href="{{env('IMAGE_KIT_URL')}}/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{asset('ms-icon-144x144.png')}}">
+    <meta name="msapplication-TileImage" content="{{env('IMAGE_KIT_URL')}}/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Scripts -->
@@ -50,14 +50,14 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{env('IMAGE_KIT_URL')}}/css/style.css" rel="stylesheet">
     @stack('styles')
 </head>
 
 <body>
     @yield('content')
 </body>
-<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{env('IMAGE_KIT_URL')}}/js/script.js"></script>
 @stack('scripts')
 
 </html>

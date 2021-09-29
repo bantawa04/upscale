@@ -15,7 +15,7 @@
 
 <div class="navbar-gap"></div>
 
-<div class="heading-wrapper-main" style="background-image: url('https://ik.imagekit.io/azq00gyzbcp/images/contact.jpg');">
+<div class="heading-wrapper-main" style="background-image: url('{{env('IMAGE_KIT_URL')}}/images/contact.jpg');">
     <div>
         <div class="container">
             <div class="row">
@@ -133,7 +133,7 @@
                 <div class="social-list-item">
                     <a href="{{$setting->facebook}}" class="social-link"></a>
                     <div>
-                        <img src="{{ asset('images/facebook.svg') }}" alt="Upscale Adventures Facebook" width="80" height="80">
+                        <img src="{{ env('IMAGE_KIT_URL')}}/images/facebook.svg" alt="Upscale Adventures Facebook" width="80" height="80">
                     </div>
                     <div class="social-name">
                         Facebook
@@ -147,7 +147,7 @@
                 <div class="social-list-item">
                     <a href="{{$setting->twitter}}" class="social-link"></a>
                     <div>
-                        <img src="{{ asset('images/twitter.svg') }}" alt="Upscale Adventures Twitter" width="80" height="80">
+                        <img src="{{ env('IMAGE_KIT_URL')}}/images/twitter.svg" alt="Upscale Adventures Twitter" width="80" height="80">
                     </div>
                     <div class="social-name">
                         Twitter
@@ -161,7 +161,7 @@
                 <div class="social-list-item">
                     <a href="{{$setting->instagram}}" class="social-link"></a>
                     <div>
-                        <img src="{{ asset('images/instagram.svg') }}" alt="Upscale Adventures Instagram" width="80" height="80">
+                        <img src="{{ env('IMAGE_KIT_URL')}}/images/instagram.svg" alt="Upscale Adventures Instagram" width="80" height="80">
                     </div>
                     <div class="social-name">
                         Instagram
