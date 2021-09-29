@@ -6,17 +6,17 @@
 
                     <div class="col-sm-auto my-3">
                         <div class="footer-recommended">
-                            <img src="https://ik.imagekit.io/azq00gyzbcp/images/tripadvisor.png" alt="tripadvisor upscale adventures" />
+                            <img src="{{env('IMAGE_KIT_URL')}}/images/tripadvisor.png" alt="tripadvisor upscale adventures" />
                         </div>
                     </div>
                     <div class="col-sm-auto my-3">
                         <div class="footer-recommended">
-                            <img src="https://ik.imagekit.io/azq00gyzbcp/images/bokun.png" alt="bukon upscale adventures" />
+                            <img src="{{env('IMAGE_KIT_URL')}}/images/bokun.png" alt="bukon upscale adventures" />
                         </div>
                     </div>
                     <div class="col-sm-auto my-3">
                         <div class="footer-recommended">
-                            <img src="https://ik.imagekit.io/azq00gyzbcp/images/inspirock.png" alt="inspirock upscale adventures" />
+                            <img src="{{env('IMAGE_KIT_URL')}}/images/inspirock.png" alt="inspirock upscale adventures" />
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         <div class="footer-link-wrapper"><a href="#">Privacy &amp; Disclaimer</a></div> --}}
                     </div>
                     <div class="col-sm-6 col-lg-3 my-4 footer-content footer-details p-3">
-                        <img src="{{ asset('images/logo.png') }}" class="img-fluid pr-4" alt="Upscale Adventures">
+                        <img src="{{ env('IMAGE_KIT_URL')}}/images/logo.png" class="img-fluid pr-4" alt="Upscale Adventures">
                         <div class="footer-address mt-3">
                             <p>Upscale Adventures</p>
                             <p>{{$setting->address}}</p>
