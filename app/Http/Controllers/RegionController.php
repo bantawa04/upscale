@@ -6,10 +6,12 @@ use App\Region;
 use Illuminate\Http\Request;
 use App\Traits\ImageKitUtility;
 use App\Media;
+use App\Traits\ResponseMessage;
 
 class RegionController extends Controller
 {
     use ImageKitUtility;
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -56,8 +58,8 @@ class RegionController extends Controller
         if (!empty($request->featured)) {
             $image = Media::findOrFail($request->featured);
             $request->merge([
-                'path' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $image->url), //1024x512
-                'thumb' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $image->url) //400x300
+                'path' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-trFetLg', $image->url), //1024x512
+                'thumb' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-tFetThumb', $image->url) //400x300
             ]);
         }
 
@@ -113,8 +115,8 @@ class RegionController extends Controller
         if (!empty($request->featured)) {
             $image = Media::findOrFail($request->featured);
             $request->merge([
-                'path' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $image->url), //1024x512
-                'thumb' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $image->url) //400x300
+                'path' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-trFetLg', $image->url), //1024x512
+                'thumb' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-tFetThumb', $image->url) //400x300
             ]);
         }
         $region->update($request->all());
@@ -132,15 +134,11 @@ class RegionController extends Controller
         try {
             $region = Region::findOrFail($id);
             $region->delete();
-            return response()->json($region);
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
         } catch (\Exception $e) {
-            $msg = [
-                'id' => $id,
-                'code' => $e->getCode(),
-                'errMsg' => $e->getCode(),
-                'msg' => 'Item cannot be delted'
-            ];
-            return json_encode($msg);
+            $msg = $this->onError($e);
+            return response()->json($msg);
         }
     }
 }

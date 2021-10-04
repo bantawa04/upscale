@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Recommended;
+use App\Traits\ImageKitUtility;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 use Image;
 use ImageOptimizer;
 
 class RecommendedController extends Controller
 {
+    use ResponseMessage;
+    use ImageKitUtility;
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +23,7 @@ class RecommendedController extends Controller
     {
         $recommendeds = Recommended::all();
         return view('backend.recommended.index')
-        ->withItems($recommendeds);
+            ->withItems($recommendeds);
     }
 
     /**
@@ -47,11 +51,11 @@ class RecommendedController extends Controller
         $file = $request->file('photo');
         $filename = time() . '_recom' . $file->getClientOriginalExtension();
         $location = $this->path . $filename;
-        Image::make($file)->resize(267,150)->save($location);
+        Image::make($file)->resize(267, 150)->save($location);
         ImageOptimizer::optimize($location);
         return Recommended::create([
             'name' => "Name not set",
-            'logo' => $location            
+            'logo' => $location
         ]);
     }
 
@@ -75,7 +79,7 @@ class RecommendedController extends Controller
     public function edit(Recommended $recommended)
     {
         return view('backend.recommended.edit')
-        ->withRecommended($recommended);
+            ->withRecommended($recommended);
     }
 
     /**
@@ -103,8 +107,14 @@ class RecommendedController extends Controller
      */
     public function destroy(Recommended $recommended)
     {
-        @unlink($recommended->logo);
-        $recommended->delete();
-        return ['type'=>'info','message' => 'Item deleted sucessfully.'];
+        try {            
+            $this->deleteImage($recommended->fileID);
+            $recommended->delete();
+            $msg = $this->onSuccess($recommended->id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

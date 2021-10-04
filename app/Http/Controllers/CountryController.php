@@ -6,10 +6,11 @@ use App\Country;
 use Illuminate\Http\Request;
 use App\Media;
 use App\Traits\ImageKitUtility;
-
+use App\Traits\ResponseMessage;
 class CountryController extends Controller
 {
     use ImageKitUtility;
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -55,13 +56,14 @@ class CountryController extends Controller
             $image = Media::findOrFail($request->featured);
 
             $request->merge([
-                'thumb' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $image->url), //400x300
-                'path' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $image->url), //1024x512
+                'thumb' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-tFetThumb', $image->url), //400x300
+                'path' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-trFetLg', $image->url), //1024x512
             ]);
         }
 
         if (!empty($request->map)) {
-            $response = $this->uploadToImageKit($request->file('map'), $request->name . '_map_.png', 'map', null, null);
+            // $response = $this->uploadToImageKit($request->file('map'), $request->name . '_map_.png', 'map', null, null);
+            $response = $this->uploadToImageKit($request->file('map'), $request->name.'_map_.png', 'map', null, null, false);
             $request->merge([
                 'mapURL' => $response->success->url,
                 'fileID' => $response->success->fileId
@@ -121,13 +123,13 @@ class CountryController extends Controller
         ]);
         if (!empty($request->featured)) {
             $image = Media::findOrFail($request->featured);
-            $country->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $image->url); //400x300
-            $country->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $image->url); //1024x512
+            $country->thumb = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-tFetThumb', $image->url); //400x300
+            $country->thumb = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-trFetLg', $image->url); //1024x512
 
         }
 
         if (!empty($request->map)) {
-            $response = $this->uploadToImageKit($request->file('map'), $request->name . '_map.png', 'map', null, null);
+            $response = $this->uploadToImageKit($request->file('map'), $request->name.'_map_.png', 'map', null, null, false);
             $country->map = $response->success->url;
             $country->fileID = $response->success->fileId;
         }
@@ -151,15 +153,11 @@ class CountryController extends Controller
             $country = Country::findOrFail($id);
             $this->deleteImage($country->fileID);
             $country->delete();
-            return response()->json($country);
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
         } catch (\Exception $e) {
-            $msg = [
-                'id' => $id,
-                'code' => $e->getCode(),
-                'errMsg' => $e->getCode(),
-                'msg' => 'Item cannot be delted'
-            ];
-            return json_encode($msg);
+            $msg = $this->onError($e);
+            return response()->json($msg);
         }
     }
 }

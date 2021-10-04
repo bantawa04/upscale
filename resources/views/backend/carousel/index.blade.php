@@ -38,10 +38,19 @@
 @section('scripts')
 <script>
     $('.delete').click(function() {
-                let id = $(this).data('id');      
-                
-                $.ajax({
-                    
+        let id = $(this).data('id');                                   
+
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+            $.ajax({                    
                     type: "POST",
                     url: '/manage/carousel/' + id,
                     data: {
@@ -49,14 +58,16 @@
                         'id': id,
                         "_method": 'DELETE'
                     },
-                    success: function (data) {
-                        $('.item' + data['id']).remove();
+                    success: function (res) {
+                        $('.item' + res.id).remove();
                         Toast.fire({
-                                type: data.type,
-                                title: data.message
-                            })  
+                            type: res.type,
+                            title: res.message,
+                        }) 
                     }
                 });
-            });
+            }
+      })                
+    });
 </script>
 @endsection

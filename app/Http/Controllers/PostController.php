@@ -71,8 +71,8 @@ class PostController extends Controller
             if (!empty($request->featured)) {
                 $media = Media::findOrFail($request->featured);
                 $request->merge([
-                    'path' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogImg', $media->url), //1200x394
-                    'thumb' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogThumb', $media->url) //780x440
+                    'path' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-blogImg', $media->url), //1200x394
+                    'thumb' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-blogThumb', $media->url) //780x440
                 ]);
                 $post->path = $request->path;
                 $post->thumb = $request->thumb;
@@ -141,8 +141,8 @@ class PostController extends Controller
         if (!empty($request->featured)) {
             $media = Media::findOrFail($request->featured);
 
-            $post->path = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogImg', $media->url); //1200x394
-            $post->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogThumb', $media->url); //780x440
+            $post->path = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-blogImg', $media->url); //1200x394
+            $post->thumb = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-blogThumb', $media->url); //780x440
         }
         $post->save();
         $post->tags()->sync($request->tags);

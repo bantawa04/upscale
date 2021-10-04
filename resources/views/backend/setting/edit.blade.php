@@ -115,7 +115,7 @@
 
 
                     <div class="col-12">
-                        {{ Form::submit('Add', ['class'=> 'btn btn-success btn-block mt-3'])}}
+                        {{ Form::submit('Update', ['class'=> 'btn btn-success btn-block mt-3'])}}
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -124,26 +124,4 @@
         </div>
     </div>
 </div>
-@endsection
-@section('scripts')
-<script>
-    $('#delete').click(function() {
-                let id = $(this).data('id');      
-                console.log(id);
-                
-                $.ajax({
-                    
-                    type: "POST",
-                    url: '/manage/accomodation/' + id,
-                    data: {
-                        '_token': $('meta[name="csrf-token"]').attr('content'),
-                        'id': id,
-                        "_method": 'DELETE'
-                    },
-                    success: function (data) {
-                        $('.item' + data['id']).remove();
-                    }
-                });
-            });
-</script>
 @endsection

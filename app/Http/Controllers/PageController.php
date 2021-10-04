@@ -6,10 +6,12 @@ use App\Page;
 use App\Media;
 use Illuminate\Http\Request;
 use App\Traits\ImageKitUtility;
+use App\Traits\ResponseMessage;
 
 class PageController extends Controller
 {
     use ImageKitUtility;
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -65,7 +67,7 @@ class PageController extends Controller
         if (!empty($request->featured)) {
             $media = Media::findOrFail($request->featured);
             // $path = UploadManager::fromMedia($image->path, 1136, 640,"test");            
-            $page->banner = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-pBanner', $media->url);
+            $page->banner = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-pBanner', $media->url);
         }
 
         $page->meta_title = $request->meta_title;
@@ -124,7 +126,7 @@ class PageController extends Controller
         if (!empty($request->featured)) {
             $media = Media::findOrFail($request->featured);
             // $path = UploadManager::fromMedia($image->path, 1136, 640,"test");
-            $page->banner = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-pBanner', $media->url);
+            $page->banner = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-pBanner', $media->url);
         }
 
         $page->meta_title = $request->meta_title;
@@ -144,15 +146,11 @@ class PageController extends Controller
         try {
             $page = Page::find($id);
             $page->delete();
-            return response()->json($page);
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
         } catch (\Exception $e) {
-            $msg = [
-                'id' => $id,
-                'code' => $e->getCode(),
-                'errMsg' => $e->getCode(),
-                'msg' => 'Item cannot be delted'
-            ];
-            return json_encode($msg);
+            $msg = $this->onError($e);
+            return response()->json($msg);
         }
     }
 

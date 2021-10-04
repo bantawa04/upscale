@@ -60,15 +60,10 @@
                         @include('backend.partials._media')
                     </div>
                     <div class="col-12 mt-3">
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="exampleInputFile" name="map">
-                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="">Upload</span>
-                            </div>
-                        </div>
+                        <div class="form-group">
+                            <label for="map">Map(png/PNG):</label>
+                            <input type="file" class="form-control-file" id="map" name="map">
+                          </div>
                     </div>
                     @include('backend.partials.metaTags')
                     <div class="col-12">
@@ -84,37 +79,37 @@
 @endsection
 @section('scripts')
 <script>
-    $('.delete').click(function() {        
-        let id = $(this).data('id');      
+    $('.delete').click(function() {
+        let id = $(this).data('id');                                   
 
         Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
+      }).then((result) => {
+        if (result.value) {
             $.ajax({                    
-                type: "POST",
-                url: '/manage/country/' + id,
-                data: {
-                    '_token': $('meta[name="csrf-token"]').attr('content'),
-                    'id': id,
-                    "_method": 'DELETE'
-                },
-                success: function (data) {
-                    console.log(data);
-                    $('.item' + data['id']).remove();
-                    Toast.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                    )
-                }
-            });
-        })                
+                    type: "POST",
+                    url: '/manage/country/' + id,
+                    data: {
+                        '_token': $('meta[name="csrf-token"]').attr('content'),
+                        'id': id,
+                        "_method": 'DELETE'
+                    },
+                    success: function (res) {
+                        $('.item' + res.id).remove();
+                        Toast.fire({
+                            type: res.type,
+                            title: res.message,
+                        }) 
+                    }
+                });
+            }
+      })                
     });
 </script>
 @endsection
