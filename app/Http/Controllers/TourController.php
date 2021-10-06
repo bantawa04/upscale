@@ -17,6 +17,7 @@ use App\Exclude;
 use App\FeaturedImage;
 use App\Slide;
 use App\Location;
+use App\Traits\ResponseMessage;
 use App\Traits\SelectOption;
 use DB;
 
@@ -24,6 +25,7 @@ class TourController extends Controller
 {
 
     use SelectOption;
+    use ResponseMessage;
 
     public function __construct()
     {
