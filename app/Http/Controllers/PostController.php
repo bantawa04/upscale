@@ -8,6 +8,7 @@ use App\Post;
 use App\Tag;
 use DB;
 use App\Traits\SelectOption;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -18,6 +19,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     use SelectOption;
+    use ResponseMessage;
     public function __construct()
     {
         $this->tags = $this->selectOption(Tag::all());
@@ -156,13 +158,18 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        $post->tags()->detach();
-
-        $post->delete();
-
-        return redirect()->route('post.index');
+        try {
+            $post = Post::find($id);
+            $post->tags()->detach();
+            $post->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 
 

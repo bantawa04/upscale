@@ -56,7 +56,7 @@ class CarouselsController extends Controller
         $response = $this->uploadToImageKit($request->file('photo'), $request->photo->getClientOriginalName(), 'carousel', null, null, true);
         //extract url
         $url = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-carousel', $response->success->url);
-        @unlink($path);
+        // @unlink($path);
         return Carousel::create([
             'thumb' => $thumbnail,
             'url'   => $url,
