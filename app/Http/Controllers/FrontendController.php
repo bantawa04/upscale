@@ -136,7 +136,8 @@ class FrontendController extends Controller
     {
         $posts = Post::where('status', '=', 1)
             ->where('featured', '=', 0)
-            ->paginate(10);
+            ->orderBy('created_at', 'desc')
+            ->paginate(3);
 
         $featured = Post::where('status', '=', 1)
             ->where('featured', '=', 1)

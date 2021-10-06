@@ -25,7 +25,11 @@
                         @if ($page == $paginator->currentPage())
                             <li class="page-item active" aria-current="page"><span class="page-link rounded-0">{{ $page }}</span></li>
                         @else
+                        @if ($page == 1)
+                        <li class="page-item"><a class="page-link rounded-0" href="{{request()->url()}}">{{ $page }}</a></li>
+                        @else
                             <li class="page-item"><a class="page-link rounded-0" href="{{ $url }}">{{ $page }}</a></li>
+                        @endif
                         @endif
                     @endforeach
                 @endif

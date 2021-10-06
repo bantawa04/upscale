@@ -118,6 +118,7 @@
 <script>
     var editor_config = {
       path_absolute : "/",
+      height: 400,
       selector: "textarea#my-editor",
       relative_urls: false,
       plugins: [
