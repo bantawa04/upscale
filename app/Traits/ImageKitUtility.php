@@ -7,13 +7,14 @@ use ImageKit\ImageKit;
 
 trait ImageKitUtility
 {
-    protected function uploadToImageKit($payload, $fileName, $folder, $height, $width)
+    protected function uploadToImageKit($payload, $fileName, $folder, $height, $width, $isPath = null)
     {
         try {
-            $base64 = $this->toBase64($payload, $width, $height);
+            // dd($isPath);
+            $isPath ? $img = $payload : $img = $this->toBase64($payload, $width, $height);
             $toImageKit = $this->init();
             $uploadFile = $toImageKit->upload(array(
-                'file' => $base64,
+                'file' => $img,
                 'fileName' => $fileName,
                 "folder" => $folder,
             )); //code...
@@ -44,13 +45,13 @@ trait ImageKitUtility
         } catch (\Exception $e) {
             return $e;
         }
-
     }
-    private function init(){
+    private function init()
+    {
         return new ImageKit(
-            "public_xee63DZd+a56dsNTMWm7zBJEkvA=",
-            "private_n+iBK4c7XBx9Bdvc73hRQquDo6E=",
-            "https://ik.imagekit.io/azq00gyzbcp"
+            env('IMAGE_KIT_PUBLIC'),
+            env('IMAGE_KIT_PRIVATE'),
+            env('IMAGE_KIT_URL')
         );
     }
 }

@@ -25,7 +25,13 @@ class AddColumnsToCarousels extends Migration
         Schema::table('countries', function (Blueprint $table) {
             $table->string('fileID')->after('map');
         });     
-        
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('fileID')->after('avatar')->nullable();
+            $table->string('type')->after('fileID');
+        });   
+        Schema::table('pages', function (Blueprint $table) {
+            $table->integer('parentPage')->after('main')->nullable();
+        });  
     }
 
     /**
@@ -45,6 +51,13 @@ class AddColumnsToCarousels extends Migration
         });
         Schema::table('countries', function (Blueprint $table) {
             $table->dropColumn('fileID');
+        });
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('fileID');
+            $table->dropColumn('type');
+        });
+        Schema::table('pages', function (Blueprint $table) {
+            $table->dropColumn('parentPage');
         });
     }
 }

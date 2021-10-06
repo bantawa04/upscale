@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Media;
 use Illuminate\Http\Request;
-// use App\UploadManager;
 use App\Traits\LocalUpload;
 use App\Traits\ImageKitUtility;
+use App\Traits\ResponseMessage;
 
 class MediaController extends Controller
 {
     use LocalUpload;
     use ImageKitUtility;
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -48,7 +49,8 @@ class MediaController extends Controller
                 'photo' => 'required|mimes:jpg,jpeg,JPG,JPGE|max:10000'
             ]);
 
-            $response = $this->uploadToImageKit($request->file('photo'), 'med_.jpg', 'media', 2080, 1170);
+            // $response = $this->uploadToImageKit($request->file('photo'), 'med_.jpg', 'media', 2080, 1170);
+            $response = $this->uploadToImageKit($request->file('photo'), 'med_.jpg', 'media', null, null, false);
             $thumb = $this->uploadThumbnail($request->file('photo'), $this->path, 'med_thumb_', 286, 180);
             // return json_encode($response);
             return Media::create([
@@ -114,9 +116,11 @@ class MediaController extends Controller
             @unlink($media->thumb);
             $this->deleteImage($media->fileID);
             $media->delete();
-            return response()->json($media);
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
         } catch (\Exception $e) {
-            return $e->getMessage();
+            $msg = $this->onError($e);
+            return response()->json($msg);
         }
     }
 }

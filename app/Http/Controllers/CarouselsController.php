@@ -6,11 +6,13 @@ use App\Carousel;
 use Illuminate\Http\Request;
 use App\Traits\ImageKitUtility;
 use App\Traits\LocalUpload;
+use App\Traits\ResponseMessage;
 
 class CarouselsController extends Controller
 {
     use ImageKitUtility;
     use LocalUpload;
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -46,11 +48,18 @@ class CarouselsController extends Controller
             'photo' => 'required|mimes:jpg,jpeg,JPG,JPGE|max:10000'
         ]);
 
+        //generate thumbnail
         $thumbnail = $this->uploadThumbnail($request->photo, $this->path, 'car_thumb_', 391, 220);
-        $response = $this->uploadToImageKit($request->file('photo'), 'car_.jpg', 'carousel', 2080, 1170);
+        //file to upload
+        $path = $this->uploadThumbnail($request->photo, $this->path, 'car_thumb_', 1920, 1080);
+        //response after upload
+        $response = $this->uploadToImageKit($path, 'car_.jpg', 'carousel', null, null, true);
+        //extract url
+        $url = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-carousel', $response->success->url);
+        @unlink($path);
         return Carousel::create([
             'thumb' => $thumbnail,
-            'url'   => $response->success->url,
+            'url'   => $url,
             'fileID'   => $response->success->fileId,
         ]);
     }
@@ -104,10 +113,17 @@ class CarouselsController extends Controller
      */
     public function destroy($id)
     {
-        $carousel = Carousel::findorFail($id);
-        @unlink($carousel->thumb);
-        $this->deleteImage($carousel->fileID);
-        $carousel->delete();
-        return response()->json($carousel);
+        try {
+            $carousel = Carousel::findorFail($id);
+            @unlink($carousel->thumb);
+            $this->deleteImage($carousel->fileID);
+            $carousel->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
+
     }
 }

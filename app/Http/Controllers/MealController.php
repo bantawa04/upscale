@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Meal;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 
 class MealController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -95,8 +97,14 @@ class MealController extends Controller
      */
     public function destroy($id)
     {
-        $meal = Meal::findOrFail($id);
-        $meal->delete();
-        return response()->json($meal);
+        try {
+            $meal = Meal::findOrFail($id);
+            $meal->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

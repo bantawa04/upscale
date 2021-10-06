@@ -6,12 +6,15 @@ use App\User;
 use Session;
 use Image;
 use Hash;
+use App\Traits\ImageKitUtility;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 
 class ProfilesController extends Controller
 {
-    private $path = "img/";
-
+    private $path = "usr/";
+    use ImageKitUtility;
+    use ResponseMessage;
     /**
      * Display the specified resource.
      *
@@ -23,7 +26,7 @@ class ProfilesController extends Controller
         $users = User::all();
         return view('backend.user.index')->withUsers($users);
     }
-    
+
 
     public function create()
     {
@@ -33,20 +36,24 @@ class ProfilesController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name' => 'required|string|max:255',
-            'email' => 'required|unique:users|string|max:255'
-        ]);
+        try {
+            $this->validate($request, [
+                'name' => 'required|string|max:255',
+                'email' => 'required|unique:users|string|max:255'
+            ]);
 
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;    
-        $user->password = Hash::make('password');
-        $user->type = $request->type;
-        $user->save();
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make('password');
+            $user->type = $request->type;
+            $user->save();
 
-        Session::flash('message','New user created');
-        return redirect()->route('profile.index');
+            Session::flash('message', 'New user created');
+            return redirect()->route('profile.index');
+        } catch (\Throwable $th) {
+            return $th;
+        }
     }
 
     public function show($id)
@@ -74,40 +81,47 @@ class ProfilesController extends Controller
      * @param  \App\Type  $type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $user->name = $request->name;
-
-        if (!empty($request->avatar)) {
-            $oldAvatar = $user->avatar;
-            $file = $request->file('avatar');
-            $filename = time() . '-'.str_slug($request->name,'-').'-' . $file->getClientOriginalName();
-            $location = $this->path . $filename;
-            Image::make($file)->resize(180,180)->save($location);
-            $user->avatar = $location;
-            @unlink($oldAvatar);
-        }
-        if(!empty($request->password && $request->conformpassword))
-        {
-            if($request->password === $request->conformpassword){            
-                $user->password =  Hash::make($request->password);                
-                Session::flash('message', 'Password changes successfully.');
+        try {
+            $user = User::find($id);
+            $user->name = $request->name;
+            $this->validate($request, [
+                'avatar' => 'max:1024',
+            ]);
+            if (!empty($request->avatar)) {
+                // Image::make($file)->resize(180,180)->save($location);
+                $response = $this->uploadToImageKit($request->file('avatar'), 'usr_.jpg', 'user', null, null);
+                $user->avatar = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-user', $response->success->url);
+                $user->fileID = $response->success->fileId;
             }
-            else{
-                Session::flash('message', 'Input passwords do not match.');
+            if (!empty($request->password && $request->conformpassword)) {
+                if ($request->password === $request->conformpassword) {
+                    $user->password =  Hash::make($request->password);
+                    Session::flash('message', 'Password changes successfully.');
+                } else {
+                    Session::flash('message', 'Input passwords do not match.');
+                }
             }
-        }
-        $user->save();
+            $user->save();
 
-        return redirect()->route('profile.show',$user->id);
+            return redirect()->route('profile.show', $user->id);
+        } catch (\Throwable $th) {
+            return $th;
+        }
     }
 
     public function destroy($id)
     {
-        $user = User::find($id);
-        @unlink($user->avatar);
-        $user->delete();
-        return ['type'=>'info','message' => 'User deleted sucessfully. '];
+        try {
+            $user = User::find($id);
+            $this->deleteImage($user->fileID);
+            $user->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

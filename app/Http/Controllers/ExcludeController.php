@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exclude;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 
 class ExcludeController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -94,9 +96,16 @@ class ExcludeController extends Controller
      */
     public function destroy($id)
     {
-        $exclude = Exclude::findOrFail($id);
-        // $exclude->tour()->detach();
-        $exclude->delete();
-        return response()->json($exclude);
+        try {
+            $exclude = Exclude::findOrFail($id);
+            // $exclude->tour()->detach();
+            $exclude->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
+
     }
 }

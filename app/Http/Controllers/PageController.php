@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Page;
 use App\Media;
-use App\UploadManager;
 use Illuminate\Http\Request;
 use App\Traits\ImageKitUtility;
+use App\Traits\ResponseMessage;
+use App\Traits\SelectOption;
 
 class PageController extends Controller
 {
     use ImageKitUtility;
+    use ResponseMessage;
+    use SelectOption;
     /**
      * Display a listing of the resource.
      *
@@ -19,13 +22,13 @@ class PageController extends Controller
 
     public function __construct()
     {
+        $this->pages = Page::orderBy('created_at','desc')->get();
         $this->images = Media::orderBy('created_at', 'desc')->get();
     }
 
     public function index()
     {
-        $pages = Page::all();
-        return view('backend.page.index')->withPages($pages);
+        return view('backend.page.index')->withPages($this->pages);
     }
 
     /**
@@ -36,7 +39,8 @@ class PageController extends Controller
     public function create()
     {
         return view('backend.page.create')
-            ->withImages($this->images);
+            ->withImages($this->images)
+            ->withPages($this->pages);
     }
 
     /**
@@ -47,7 +51,7 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $this->validate($request, [
             'title' => 'required|required',
             'position' => 'required|numeric',
@@ -59,14 +63,20 @@ class PageController extends Controller
         $page = new Page;
         $page->title = $request->title;
         $page->content = $request->content;
-        $page->main = $request->main;
+        $page->main = $request->isParent;
+        $page->parentpage = $request->parentPage;
         $page->position = $request->position;
-        $page->status = $request->status;
+        if (!$request->status) {
+            $page->status = 0;
+        }
+        else{
+            $page->status = $request->status;
+        }
 
         if (!empty($request->featured)) {
             $media = Media::findOrFail($request->featured);
             // $path = UploadManager::fromMedia($image->path, 1136, 640,"test");            
-            $page->banner = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-pBanner', $media->url);
+            $page->banner = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-pBanner', $media->url);
         }
 
         $page->meta_title = $request->meta_title;
@@ -97,7 +107,8 @@ class PageController extends Controller
     {
         return view('backend.page.edit')
             ->withPage($page)
-            ->withImages($this->images);
+            ->withImages($this->images)
+            ->withPages($this->pages);
     }
 
     /**
@@ -109,6 +120,7 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
+        // dd($request->all());
         $this->validate($request, [
             'title' => 'required|required',
             'position' => 'required|numeric',
@@ -119,13 +131,14 @@ class PageController extends Controller
 
         $page->title = $request->title;
         $page->content = $request->content;
-        $page->main = $request->main;
+        $page->main = $request->isParent;
+        $page->parentpage = $request->parentPage;
         $page->position = $request->position;
 
         if (!empty($request->featured)) {
             $media = Media::findOrFail($request->featured);
             // $path = UploadManager::fromMedia($image->path, 1136, 640,"test");
-            $page->banner = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-pBanner', $media->url);
+            $page->banner = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-pBanner', $media->url);
         }
 
         $page->meta_title = $request->meta_title;
@@ -145,15 +158,11 @@ class PageController extends Controller
         try {
             $page = Page::find($id);
             $page->delete();
-            return response()->json($page);
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
         } catch (\Exception $e) {
-            $msg = [
-                'id' => $id,
-                'code' => $e->getCode(),
-                'errMsg' => $e->getCode(),
-                'msg' => 'Item cannot be delted'
-            ];
-            return json_encode($msg);
+            $msg = $this->onError($e);
+            return response()->json($msg);
         }
     }
 

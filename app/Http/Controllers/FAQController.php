@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\FAQ;
 use App\Tour;
+use App\Traits\ResponseMessage;
 use App\Traits\SelectOption;
 use Illuminate\Http\Request;
 
 class FAQController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -22,10 +24,10 @@ class FAQController extends Controller
     public function index()
     {
         $faqs = FAQ::all();
-        
+
         return view('backend.faq.index')
-        ->withFaqs($faqs)
-        ->withTours($this->tours);
+            ->withFaqs($faqs)
+            ->withTours($this->tours);
     }
 
     /**
@@ -46,7 +48,7 @@ class FAQController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'question' => 'required',
             'answer' => 'required'
         ]);
@@ -78,8 +80,8 @@ class FAQController extends Controller
     public function edit(FAQ $faq)
     {
         return view('backend.faq.edit')
-        ->withFaq($faq)
-        ->withTours($this->tours);
+            ->withFaq($faq)
+            ->withTours($this->tours);
     }
 
     /**
@@ -91,7 +93,7 @@ class FAQController extends Controller
      */
     public function update(Request $request, FAQ $faq)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'question' => 'required',
             'answer' => 'required'
         ]);
@@ -107,8 +109,14 @@ class FAQController extends Controller
      */
     public function destroy($id)
     {
-        $faq = FAQ::find($id);
-        $faq->delete();
-        return ['type'=>'info','message' => 'Item deleted sucessfully.'];
+        try {
+            $faq = FAQ::find($id);
+            $faq->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

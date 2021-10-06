@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Tour;
 use Illuminate\Http\Request;
 use App\Media;
-use App\UploadManager;
 use App\Accomodation;
 use App\Meal;
 use App\Country;
@@ -18,12 +17,15 @@ use App\Exclude;
 use App\FeaturedImage;
 use App\Slide;
 use App\Location;
+use App\Traits\ResponseMessage;
 use App\Traits\SelectOption;
+use DB;
 
 class TourController extends Controller
 {
 
     use SelectOption;
+    use ResponseMessage;
 
     public function __construct()
     {
@@ -235,7 +237,7 @@ class TourController extends Controller
         $tour->meta_title = $request->meta_title;
         $tour->meta_description = $request->meta_description;
         $tour->save();
-            // dd($request->all());
+        // dd($request->all());
         if (!empty($request->featured)) {
 
             $image = $tour->image;
@@ -244,7 +246,6 @@ class TourController extends Controller
             $image->path = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $media->url);
             $image->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $media->url);
             $tour->image()->save($image);
-
         }
 
         if (isset($request->slides)) {
@@ -284,25 +285,28 @@ class TourController extends Controller
      */
     public function destroy($id)
     {
-        $tour = Tour::find($id);
-        // foreach ($tour->departure as $departure) {
-        //     $departure->delete();
-        // }
-        if ($tour->image) {
-            $tour->image->delete();
+        try {
+            $tour = Tour::find($id);
+            if ($tour->image) {
+                $tour->image->delete();
+            }
+            foreach ($tour->slides as $slide) {
+                $slide->delete();
+            }
+            if ($test = $tour->includes()->count() != null) {
+                $tour->includes()->detach();
+            }
+            if ($test = $tour->excludes()->count() != null) {
+                $tour->excludes()->detach();
+            }
+            DB::table('departures')->where('tour_id', '=', $id)->delete();
+            $tour->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
         }
-        foreach ($tour->slides as $slide) {
-            $slide->delete();
-        }
-        if ($test = $tour->includes()->count() != null) {
-            $tour->includes()->detach();
-        }
-        if ($test = $tour->excludes()->count() != null) {
-            $tour->excludes()->detach();
-        }
-        $tour->delete();
-
-        return ['type' => 'info', 'message' => 'Tour deleted sucessfully.'];
     }
 
     public function publish($id)
@@ -359,12 +363,10 @@ class TourController extends Controller
         $tour = Tour::find($id);
         if ($tour) {
             $tour->promote = 0;
-            $tour->save();    
+            $tour->save();
             return response()->json(200);
+        } else {
+            return response()->json(['message' => 'Invalid request!'], 400);
         }
-        else {
-            return response()->json(['message' => 'Invalid request!'],400);
-        }
-
     }
 }

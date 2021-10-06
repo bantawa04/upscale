@@ -6,7 +6,6 @@ use App\BlogCategory;
 use App\Media;
 use App\Post;
 use App\Tag;
-use App\UploadManager;
 use DB;
 use App\Traits\SelectOption;
 use Illuminate\Http\Request;
@@ -72,8 +71,8 @@ class PostController extends Controller
             if (!empty($request->featured)) {
                 $media = Media::findOrFail($request->featured);
                 $request->merge([
-                    'path' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogImg', $media->url), //1200x394
-                    'thumb' => str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogThumb', $media->url) //780x440
+                    'path' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-blogImg', $media->url), //1200x394
+                    'thumb' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-blogThumb', $media->url) //780x440
                 ]);
                 $post->path = $request->path;
                 $post->thumb = $request->thumb;
@@ -124,6 +123,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        // dd($request->all());
         $this->validate($request, [
             'title' => 'required',
             'title' => 'required',
@@ -135,15 +135,15 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
         $post->status = $request->status;
         $post->content = $request->content;
-        $post->title = $request->titleTag;
+        $post->title_tag = $request->titleTag;
         $post->meta_title = $request->meta_title;
         $post->meta_description = $request->meta_description;
 
         if (!empty($request->featured)) {
             $media = Media::findOrFail($request->featured);
 
-            $post->path = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogImg', $media->url); //1200x394
-            $post->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-blogThumb', $media->url); //780x440
+            $post->path = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-blogImg', $media->url); //1200x394
+            $post->thumb = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-blogThumb', $media->url); //780x440
         }
         $post->save();
         $post->tags()->sync($request->tags);

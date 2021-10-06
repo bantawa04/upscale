@@ -12,7 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <title>{{config('app.name')}}</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   @yield('styles')
 </head>
 
@@ -335,7 +335,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
-            @can('isAdmin')
+            @can('isAdmin')            
             <li class="nav-item">
               <a href="{{route('profile.index')}}" class="nav-link">
                 <i class="nav-icon fas fa-user orange"></i>
