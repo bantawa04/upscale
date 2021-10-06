@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Itinerary;
 use App\Tour;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 
 class ItineraryController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +30,8 @@ class ItineraryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    { }
+    {
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -113,8 +116,14 @@ class ItineraryController extends Controller
      */
     public function destroy($id)
     {
-        $itinerary = Itinerary::find($id);
-        $itinerary->delete();
-        return response()->json($itinerary);
+        try {
+            $itinerary = Itinerary::find($id);
+            $itinerary->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

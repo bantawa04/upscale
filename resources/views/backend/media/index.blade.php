@@ -43,7 +43,8 @@
 @section('scripts')
 <script>
     $('.delete').click(function() {
-        let id = $(this).data('id');      
+        let id = $(this).data('id');                                   
+
         Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -53,9 +54,8 @@
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
-        if (result.value) {                
-                $.ajax({
-                    
+        if (result.value) {
+            $.ajax({                    
                     type: "POST",
                     url: '/manage/media/' + id,
                     data: {
@@ -63,17 +63,16 @@
                         'id': id,
                         "_method": 'DELETE'
                     },
-                    success: function (data) {
-                        console.log(data['id']);
-                        $('.item' + data['id']).remove();
+                    success: function (res) {
+                        $('.item' + res.id).remove();
                         Toast.fire({
-                                type: 'success',
-                                title: 'Item deleted.'
-                            })  
+                            type: res.type,
+                            title: res.message,
+                        }) 
                     }
                 });
             }
-        })
+      })                
     });
 </script>
 @endsection

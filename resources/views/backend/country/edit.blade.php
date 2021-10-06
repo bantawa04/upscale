@@ -5,7 +5,7 @@
         <div class="col-6">
             <div class="card">
                 <div class="card-body">
-                    <img class="img-fluid pad" src="{{ asset($country->path) }}">
+                    <img class="img-fluid pad" src="{{ asset($country->thumb) }}">
                     <img class="img-fluid pad" src="{{ asset($country->map) }}">
                 </div>
             </div>
@@ -23,13 +23,10 @@
             @include('backend.partials.metaTags')
 
             <div class="input-group mt-2">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="exampleInputFile" name="map">
-                    <label class="custom-file-label" for="exampleInputFile">Choose file for map</label>
-                </div>
-                <div class="input-group-append">
-                    <span class="input-group-text" id="">Upload</span>
-                </div>
+                <div class="form-group">
+                    <label for="map">Map(png/PNG):</label>
+                    <input type="file" class="form-control-file" id="map" name="map">
+                  </div>
             </div>
 
             {{ Form::submit('Update', ['class'=> 'btn btn-success btn-block mt-3'])}}

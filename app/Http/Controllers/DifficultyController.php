@@ -36,8 +36,8 @@ class DifficultyController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name'=> 'required'
+        $this->validate($request, [
+            'name' => 'required'
         ]);
 
         $difficulty = new Difficulty;
@@ -78,8 +78,8 @@ class DifficultyController extends Controller
      */
     public function update(Request $request, Difficulty $difficulty)
     {
-        $this->validate($request,[
-            'name'=> 'required'
+        $this->validate($request, [
+            'name' => 'required'
         ]);
 
         $difficulty->name = $request->name;
@@ -96,8 +96,14 @@ class DifficultyController extends Controller
      */
     public function destroy($id)
     {
-        $difficulty = Difficulty::findOrFail($id);
-        $difficulty->delete();
-        return response()->json($difficulty);
+        try {
+            $difficulty = Difficulty::findOrFail($id);
+            $difficulty->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

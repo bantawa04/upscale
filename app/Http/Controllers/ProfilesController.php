@@ -7,12 +7,14 @@ use Session;
 use Image;
 use Hash;
 use App\Traits\ImageKitUtility;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 
 class ProfilesController extends Controller
 {
     private $path = "usr/";
     use ImageKitUtility;
+    use ResponseMessage;
     /**
      * Display the specified resource.
      *
@@ -39,20 +41,19 @@ class ProfilesController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|unique:users|string|max:255'
             ]);
-    
+
             $user = new User;
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make('password');
             $user->type = $request->type;
             $user->save();
-    
+
             Session::flash('message', 'New user created');
             return redirect()->route('profile.index');
         } catch (\Throwable $th) {
             return $th;
         }
-
     }
 
     public function show($id)
@@ -112,9 +113,15 @@ class ProfilesController extends Controller
 
     public function destroy($id)
     {
-        $user = User::find($id);
-        $this->deleteImage($user->fileID);
-        $user->delete();
-        return ['type' => 'info', 'message' => 'User deleted sucessfully. '];
+        try {
+            $user = User::find($id);
+            $this->deleteImage($user->fileID);
+            $user->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

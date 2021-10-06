@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Location;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -65,7 +67,7 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
-        return view('backend.location.edit')->withLocation($location);//
+        return view('backend.location.edit')->withLocation($location); //
     }
 
     /**
@@ -94,8 +96,14 @@ class LocationController extends Controller
      */
     public function destroy($id)
     {
-        $location = Location::findOrFail($id);
-        $location->delete();
-        return response()->json($location);
+        try {
+            $location = Location::findOrFail($id);
+            $location->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

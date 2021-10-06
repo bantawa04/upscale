@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -94,8 +96,14 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        $group = Group::findOrFail($id);
-        $group->delete();
-        return response()->json($group);
+        try {
+            $group = Group::findOrFail($id);
+            $group->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

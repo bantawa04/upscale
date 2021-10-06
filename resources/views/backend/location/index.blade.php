@@ -64,10 +64,19 @@
 @section('scripts')
 <script>
     $('.delete').click(function() {
-                let id = $(this).data('id');      
-                
-                $.ajax({
-                    
+        let id = $(this).data('id');                                   
+
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+            $.ajax({                    
                     type: "POST",
                     url: '/manage/location/' + id,
                     data: {
@@ -76,9 +85,15 @@
                         "_method": 'DELETE'
                     },
                     success: function (data) {
-                        $('.item' + id).remove();
+                        $('.item' + data.id).remove();
+                        Toast.fire({
+                            type: data.type,
+                            title: data.message,
+                        }) 
                     }
                 });
-            });
+            }
+      })                
+    });
 </script>
 @endsection
