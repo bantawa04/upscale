@@ -11,7 +11,8 @@ trait ImageKitUtility
     {
         try {
             // dd($isPath);
-            $isPath ? $img = $payload : $img = $this->toBase64($payload, $width, $height);
+            // $isPath ? $img = $payload : $img = $this->toBase64($payload, $width, $height);
+            $img = $this->toBase64($payload, $width, $height);
             $toImageKit = $this->init();
             $uploadFile = $toImageKit->upload(array(
                 'file' => $img,
