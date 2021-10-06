@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Includes;
+use App\Traits\ResponseMessage;
 
 class IncludeController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -94,9 +96,15 @@ class IncludeController extends Controller
      */
     public function destroy($id)
     {
-        $include = Includes::findOrFail($id);
-        // $include->tour()->detach();
-        $include->delete();
-        return response()->json($include);
+        try {
+            $include = Includes::findOrFail($id);
+            // $include->tour()->detach();
+            $include->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\ResponseMessage;
 use App\Type;
 use Illuminate\Http\Request;
 
 class TypeController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +38,7 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required'
         ]);
 
@@ -77,7 +79,7 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required'
         ]);
 
@@ -95,9 +97,14 @@ class TypeController extends Controller
      */
     public function destroy($id)
     {
-        $type = Type::find($id);
-        $type->delete();
-
-        return ['type'=>'info','message' => 'Tour removed from featured'];
+        try {
+            $type = Type::find($id);
+            $type->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Link;
-use DB;
+use App\Traits\ResponseMessage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class LinksController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +21,7 @@ class LinksController extends Controller
         $links = Link::all();
 
         return view('backend.link.index')
-        ->withLinks($links);
+            ->withLinks($links);
     }
 
     /**
@@ -30,7 +32,7 @@ class LinksController extends Controller
     public function create()
     {
         return view('backend.link.create')
-        ->withOptions($this->allOptions());
+            ->withOptions($this->allOptions());
     }
 
     /**
@@ -41,7 +43,7 @@ class LinksController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'meta_title' => 'required',
             'meta_description' => 'required',
             'title' => 'required'
@@ -80,8 +82,8 @@ class LinksController extends Controller
     {
         $link = Link::find($id);
         return view('backend.link.edit')
-        ->withLink($link)
-        ->withOptions($this->allOptions());
+            ->withLink($link)
+            ->withOptions($this->allOptions());
     }
 
     /**
@@ -93,7 +95,7 @@ class LinksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'meta_title' => 'required',
             'meta_description' => 'required',
             'title' => 'required'
@@ -118,26 +120,31 @@ class LinksController extends Controller
      */
     public function destroy($id)
     {
-        $link = Link::findOrFail($id);
-        $link->delete();
-        return response()->json($link);
+        try {
+            $link = Link::findOrFail($id);
+            $link->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 
     public function allOptions()
     {
         $opt1 = DB::table('countries')
-        ->select("countries.name","countries.slug");
+            ->select("countries.name", "countries.slug");
 
         $opt2 = DB::table('tourcategories')
-        ->select("tourcategories.name", "tourcategories.slug");
+            ->select("tourcategories.name", "tourcategories.slug");
 
         $opt3 = DB::table('regions')
-        ->select("regions.name","regions.slug")
-        ->union($opt1)
-        ->union($opt2)
-        ->get();
+            ->select("regions.name", "regions.slug")
+            ->union($opt1)
+            ->union($opt2)
+            ->get();
 
         return $opt3;
     }
-
 }

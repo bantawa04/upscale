@@ -94,11 +94,11 @@
                         'id': id,
                         "_method": 'DELETE'
                     },
-                    success: function (data) {
-                        $('.item' + data['id']).remove();
+                    success: function (res) {
+                        $('.item' + res.id).remove();
                         Toast.fire({
-                                type: 'success',
-                                title: 'Item deleted.'
+                                type: res.type,
+                                title: res.message
                             })  
                     }
                 });

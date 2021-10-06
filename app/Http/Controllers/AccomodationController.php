@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Accomodation;
 use Illuminate\Http\Request;
-
+use App\Traits\ResponseMessage;
 class AccomodationController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -96,8 +97,14 @@ class AccomodationController extends Controller
      */
     public function destroy($id)
     {
-        $accomodation = Accomodation::findOrFail($id);
-        $accomodation->delete();
-        return response()->json($accomodation);
+        try {
+            $accomodation = Accomodation::findOrFail($id);
+            $accomodation->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }

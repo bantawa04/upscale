@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Newsletter;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
 {
+    use ResponseMessage;
     /**
      * Display a listing of the resource.
      *
@@ -69,7 +71,6 @@ class NewsletterController extends Controller
      */
     public function edit(Newsletter $newsletter)
     {
-        
     }
 
     /**
@@ -92,8 +93,14 @@ class NewsletterController extends Controller
      */
     public function destroy($id)
     {
-        $newsletter = Newsletter::find($id);
-        $newsletter->delete();
-        return response()->json(200);
+        try {
+            $newsletter = Newsletter::find($id);
+            $newsletter->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 }
