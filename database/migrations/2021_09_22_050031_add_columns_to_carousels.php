@@ -29,7 +29,9 @@ class AddColumnsToCarousels extends Migration
             $table->string('fileID')->after('avatar')->nullable();
             $table->string('type')->after('fileID');
         });   
-        
+        Schema::table('pages', function (Blueprint $table) {
+            $table->integer('parentPage')->after('main')->nullable();
+        });  
     }
 
     /**
@@ -53,6 +55,9 @@ class AddColumnsToCarousels extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('fileID');
             $table->dropColumn('type');
+        });
+        Schema::table('pages', function (Blueprint $table) {
+            $table->dropColumn('parentPage');
         });
     }
 }

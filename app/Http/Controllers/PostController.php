@@ -123,6 +123,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        // dd($request->all());
         $this->validate($request, [
             'title' => 'required',
             'title' => 'required',
@@ -134,7 +135,7 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
         $post->status = $request->status;
         $post->content = $request->content;
-        $post->title = $request->titleTag;
+        $post->title_tag = $request->titleTag;
         $post->meta_title = $request->meta_title;
         $post->meta_description = $request->meta_description;
 

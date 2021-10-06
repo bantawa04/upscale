@@ -18,7 +18,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    {!! Form::open( ['route'=> 'post.store', 'method' =>'POST'] ) !!}
+                    {!! Form::open( ['route'=> 'post.store', 'method' =>'POST','data-parsley-validate'=>''] ) !!}
 
                     <div class="row">
                         <div class="col-12">
@@ -115,11 +115,9 @@
 @section('scripts')
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 <script src="https://cdn.tiny.cloud/1/8t3cusqbsgxjxtrx0cesy6fo1sdkesg3rsg41aky7y8m430h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
 <script>
     var editor_config = {
-        height: 400,
-      path_absolute : "/manage/",
+      path_absolute : "/",
       selector: "textarea#my-editor",
       relative_urls: false,
       plugins: [
@@ -155,9 +153,11 @@
     };
   
     tinymce.init(editor_config);
-  </script>
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js" integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endsection
 @section('styles')
 <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/parsley.css') }}">
 @endsection
