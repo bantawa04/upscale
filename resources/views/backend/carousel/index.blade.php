@@ -14,7 +14,7 @@
     </div>
     <div class="row">
         @foreach($carousels as $item)
-        <div class="card col-md-3 mx-2 px-0 item{{$item->id}}">
+        <div class="card col-3 mx-2 px-0 item{{$item->id}}">
             <img class="card-img-top" src="{{ asset($item->thumb) }}" height="200px" width="auto" />
 
             @if($item->name)

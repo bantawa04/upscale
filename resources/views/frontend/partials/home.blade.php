@@ -1,14 +1,13 @@
 <div class="banner">
     {{-- medium & large screen --}}
-    <div class="images owl-carousel">
-        @foreach($carousels as $item)
-        <div class="embed-responsive embed-responsive-banner">
-            <div class="embed-responsive-item">
-                <img src="{{ asset($item->url)}}" alt="{{$item->heading}}" title="{{$item->subheading}}" width="1920"
-                    height="1080" class="">
+    <div class="owl-slider">
+        <div id="carousel" class="owl-carousel">
+            @foreach($carousels as $item)
+            <div class="item">
+                <img src="{{ asset($item->url)}}" alt="1000X1000" >
             </div>
+            @endforeach
         </div>
-        @endforeach
     </div>
 
     <div class="banner-overlay">

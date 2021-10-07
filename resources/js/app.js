@@ -49,29 +49,29 @@ $(function () {
         animateOut: 'fadeOut',
     });
 
-    $('#section-middle .owl-carousel').owlCarousel({
-        loop: true,
-        autoplay: true,
-        autoplayTimeout: 5000,
-        mouseDrag: true,
-        responsive: {
-            0: {
-                items: 1,
-                dots: false,
-                touchDrag: true,
-            },
-            576: {
-                items: 3,
-                dots: false,
-                touchDrag: true,
-            },
-            992: {
-                items: 3,
-                dots: true,
-                touchDrag: false,
-            },
-        },
-    });
+    // $('#section-middle .owl-carousel').owlCarousel({
+    //     loop: true,
+    //     autoplay: true,
+    //     autoplayTimeout: 5000,
+    //     mouseDrag: true,
+    //     responsive: {
+    //         0: {
+    //             items: 1,
+    //             dots: false,
+    //             touchDrag: true,
+    //         },
+    //         576: {
+    //             items: 3,
+    //             dots: false,
+    //             touchDrag: true,
+    //         },
+    //         992: {
+    //             items: 3,
+    //             dots: true,
+    //             touchDrag: false,
+    //         },
+    //     },
+    // });
 });
 
 $(function () {

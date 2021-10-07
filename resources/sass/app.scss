@@ -155,6 +155,9 @@
 
     .owl-carousel {
         z-index: auto;
+        .owl-item {
+            max-height: 756px;
+        }
     }
 }
 
