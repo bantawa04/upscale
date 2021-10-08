@@ -60,6 +60,8 @@
             margin: 0 auto;
             @include media-breakpoint-down(xs) {
                 margin: 120px 0 0 0;
+                display: grid;
+                place-items: center;
             }
             .banner-text {
                 color: #ffffff;
@@ -110,6 +112,9 @@
                     @include media-breakpoint-down(xs) {
                         height: rem-calc(18px);
                         font-size: rem-calc(10px);
+                        &::-webkit-input-placeholder{
+                            font-size:rem-calc(9px); ;
+                        }
                     }
                 }
 
@@ -153,14 +158,16 @@
     .owl-carousel {
         z-index: auto;
         .owl-item {
-            max-height: 615px;
+            max-height: 580px;
         }
     }
 }
 
 .container-triple {
     margin-top: 33px;
-
+    @include media-breakpoint-down(xs) {
+        margin-top: 15px;
+    }
     @include media-breakpoint-up(md) {
         margin-top: -50px;
     }
@@ -168,6 +175,9 @@
     .row-triple {
         > [class*="col-"] {
             margin-bottom: 33px;
+            @include media-breakpoint-down(xs) {
+                margin-bottom: 15px;
+            }
         }
     }
 
@@ -176,7 +186,10 @@
         box-shadow: 0 7px 30px #00000080;
         padding: 30px;
         background-color: white;
-
+        @include media-breakpoint-down(xs) {
+            box-shadow: 0 5px 20px #00000080;
+            padding: 20px;
+        }
         .box-icon {
             font-size: rem-calc(40px);
         }
@@ -186,11 +199,19 @@
             font-weight: 600;
             line-height: line-height(26px, 39px);
             margin-top: rem-calc(25px);
+            @include media-breakpoint-down(xs) {
+                font-size: rem-calc(16px);
+                margin-top: rem-calc(15px);
+            }
         }
 
         .box-description {
             line-height: line-height(18px, 27px);
             margin-top: rem-calc(20px);
+            @include media-breakpoint-down(xs) {
+                margin-top: rem-calc(10px);
+                font-size: rem-calc(12px);
+            }
         }
     }
 }
@@ -199,7 +220,9 @@
     max-width: 812px;
     margin-left: auto;
     margin-right: auto;
-
+    @include media-breakpoint-down(xs) {
+        margin-top: 15px;
+    }
     .box {
         text-align: center;
         box-shadow: 0 14px 30px #00000029;
@@ -207,10 +230,16 @@
 
         .section-subtitle {
             @include section-subtitle();
+            @include media-breakpoint-down(xs) {
+                font-size: rem-calc(16px) ;
+            }
         }
 
         .section-title {
             @include section-title($font-size: 35px);
+            @include media-breakpoint-down(xs) {
+                font-size: rem-calc(20px);
+            }
         }
 
         .box-description {
