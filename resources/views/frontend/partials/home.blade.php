@@ -21,7 +21,6 @@
                 <input name="q" placeholder="Search by destination or travel type" class="form-control">
                 <button class="btn btn-primary btn-search">
                     <span class="icon fa fa-search"></span>
-                    <span class="d-md-none">Search</span>
                 </button>
             </form>
         </div>

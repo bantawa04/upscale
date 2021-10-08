@@ -38,18 +38,22 @@ class NewsletterController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'fname' => ['required'],
-            'lname' => ['required'],
-            'email' => ['required', 'email'],
-        ]);
+        try {
+            $request->validate([
+                'fName' => 'required',
+                'lName' => 'required',
+                'email' => 'required | email', 
+            ]);
+            Newsletter::create([
+                'fname' =>  strip_tags($request->fName),
+                'lname' =>  strip_tags($request->lName),
+                'email' =>  strip_tags($request->email)
+            ]);
 
-        Newsletter::create([
-            'fname' =>  $request->fname,
-            'lname' =>  $request->lname,
-            'email' =>  $request->email
-        ]);
-        return response()->json(['message' => 'success', 'statement' => 'You are subscribed to Upscale Adventures.'], 200);
+            return response()->json(['message' => 'success', 'statement' => 'You are subscribed to Upscale Adventures.', 'status' => 200],200);
+        } catch (\Exception $e) {
+            return response()->json(['statement'=> 'Sorry cannot subscribe to newsletter', 'status' => 500 ], 500);
+        }
     }
 
     /**

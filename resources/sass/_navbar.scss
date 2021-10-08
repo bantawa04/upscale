@@ -12,7 +12,10 @@
   }
 
   .logo {
-    width: 180px;
+    max-height: 40px;
+    @include media-breakpoint-down(xs) {
+      max-height: 30px;
+    }
   }
 
   .nav-link {
