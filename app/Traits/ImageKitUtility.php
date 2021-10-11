@@ -10,7 +10,6 @@ trait ImageKitUtility
     protected function uploadToImageKit($payload, $fileName, $folder, $height, $width, $isPath = null)
     {
         try {
-            // dd($isPath);
             // $isPath ? $img = $payload : $img = $this->toBase64($payload, $width, $height);
             $img = $this->toBase64($payload, $width, $height);
             $toImageKit = $this->init();

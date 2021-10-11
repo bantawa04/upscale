@@ -4,7 +4,8 @@
         'mtitle' => $post->meta_title,
         'title' => $post->title_tag ? $post->title_tag : $post->title,
         'description' => $post->meta_description,
-        'image' => asset($post->thumb),
+        'og' => $post->ogTag,
+        'twitter' => $post->twitter,
         'robot' => ''
     ])
   <script type="application/ld+json">
@@ -17,7 +18,7 @@
       },
       "headline": "{{$post->title}}",
       "image": [
-        "{{ asset($post->thumb) }}"
+        "{{ $post->twitter }}"
        ],
       "datePublished": "{{ date("Y-m-d", strtotime($post->created_at))}}",
       "dateModified": "{{ date("Y-m-d", strtotime($post->modified_at))}}",

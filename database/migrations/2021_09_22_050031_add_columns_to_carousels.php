@@ -32,6 +32,10 @@ class AddColumnsToCarousels extends Migration
         Schema::table('pages', function (Blueprint $table) {
             $table->integer('parentPage')->after('main')->nullable();
         });  
+        Schema::table('settings', function (Blueprint $table) {
+            $table->string('cover')->after('meta_description')->nullable();
+            $table->integer('fileId')->after('cover')->nullable();
+        });  
     }
 
     /**
@@ -58,6 +62,10 @@ class AddColumnsToCarousels extends Migration
         });
         Schema::table('pages', function (Blueprint $table) {
             $table->dropColumn('parentPage');
+        });
+        Schema::table('settings', function (Blueprint $table) {
+            $table->dropColumn('cover');
+            $table->dropColumn('fileId');
         });
     }
 }

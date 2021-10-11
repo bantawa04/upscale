@@ -9,7 +9,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body px-2">
-                    {!! Form::model($setting, ['route' => ['setting.update', $setting->id], 'method' => 'PUT']) !!}
+                    {!! Form::model($setting, ['route' => ['setting.update', $setting->id], 'method' => 'PUT', 'files' => true]) !!}
 
                     <div class="row">
                         <div class="col-6">
@@ -112,7 +112,14 @@
                             {{ Form::textarea('meta_description', null, array("class"=>'form-control', "style" => 'resize:none', "rows" => '3')) }}
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-6">
+                            {{ Form::label('Cover Photo', 'Cover Photo:')}}
+                            <input type="file" name="photo" id="">
+                        </div>
+                        <div class="col-6">
+                        </div>
+                    </div>
 
                     <div class="col-12">
                         {{ Form::submit('Update', ['class'=> 'btn btn-success btn-block mt-3'])}}

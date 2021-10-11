@@ -5,7 +5,8 @@
         'mtitle' => 'Travel Special',
         'title' => 'Travel Special',
         'description' => 'Chosen best ones from our wide scope of varieties for you to pick.',
-        'image' => asset('apple-icon-180x180.png"'),
+        'og' => '',
+        'twitter' => '',
         'robot' => 'noindex, nofollow'
 
     ])

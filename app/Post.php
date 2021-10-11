@@ -34,4 +34,8 @@ class Post extends Model
     {
     	return $this->belongsToMany('App\Tag');
     }
+
+    public function metaImage($tag){
+        return str_replace('tr:n-blogThumb', $tag, $this->path);
+    }
 }

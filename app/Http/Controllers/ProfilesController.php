@@ -92,7 +92,7 @@ class ProfilesController extends Controller
             if (!empty($request->avatar)) {
                 // Image::make($file)->resize(180,180)->save($location);
                 $response = $this->uploadToImageKit($request->file('avatar'), 'usr_.jpg', 'user', null, null);
-                $user->avatar = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-user', $response->success->url);
+                $user->avatar = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-user', $response->success->url);
                 $user->fileID = $response->success->fileId;
             }
             if (!empty($request->password && $request->conformpassword)) {

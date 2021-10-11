@@ -4,7 +4,8 @@
         'mtitle' => '',
         'title' => '',
         'description' => '',
-        'image' => asset('apple-icon-180x180.png'),
+        'twitter' => '',
+        'og' => '',
         'robot' => ''
 
     ])

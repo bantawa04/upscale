@@ -4,10 +4,11 @@
 'mtitle' => $tour->meta_title,
 'title' =>  $tour->name.' '.$tour->days.' Day(s)',
 'description' => $tour->meta_description,
-'image' => asset($tour->image->thumb),
-'robot' => ''
+'og' => $tour->ogTag,
+'twitter' => $tour->twitterImg,
+'robot' => $tour
 ])
-<script type="application/ld+json">{"@context":"http://schema.org","@type":"Product","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.5","reviewCount":"11"},"description":"{{$tour->meta_description}}","name":"{{$tour->name.' '.$tour->days.' Day(s)'}}","image":"{{asset($tour->image->thumb)}}","offers":{"@type":"Offer","availability":"http://schema.org/InStock","price":"{{$tour->price}}.00","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"http://schema.org","@type":"Product","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.5","reviewCount":"11"},"description":"{{$tour->meta_description}}","name":"{{$tour->name.' '.$tour->days.' Day(s)'}}","image":"{{$tour->twitterImg}}","offers":{"@type":"Offer","availability":"http://schema.org/InStock","price":"{{$tour->price}}.00","priceCurrency":"USD"}}</script>
 @endpush
 @inject('countries','App\Http\Utilities\Country')
 @section('content')

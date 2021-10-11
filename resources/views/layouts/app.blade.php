@@ -65,7 +65,7 @@
     @include('frontend.partials.footer-2')
     @endif
 </body>
-<script src="{{env('IMAGE_KIT_URL')}}/js/app.js"></script>
+<script src="{{env('IMAGE_KIT_URL')}}/js/app_uXLD5-dAe.js?updatedAt=1633945547842"></script>
 @stack('scripts')
 
 </html>

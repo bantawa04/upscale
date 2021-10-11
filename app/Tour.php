@@ -115,4 +115,9 @@ class Tour extends Model
     // {
     //     return $value."m / ".$value* 3.281." .ft";
     // }
+
+    public function getImage($tag){
+        $url = $this->slides[0]->path;
+        return str_replace('tr:n-tSlide',$tag, $url);
+    }
 }

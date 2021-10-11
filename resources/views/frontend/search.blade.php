@@ -4,7 +4,8 @@
         'mtitle' => 'Search Results',
         'title' => 'Search Results',
         'description' => 'Query items as indicated by your choice.',
-        'image' => asset('apple-icon-180x180.png"'),
+        'og' => '',
+        'twitter' => '',
         'robot' => 'noindex, nofollow'
     ])
     <script type="application/ld+json">
