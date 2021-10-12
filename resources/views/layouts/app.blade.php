@@ -29,14 +29,14 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{env('IMAGE_KIT_URL')}}/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="{{env('IMAGE_KIT_URL')}}/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="{{env('IMAGE_KIT_URL')}}/favicon-16x16.png">
-    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <!--<link rel="manifest" href="{{ asset('manifest.json') }}">-->
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{env('IMAGE_KIT_URL')}}/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <meta name="google-site-verification" content="alKOmHO1iHSMk-UW__svD3oe9D1EFeyB34zzkA-KR-8">
     <meta name="yandex-verification" content="603a43b23fdd88e5" />
     <!-- Scripts -->
-    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    {{-- <script src="{{ asset('js/app.js') }}" ></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

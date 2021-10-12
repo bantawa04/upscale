@@ -18,11 +18,11 @@
 <div class="banner">
     <div class="images owl-carousel">
         @foreach($tour->slides as $item)
-        <div class="embed-responsive embed-responsive-banner">
-            <div class="embed-responsive-item">
-                <img src="{{ asset($item->path) }}" width="1920" height="1080" class="" alt="{{$tour->title}}">
-            </div>
-        </div>
+        <!--<div class="embed-responsive embed-responsive-banner">-->
+            <!--<div class="embed-responsive-item">-->
+                <img src="{{ asset($item->path) }}" class="" alt="{{$tour->title}}">
+            <!--</div>-->
+        <!--</div>-->
         @endforeach
     </div>
     <div class="trip-highlight">

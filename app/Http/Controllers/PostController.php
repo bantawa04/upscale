@@ -22,7 +22,7 @@ class PostController extends Controller
     use ResponseMessage;
     public function __construct()
     {
-        $this->tags = $this->selectOption(Tag::all());
+        $this->tags = Tag::all();
         $this->medias = Media::all();
         $this->categories = $this->selectOption(BlogCategory::all());
     }
@@ -53,6 +53,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         try {
             $this->validate($request, [
                 'title' => 'required',
@@ -81,11 +83,13 @@ class PostController extends Controller
             }
 
             $post->save();
-
+            // dd($request->all());
             $post->tags()->sync($request->tags, false);
-
+            
+            DB::commit();
             return redirect()->route('post.show', $post->id);
         } catch (\Exception $th) {
+            DB::rollback();
             return $th->getMessage();
         }
     }

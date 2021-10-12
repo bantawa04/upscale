@@ -23,7 +23,7 @@
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->name}}</td>
                                 <td class="text-right">
-                                    <a href="{{ route('tour-category.edit',$item->id) }}"
+                                    <a href="{{ route('accomodation.edit',$item->id) }}"
                                         class="btn btn-primary btn-sm"><i class="far fa-edit"></i></a>
                                     <button class="btn btn-sm btn-danger delete" data-id={{$item->id}}><i
                                             class="far fa-trash-alt"></i></button>
