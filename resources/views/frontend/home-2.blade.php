@@ -4,7 +4,8 @@
         'mtitle' => '',
         'title' => '',
         'description' => '',
-        'image' => asset('apple-icon-180x180.png'),
+        'twitter' => '',
+        'og' => '',
         'robot' => ''
 
     ])
@@ -79,7 +80,7 @@
 <div id="section-trip">
     <div class="container">
         <h2 class="section-title">
-            Inspiring Hiking / Trekking Trips In Nepal for 2020
+            Inspiring Hiking / Trekking Trips In Nepal for {{date('Y')}}
         </h2>
         <div class="section-summary">
             We hit the trails like nobody else & we pride ourselves on providing impartial information to help you

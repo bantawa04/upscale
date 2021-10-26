@@ -8,6 +8,7 @@ use App\Post;
 use App\Tag;
 use DB;
 use App\Traits\SelectOption;
+use App\Traits\ResponseMessage;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -18,9 +19,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     use SelectOption;
+    use ResponseMessage;
     public function __construct()
     {
-        $this->tags = $this->selectOption(Tag::all());
+        $this->tags = Tag::all();
         $this->medias = Media::all();
         $this->categories = $this->selectOption(BlogCategory::all());
     }
@@ -51,6 +53,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         try {
             $this->validate($request, [
                 'title' => 'required',
@@ -79,11 +83,13 @@ class PostController extends Controller
             }
 
             $post->save();
-
+            // dd($request->all());
             $post->tags()->sync($request->tags, false);
-
+            
+            DB::commit();
             return redirect()->route('post.show', $post->id);
         } catch (\Exception $th) {
+            DB::rollback();
             return $th->getMessage();
         }
     }
@@ -123,6 +129,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        // dd($request->all());
         $this->validate($request, [
             'title' => 'required',
             'title' => 'required',
@@ -134,7 +141,7 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
         $post->status = $request->status;
         $post->content = $request->content;
-        $post->title = $request->titleTag;
+        $post->title_tag = $request->titleTag;
         $post->meta_title = $request->meta_title;
         $post->meta_description = $request->meta_description;
 
@@ -155,13 +162,18 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        $post->tags()->detach();
-
-        $post->delete();
-
-        return redirect()->route('post.index');
+        try {
+            $post = Post::find($id);
+            $post->tags()->detach();
+            $post->delete();
+            $msg = $this->onSuccess($id);
+            return response()->json($msg);
+        } catch (\Exception $e) {
+            $msg = $this->onError($e);
+            return response()->json($msg);
+        }
     }
 
 

@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row pt-5">
         <div class="col-9">
-            <h4>{{$pages->count()}} Tours</h4>
+            <h4>{{$pages->count()}} pages</h4>
         </div>
         <div class="col-3">
             <a href="{{ route('page.create') }}" class="btn btn-success btn-block"> Add New</a>

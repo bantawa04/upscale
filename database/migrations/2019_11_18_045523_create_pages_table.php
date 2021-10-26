@@ -23,7 +23,7 @@ class CreatePagesTable extends Migration
             $table->string('meta_description');
             $table->boolean('main')->default(0);
             $table->integer('position')->default(0);
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

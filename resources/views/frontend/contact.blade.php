@@ -4,7 +4,8 @@
         'mtitle' => 'Contact Upscale Adventures',
         'title' => 'Contact Us',
         'description' => 'Get in touch with Upscale Adventures',
-        'image' => asset('apple-icon-180x180.png"'),
+        'og' => '',
+        'twitter' => '',
         'robot' => ''
 
     ])

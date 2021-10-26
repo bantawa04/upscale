@@ -8,7 +8,13 @@ trait SelectOption
     {
         $select = [];
         foreach ($collection as $data) {
-            $select[$data->id] = $data->name;
+            if ($data->name) {
+                $select[$data->id] = $data->name;
+            }
+            if ($data->title) {
+                $select[$data->id] = $data->title;# code...
+            }
+            
         }
         return $select;
     }

@@ -4,7 +4,8 @@
 'mtitle' => $category->meta_title,
 'title' => $title,
 'description' => $category->meta_description,
-'image' => asset('apple-icon-180x180.png"'),
+'og' => '',
+'twitter' => '',
 'robot' => ''
 
 ])

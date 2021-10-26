@@ -18,7 +18,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    {!! Form::open( ['route'=> 'post.store', 'method' =>'POST'] ) !!}
+                    {!! Form::open( ['route'=> 'post.store', 'method' =>'POST','data-parsley-validate'=>''] ) !!}
 
                     <div class="row">
                         <div class="col-12">
@@ -39,8 +39,13 @@
                             @enderror
                         </div>
                         <div class="col-6">
-                            {{ Form::select('tags', $tags , null, ['placeholder' => 'Tags', 'class' => 'form-control select2'])}}
-                            @error('tags')
+                            <!--{{ Form::select('tags', $tags , null, ['placeholder' => 'Tags', 'class' => 'form-control select2'])}}-->
+                            <select class="tags form-control" name="tags[]" multiple="multiple" id="tags">
+                                @foreach($tags as $tag)
+                                <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                @endforeach
+                            </select>
+                                @error('tags')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -113,13 +118,16 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.tiny.cloud/1/8t3cusqbsgxjxtrx0cesy6fo1sdkesg3rsg41aky7y8m430h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
 <script>
+    $(function(){
+         $('#tags').select2();
+    });
     var editor_config = {
+      path_absolute : "/",
       height: 400,
-      path_absolute : "/manage/",
       selector: "textarea#my-editor",
       relative_urls: false,
       plugins: [
@@ -155,9 +163,16 @@
     };
   
     tinymce.init(editor_config);
-  </script>
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js" integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endsection
 @section('styles')
-<link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/parsley.css') }}">
+<style>
+    .select2-selection__choice__display{
+        color: #555;
+        padding-left: 8px !important;
+    }
+</style>
 @endsection

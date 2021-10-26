@@ -10,9 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => 'manage/laravel-filemanager', 'middleware' => ['auth']], function () {
+// Route::group(['prefix' => 'manage/laravel-filemanager', 'middleware' => ['auth']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
+// });
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
 Route::prefix('manage')->group(function () {
     Auth::routes(['register' => false]);
 

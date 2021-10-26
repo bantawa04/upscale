@@ -17,16 +17,24 @@ use App\Setting;
 use App\Post;
 use App\Region;
 use App\Traits\MetaTag;
+use Illuminate\Support\Facades\View;
 
 class FrontendController extends Controller
 {
     use MetaTag;
     public function __construct()
     {
+        $setting = Setting::firstOrFail();
+       $metaImages = (object) [
+            'ogTag' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL') . '/tr:n-OGTag', $setting->cover),
+            'twitter' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL') . '/tr:n-twitter', $setting->cover)
+        ];
+
         $this->carousels = Carousel::all();
         $this->categories = TourCategory::whereHas('tours')->get();
         $this->countries = Country::all();
         $this->difficulties = Difficulty::all();
+        View::share('metaImages', $metaImages);
     }
     // Home version 1
 
@@ -86,6 +94,8 @@ class FrontendController extends Controller
     public function tripDetail($slug)
     {
         $tour = Tour::where('slug', '=', $slug)->first();
+        $tour->ogTag = $tour->getImage('n-OGTag');
+        $tour->twitterImg = $tour->getImage('n-twitter');
         $cat = $tour->category->slug;
         $similars = Tour::whereHas('category', function ($r) use ($cat) {
             $r->where('tourcategories.slug', '=', $cat);
@@ -154,6 +164,8 @@ class FrontendController extends Controller
             $r->where('blogCateogries.slug', '=', $category);
         })
             ->where('slug', '=', $slug)->first();
+        $post->ogTag = $post->metaImage('n-OGTag');
+        $post->twitter = $post->metaImage('n-twitter');
         return view('frontend.post-detail')->withPost($post);
     }
     public function postByCategory($slug)
@@ -165,9 +177,9 @@ class FrontendController extends Controller
             ->paginate(10);
         $category = BlogCategory::where('slug', $slug)->first();
         return view('frontend.post-list')
-        ->withPosts($posts)
-        ->withTitle(1)
-        ->withCategory($category);
+            ->withPosts($posts)
+            ->withTitle(1)
+            ->withCategory($category);
     }
 
     public function allDestination()
@@ -187,17 +199,17 @@ class FrontendController extends Controller
     }
 
     public function countryCategory($country, $cat)
-    {        
+    {
         // return 1;
         $stuff = $this->metaTag($country, $cat);
         $category = TourCategory::where('slug', $cat)->first();
         $results = Tour::whereHas('category', function ($r) use ($cat) {
             $r->where('tourcategories.slug', $cat);
         })
-        ->whereHas('country', function ($s) use ($country) {
-            $s->where('countries.slug', $country);
-        })
-        ->get(); 
+            ->whereHas('country', function ($s) use ($country) {
+                $s->where('countries.slug', $country);
+            })
+            ->get();
 
         return view('frontend.category-country')
             ->withResults($results)
@@ -221,7 +233,7 @@ class FrontendController extends Controller
         })
             ->where('status', '=', 1)
             ->get();
-            $title_tag = "Trips available for ". ucfirst($category);
+        $title_tag = "Trips available for " . ucfirst($category);
         return view('frontend.category-with-trips')
             ->withResults($results)
             ->withCategory($cateogry)
@@ -248,11 +260,11 @@ class FrontendController extends Controller
 
     public function booking(Request $request, $slug)
     {
-        $tour = Tour::where('slug','=', $slug)->first();
+        $tour = Tour::where('slug', '=', $slug)->first();
         $departure = Departure::where('id', '=', $request->depID)->first();
         return view('frontend.booking')
-        ->withDeparture($departure)
-        ->withTour($tour);
+            ->withDeparture($departure)
+            ->withTour($tour);
     }
 
     public function getPage($slug)
@@ -264,23 +276,23 @@ class FrontendController extends Controller
     public function categoryRegion($category, $region)
     {
         $stuff = $this->metaTag($category, $region);
-        $region = Region::where('slug','=', $region)->first();
+        $region = Region::where('slug', '=', $region)->first();
         $tours = Tour::whereHas('category', function ($r) use ($category) {
             $r->where('tourcategories.slug', $category);
         })
-        ->whereHas('region', function ($s) use ($region) {
-            $s->where('regions.slug', $region->slug);
-        })
-        ->get();        
+            ->whereHas('region', function ($s) use ($region) {
+                $s->where('regions.slug', $region->slug);
+            })
+            ->get();
         return view('frontend.category-region')
-        ->withRegion($region)
-        ->withResults($tours)
-        ->withMeta($stuff);
+            ->withRegion($region)
+            ->withResults($tours)
+            ->withMeta($stuff);
     }
 
     public function getPackages()
     {
-        $tours = Tour::where('status',1)->paginate(12);
+        $tours = Tour::where('status', 1)->paginate(12);
         return view('frontend.packages')->withResults($tours);
     }
 }

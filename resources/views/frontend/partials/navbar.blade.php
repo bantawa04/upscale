@@ -135,7 +135,7 @@
 <nav id="navbar" class="navbar navbar-expand-xl navbar-dark fixed-top">
     <div class="container">
         <a href="{{ asset('/') }}" class="navbar-brand">
-            <img src="https://ik.imagekit.io/azq00gyzbcp/images/logo.png" alt="Upscale Adventures" width="180" height="46" class="logo">
+            <img src="{{env('IMAGE_KIT_URL')}}/images/logo.png" alt="Upscale Adventures" class="logo">
         </a>
         <button id="navbar-menu-toggler" class="navbar-toggler" type="button" data-toggle="collase"
             data-target="#navbar-menu">

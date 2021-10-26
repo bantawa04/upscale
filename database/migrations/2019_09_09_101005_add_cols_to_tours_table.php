@@ -14,7 +14,7 @@ class AddColsToToursTable extends Migration
     public function up()
     {
         Schema::table('tours', function (Blueprint $table) {
-            $table->integer('discountPrice')->after('price')->unsigned(); //
+            $table->integer('discountPrice')->after('price')->unsigned()->nullable(); //
             $table->integer('difficulty_id')->after('max_altitude')->unsigned(); //
             $table->integer('group_id')->after('difficulty_id')->unsigned(); //
             $table->integer('category_id')->unsigned()->after('group_id'); //  
@@ -37,7 +37,7 @@ class AddColsToToursTable extends Migration
     public function down()
     {
         Schema::table('tours', function (Blueprint $table) {
-            $table->dropColumn('discountPrice')->nullable();
+            $table->dropColumn('discountPrice');
             $table->dropColumn('difficulty_id');
             $table->dropColumn('group_id');
             $table->dropColumn('category_id');

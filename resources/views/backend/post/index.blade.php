@@ -67,15 +67,12 @@
                                         <label for="feature">Feature</label>
                                     </div>
 
-                                    {!! Form::open( array('route'=>array('post.destroy',
-                                    $item->id),'method'=>'DELETE' )) !!}
 
-                                    <button class="btn btn-danger btn-sm delete" type="submit">
+                                    <button class="btn btn-danger btn-sm delete" data-id={{$item->id}} >
 
                                         <i class="far fa-trash-alt"></i>
                                         Delete
                                     </button>
-                                    {!! Form::close() !!}
                                 </td>
                                 </td>
                             </tr>
@@ -96,27 +93,39 @@
         $('#table').DataTable({
                 "ordering": false,
         });
-
-        $('.delete').click(function(e) {
-            let id = $(this).data('id');      
-            
-            $.ajax({
-                
-                type: "POST",
-                url: '/manage/tour/' + id,
-                data: {
-                    '_token': $('meta[name="csrf-token"]').attr('content'),
-                    'id': id,
-                    "_method": 'DELETE'
-                },
-                success: function (data) {
-                    $('.row' + data['id']).remove();
-                    Toast.fire({
-                        type: data.type,
-                        title: data.message
+        
+        $('.delete').click(function() {
+            let id = $(this).data('id');                                   
+    
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                        
+                        type: "POST",
+                        url: '/manage/post/' + id,
+                        data: {
+                            '_token': $('meta[name="csrf-token"]').attr('content'),
+                            'id': id,
+                            "_method": 'DELETE'
+                        },
+                        success: function (res) {
+                            $('.row' + res.id).remove();
+                            Toast.fire({
+                                type: res.type,
+                                title: res.message
+                            }) 
+                        }
                     });
                 }
-            });
+          })                
         });
 
         $('.publish').change(function() {

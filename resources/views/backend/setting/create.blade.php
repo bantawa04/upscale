@@ -9,7 +9,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body px-2">
-                    {!! Form::open( ['route'=> 'setting.store', 'method' =>'POST'] ) !!}
+                    {!! Form::open( ['route'=> 'setting.store', 'method' =>'POST', 'files' => true] ) !!}
 
                     <div class="row">
                         <div class="col-6">
@@ -112,7 +112,14 @@
                             {{ Form::textarea('meta_description', null, array("class"=>'form-control', "style" => 'resize:none', "rows" => '3')) }}
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-6">
+                            {{ Form::label('Cover Photo', 'Cover Photo:')}}
+                            {{ Form::file('photo', null, array("class"=>'form-control')) }}
+                        </div>
+                        <div class="col-6">
+                        </div>
+                    </div>
 
                     <div class="col-12">
                         {{ Form::submit('Save', ['class'=> 'btn btn-success btn-block mt-3'])}}

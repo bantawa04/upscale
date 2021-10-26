@@ -124,9 +124,9 @@ class TourController extends Controller
         $tour->save();
 
         if (!empty($request->featured)) {
-            $image = Media::findOrFail($request->featured);
-            $thumbnail = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $image->url);
-            $path = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $image->url);
+            $image = Media::findOrFail($request->featured);            
+            $thumbnail = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-tFetThumb', $image->url);
+            $path = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-trFetLg', $image->url);
             $tour->image()->save(new FeaturedImage([
                 'path' => $path,
                 'thumb' => $thumbnail
@@ -140,8 +140,8 @@ class TourController extends Controller
                 $slide = new Slide;
                 $slide->tour_id = $tour->id;
                 $slide->media_id = $media->id;
-                $slide->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tSliThumb', $media->url);
-                $slide->path  = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tSlide', $media->url);
+                $slide->thumb = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-tSliThumb', $media->url);
+                $slide->path  = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-tSlide', $media->url);
                 $slide->name = $media->name;
                 $slide->save();
             }
@@ -243,8 +243,8 @@ class TourController extends Controller
             $image = $tour->image;
 
             $media = Media::findOrFail($request->featured);
-            $image->path = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-trFetLg', $media->url);
-            $image->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tFetThumb', $media->url);
+            $image->path = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-trFetLg', $media->url);
+            $image->thumb = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-tFetThumb', $media->url);
             $tour->image()->save($image);
         }
 
@@ -260,8 +260,8 @@ class TourController extends Controller
                 $slide = new Slide;
                 $slide->tour_id = $tour->id;
                 $slide->media_id = $media->id;
-                $slide->thumb = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tSliThumb', $media->url);
-                $slide->path  = str_replace('azq00gyzbcp', 'azq00gyzbcp/tr:n-tSlide', $media->url);
+                $slide->thumb = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-tSliThumb', $media->url);
+                $slide->path  = str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL').'/tr:n-tSlide', $media->url);
                 $slide->name = $media->name;
                 $slide->save();
             }

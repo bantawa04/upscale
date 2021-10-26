@@ -4,7 +4,8 @@
         'mtitle' => 'Travel style to look over from '. $country->name,
         'title' => $country->name,
         'description' => $country->description,
-        'image' => asset('apple-icon-180x180.png"'),
+        'og' => '',
+        'twitter' => '',
         'robot' => ''
     ])
 <script type="application/ld+json">{"@context":"http://schema.org/","@type":"Organization","name":"Upscale Adventures","address":{"@type":"PostalAddress","streetAddress":"Keshar Mahal Marg, Thamel","addressLocality":"Kathmandu","addressRegion":"Bagmati","postalCode":"44600"},"telephone":"+977-9851062726"}</script>

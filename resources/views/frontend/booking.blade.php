@@ -5,7 +5,8 @@
         'mtitle' => 'Reserve your seat for'. $tour->name,
         'title' => 'Book '. $tour->name.' '. $tour->days.' Day(s)',
         'description' => 'Secure your seat for '. $tour->name,
-        'image' => asset($tour->image->thumb),
+        'og' => $tour->ogTag,
+        'twitter' => $tour->twitter,
         'robot' => 'noindex,nofollow'
 
     ])

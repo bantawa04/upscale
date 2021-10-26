@@ -6,7 +6,8 @@
 
                     <div class="col-sm-auto my-3">
                         <div class="footer-recommended">
-                            <img src="{{env('IMAGE_KIT_URL')}}/images/tripadvisor.png" alt="tripadvisor upscale adventures" />
+                            <img src="{{env('IMAGE_KIT_URL')}}/images/tripadvisor.png"
+                                alt="tripadvisor upscale adventures" />
                         </div>
                     </div>
                     <div class="col-sm-auto my-3">
@@ -16,7 +17,8 @@
                     </div>
                     <div class="col-sm-auto my-3">
                         <div class="footer-recommended">
-                            <img src="{{env('IMAGE_KIT_URL')}}/images/inspirock.png" alt="inspirock upscale adventures" />
+                            <img src="{{env('IMAGE_KIT_URL')}}/images/inspirock.png"
+                                alt="inspirock upscale adventures" />
                         </div>
                     </div>
                 </div>
@@ -56,7 +58,8 @@
                         <div class="footer-link-wrapper"><a href="#">Privacy &amp; Disclaimer</a></div> --}}
                     </div>
                     <div class="col-sm-6 col-lg-3 my-4 footer-content footer-details p-3">
-                        <img src="{{ env('IMAGE_KIT_URL')}}/images/logo.png" class="img-fluid pr-4" alt="Upscale Adventures">
+                        <img src="{{ env('IMAGE_KIT_URL')}}/images/logo.png" class="img-fluid pr-4"
+                            alt="Upscale Adventures">
                         <div class="footer-address mt-3">
                             <p>Upscale Adventures</p>
                             <p>{{$setting->address}}</p>
@@ -67,34 +70,31 @@
                         </div>
                     </div>
                 </div>
-                <form class="newsletter-form" id="newsletter" v-if="!subscribed">
+                <form class="newsletter-form" id="newsletter">
                     <div class="row">
                         <div class="col-6 col-lg-2 my-2">
                             <label class="sr-only" for="firstName">First Name</label>
-                            <input type="text" class="form-control" v-model="form.fname" id="firstName"
-                                placeholder="First Name">
+                            <input type="text" class="form-control" id="firstName" name="firstName"
+                                placeholder="First Name" required>
                         </div>
                         <div class="col-6 col-lg-2 my-2">
                             <label class="sr-only" for="lastName">Last Name</label>
-                            <input type="text" class="form-control" v-model="form.lname" id="lastName"
-                                placeholder="Last Name">
+                            <input type="text" class="form-control" id="lastName" name="lastName"
+                                placeholder="Last Name" required>
                         </div>
                         <div class="col-lg-4 my-2">
                             <label class="sr-only" for="email">Email</label>
                             <div class="input-group">
-                                <input type="email" class="form-control" id="email" v-model="form.email"
-                                    placeholder="example@example.com">
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="youremail@example.com" required>
                             </div>
                         </div>
                         <div class="col-lg-4 my-2">
-                            <button class="btn btn-primary btn-block" @click.prevent="signUp">SIGNUP FOR
+                            <button class="btn btn-primary btn-block" id="submitNewsletter" type="submit">SIGNUP FOR
                                 NEWSLETTER</button>
                         </div>
                     </div>
                 </form>
-                <div class="alert alert-dark" role="alert" id="success-message" v-if="show">
-                    @{{ message }}
-                  </div>
                 <hr class="footer-divider">
                 <div class="social-link-wrapper d-flex justify-content-center">
                     <a href="{{$setting->facebook}}" class="social-link">
@@ -116,6 +116,12 @@
                         <span class="fab fa-linkedin social-icon"></span>
                     </a>
                 </div>
+
+                <div class="alert" role="alert" id="notification">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <hr class="footer-divider">
                 <div class="col-12 copyright-text">
                     <p>Copyright {{date('Y')}} Upscale Adventures</p>
@@ -126,55 +132,6 @@
         </div>
     </div>
 </div>
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      new Vue({
-        el: '#app',
-        data() {
-            return {
-                url: {!! json_encode(url('/')) !!},
-                form: {
-                    fname: '',
-                    lname: '',
-                    email: ''
-                },
-                subscribed: false,
-                message:'aa',
-                show: false
-            }
-        },
-        methods: {
-            signUp(){
-                axios.post(this.url+'/newsletter', this.form)
-                .then( (res) => {
-                    if (res.status === 200) {
-                        this.form.fname = '';
-                        this.form.lname = '';
-                        this.form.email = '';
-                        this.success = res.data;
-                        this.subscribed = true;
-                        localStorage.setItem('subscribed', true);
-                        this.message = res.data.statement;
-                        this.show = true;
-                        setTimeout(() => {
-                            this.show = false
-                        }, 2000);
-                    }
-                }).catch(function (error) {
-                    this.errors = error.response.data.errors;
-                })
-            },
-            checkSubscribed(){
-                const val = localStorage.getItem('subscribed');
-                this.subscribed = val?true:false;
-            }
-        },
-        mounted(){
-            this.checkSubscribed();
-        }
-      })
-    })
+function checkSubscription(){localStorage.getItem("subscribed")&&(document.getElementById("newsletter").style.display="none")}document.getElementById("submitNewsletter").onclick=function(){let e=document.getElementById("firstName").value,t=document.getElementById("lastName").value,n=document.getElementById("email").value;if(e&&t&&n){let o=window.location.origin,i=document.querySelector('meta[name="csrf-token"]').content;fetch(o+"/newsletter",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json, text-plain, */*","X-Requested-With":"XMLHttpRequest","X-CSRF-TOKEN":i},credentials:"same-origin",body:JSON.stringify({fName:e,lName:t,email:n})}).then(e=>e.json()).then(e=>{if(200===e.status){localStorage.setItem("subscribed",!0);let t=document.getElementById("notification");t.classList.toggle("alert-secondary"),t.style.display="block",t.insertAdjacentHTML("afterbegin","<strong>"+e.statement+"</strong>"),checkSubscription(),setTimeout(function(){t.style.display="none"},3e3)}else notification.classList.toggle("alert-danger"),notification.insertAdjacentHTML("afterbegin","<strong>"+e.statement+"</strong>")}).catch(e=>{console.log(e)})}},window.onload=checkSubscription;
 </script>
-@endpush
