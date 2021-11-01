@@ -1,22 +1,24 @@
 @extends('layouts.app')
 @push('meta')
-    @include('frontend.partials._meta-tags', [
-        'mtitle' => 'Contact Upscale Adventures',
-        'title' => 'Contact Us',
-        'description' => 'Get in touch with Upscale Adventures',
-        'og' => '',
-        'twitter' => '',
-        'robot' => ''
+@include('frontend.partials._meta-tags', [
+'mtitle' => 'Contact Upscale Adventures',
+'title' => 'Contact Us',
+'description' => 'Get in touch with Upscale Adventures',
+'og' => '',
+'twitter' => '',
+'robot' => ''
 
-    ])
-<script type="application/ld+json">{"@context":"http://schema.org/","@type":"Organization","name":"Upscale Adventures","address":{"@type":"PostalAddress","streetAddress":"Keshar Mahal Marg, Thamel","addressLocality":"Kathmandu","addressRegion":"Bagmati","postalCode":"44600"},"telephone":"+977-9851062726"}</script>
+])
+<script type="application/ld+json">
+    {"@context":"http://schema.org/","@type":"Organization","name":"Upscale Adventures","address":{"@type":"PostalAddress","streetAddress":"Keshar Mahal Marg, Thamel","addressLocality":"Kathmandu","addressRegion":"Bagmati","postalCode":"44600"},"telephone":"+977-9851062726"}
+</script>
 @endpush
 @section('content')
 
 
 <div class="navbar-gap"></div>
 
-<div class="heading-wrapper-main" style="background-image: url('{{env('IMAGE_KIT_URL')}}/images/contact.jpg');">
+<div class="heading-wrapper-main" style="background-image: url('/images/contact.jpg');">
     <div>
         <div class="container">
             <div class="row">
@@ -26,7 +28,8 @@
                     </h1>
                     <div class="description-main">
                         Please feel free to reach us by email, phone or mail using the information found on this
-                        page. We are always glad to address any queries or concerns you may have about Upscale Adventures,
+                        page. We are always glad to address any queries or concerns you may have about Upscale
+                        Adventures,
                         your trip, or our trips in general.
                     </div>
                 </div>
@@ -38,17 +41,17 @@
 <div class="section-contact-form">
     <div class="container">
         @include('frontend.partials.breadcrumb', [
-            'links' => [
-                [
-                    'text' => 'Home',
-                    'url' => url('/'),
-                ],
-                [
-                    'text' => 'Contact Us',
-                    'url' => url()->current(),
-                ]           
-            ],
-            'position' => 'mx-auto'
+        'links' => [
+        [
+        'text' => 'Home',
+        'url' => url('/'),
+        ],
+        [
+        'text' => 'Contact Us',
+        'url' => url()->current(),
+        ]
+        ],
+        'position' => 'mx-auto'
         ])
         <div class="row row-contact-form">
             <div class="col-md-6">
@@ -76,7 +79,7 @@
                         </label>
                         <input name="subject" class="form-control" id="input-subject">
                     </div>
-                  
+
                     <div class="form-group">
                         <label for="input-message">
                             Message
@@ -85,7 +88,7 @@
                     </div>
                     <div class="form-group">
                         <div class="g-recaptcha" data-sitekey="6LchwMcUAAAAABMJDoJJSsRIwTsoQy6T73hu0ctQ"></div>
-                    </div> 
+                    </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block mx-auto btn-send">Send</button>
                     </div>
@@ -130,45 +133,44 @@
             Contact support via
         </div>
         <div class="row social-list">
-            <div class="col-md-4 social-list-item-wrapper">
+            <div class="col-4 social-list-item-wrapper">
                 <div class="social-list-item">
-                    <a href="{{$setting->facebook}}" class="social-link"></a>
-                    <div>
-                        <img src="{{ env('IMAGE_KIT_URL')}}/images/facebook.svg" alt="Upscale Adventures Facebook" width="80" height="80">
-                    </div>
-                    <div class="social-name">
-                        Facebook
+
+                    <div class="social-img">
+                        <img src="{{ env('IMAGE_KIT_URL')}}/images/facebook.svg" alt="Upscale Adventures Facebook" width="80"
+                            height="80">
                     </div>
                     <div class="social-handle">
-                        /upscaleadventures
+                        <a href="{{$setting->facebook}}" class="social-link" target="_blank">
+                            /upscaleadventures
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 social-list-item-wrapper">
+            <div class="col-4 social-list-item-wrapper">
                 <div class="social-list-item">
-                    <a href="{{$setting->twitter}}" class="social-link"></a>
-                    <div>
-                        <img src="{{ env('IMAGE_KIT_URL')}}/images/twitter.svg" alt="Upscale Adventures Twitter" width="80" height="80">
+                    <div class="social-img">
+                        <img src="{{ env('IMAGE_KIT_URL')}}/images/twitter.svg" alt="Upscale Adventures Twitter" width="80"
+                            height="80">
                     </div>
-                    <div class="social-name">
-                        Twitter
-                    </div>
+
                     <div class="social-handle">
-                        @upscaleadventures
+                        <a href="{{$setting->twitter}}" class="social-link" target="_blank">
+                            @upscaleadventures
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 social-list-item-wrapper">
+            <div class="col-4 social-list-item-wrapper">
                 <div class="social-list-item">
-                    <a href="{{$setting->instagram}}" class="social-link"></a>
-                    <div>
-                        <img src="{{ env('IMAGE_KIT_URL')}}/images/instagram.svg" alt="Upscale Adventures Instagram" width="80" height="80">
-                    </div>
-                    <div class="social-name">
-                        Instagram
+
+                    <div class="social-img">
+                        <img src="{{ env('IMAGE_KIT_URL')}}/images/instagram.svg" alt="Upscale Adventures Instagram" width="80"
+                            height="80">
                     </div>
                     <div class="social-handle">
-                        @upscaleadventures
+                        <a href="{{$setting->instagram}}" class="social-link" target="_blank">
+                            @upscaleadventures</a>
                     </div>
                 </div>
             </div>

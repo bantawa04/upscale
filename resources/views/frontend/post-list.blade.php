@@ -16,12 +16,11 @@
 <div class="navbar-gap"></div>
 
 <div>
-    @if( request()->query('page') )          
+    @if( !request()->query('page') )          
         @isset($featured)
         <div class="featured-article">
             <div class="row no-gutters">
                 <div class="col-lg-6 align-self-stretch">
-                    {{--<img src="http://unsplash.it/926/521" alt="" width="926" height="521" class="img-fluid w-100">--}}
                     <img src="{{ asset($featured->thumb) }}" alt="" width="780" height="440" class="article-image">
                 </div>
                 <div class="col-lg-6 col-text align-self-center">

@@ -18,18 +18,14 @@
 <div class="banner">
     <div class="images owl-carousel">
         @foreach($tour->slides as $item)
-        <!--<div class="embed-responsive embed-responsive-banner">-->
-            <!--<div class="embed-responsive-item">-->
-                <img src="{{ asset($item->path) }}" class="" alt="{{$tour->title}}">
-            <!--</div>-->
-        <!--</div>-->
+            <img src="{{ asset($item->path) }}" class="" alt="{{$tour->title}}">
         @endforeach
     </div>
     <div class="trip-highlight">
         <div class="trip-highlight-box px-4">
             <div class="px-4">
                 <div class="row mx-n4 justify-content-around">
-                    <div class="col-sm-6 col-lg-auto px-4 my-4">
+                    <div class="trip-highlight__item">
                         <div class="row mx-n2">
                             <div class="col-auto px-2">
                                 <div>
@@ -44,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-lg-auto px-4 my-4">
+                    <div class="trip-highlight__item">
                         <div class="row mx-n2">
                             <div class="col-auto px-2">
                                 <div>
@@ -59,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-lg-auto px-4 my-4">
+                    <div class="trip-highlight__item">
                         <div class="row mx-n2">
                             <div class="col-auto px-2">
                                 <div>
@@ -74,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-lg-auto px-4 my-4">
+                    <div class="trip-highlight__item">
                         <div class="row mx-n2">
                             <div class="col-auto px-2">
                                 <div>
@@ -101,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-lg-auto px-4 my-4">
+                    <div class="trip-highlight__item">
                         <button class="btn btn-outline-primary btn-lg btn-block btn-book">
                             Get Quote
                         </button>
@@ -535,6 +531,6 @@
 <script>
  $(function(){var $navbar=$('#navbar');var $tripDetailNav=$('#trip-detail-nav');var navbarHeight=$navbar.outerHeight();var tripDetailNavHeight=$tripDetailNav.outerHeight();$tripDetailNav.css({top:navbarHeight,});$('body').scrollspy({target:'#trip-detail-nav',offset:navbarHeight+tripDetailNavHeight,});$tripDetailNav.find('.nav-item .nav-link').on('click',function(ev){ev.preventDefault();var href=$(this).attr('href');$('html,body').animate({scrollTop:$(href).offset().top-(navbarHeight+tripDetailNavHeight)+1,},'slow')})});$(function(){var $itinerary=$('#trip-detail-itinerary');var $collapsibleItinerary=$('#collapsible-itinerary');var toggleExpandCollapse=function(){var collapsed=$collapsibleItinerary.find('[data-toggle="collapse"].collapsed').length;if(collapsed===0){$itinerary.find('.btn-collapse').parent().removeClass('d-none');$itinerary.find('.btn-expand').parent().addClass('d-none')}else{$itinerary.find('.btn-collapse').parent().addClass('d-none');$itinerary.find('.btn-expand').parent().removeClass('d-none')}};$collapsibleItinerary.on('shown.bs.collapse',toggleExpandCollapse);$collapsibleItinerary.on('hidden.bs.collapse',toggleExpandCollapse);$itinerary.find('.btn-collapse').on('click',function(ev){ev.preventDefault();$itinerary.find('.collapse').collapse('hide')});$itinerary.find('.btn-expand').on('click',function(ev){ev.preventDefault();$itinerary.find('.collapse').collapse('show')})});$(function(){$("#quick-enquiry").submit(function(event){event.preventDefault();var post_url=$(this).attr("action");var request_method=$(this).attr("method");var form_data=$(this).serialize();$.ajax({url:post_url,type:request_method,data:form_data,success:function(data){$("#quick-enquiry").trigger("reset");if($.isEmptyObject(data.error))
 {$("#response-msg").toggleClass('alert-danger alert-success');$('.print-error-msg').find('ul').empty();$('.print-error-msg').css('display','block');$('.print-error-msg').append("<p>"+data.message+"</p>");setTimeout(function(){$(".btn-send").prop("disabled",!1)},3000)}
-else{printMessageErrors(data.error);$(".btn-send").prop("disabled",!1);setTimeout(function(){$('.print-error-msg').fadeOut()},3000)}}})});function printMessageErrors(msg){$('.print-error-msg').find('ul').empty();$('.print-error-msg').css('display','block');$.each(msg,function(key,value){$('.print-error-msg').find('ul').append("<li>"+value+"</li>")})}});$(function(){$('.btn-book').on('click',function(e){var $form=$('#quick-enquiry');var windowHeight=$(window).height();var formHeight=$form.height();var offset=(windowHeight>formHeight)?(windowHeight-formHeight)/2:0;e.preventDefault();$('html, body').animate({scrollTop:$("#quick-enquiry").offset().top-offset},800,'linear')})});$(function(){$('#search').click(function(e){e.preventDefault();let month=$("#month").val();let year=$("#year").val();let id=$("#tour_id").val();$(".loading").show(),$.ajax({type:"GET",url:"/ajax/load-departures",data:{'_token':$('meta[name="csrf-token"]').attr('content'),tour_id:id,year:year,month:month},success:function(data){$(".ajaxloadmoredeparture").html(data),$(".loading").hide()}})})})
+else{printMessageErrors(data.error);$(".btn-send").prop("disabled",!1);setTimeout(function(){$('.print-error-msg').fadeOut()},3000)}}})});function printMessageErrors(msg){$('.print-error-msg').find('ul').empty();$('.print-error-msg').css('display','block');$.each(msg,function(key,value){$('.print-error-msg').find('ul').append("<li>"+value+"</li>")})}});$(function(){$('.btn-book').on('click',function(e){var $form=$('#quick-enquiry');var windowHeight=$(window).height();var formHeight=$form.height();var offset=(windowHeight>formHeight)?(windowHeight-formHeight)/2:0;e.preventDefault();$('html, body').animate({scrollTop:$("#quick-enquiry").offset().top-offset},800,'linear')})});$(function(){$('#search').click(function(e){e.preventDefault();let month=$("#month").val();let year=$("#year").val();let id=$("#tour_id").val();$(".loading").show(),$.ajax({type:"POST",url:"/ajax/load-departures",data:{'_token':$('meta[name="csrf-token"]').attr('content'),tour_id:id,year:year,month:month},success:function(data){$(".ajaxloadmoredeparture").html(data),$(".loading").hide()}})})})
 </script>
 @endpush

@@ -1,3 +1,7 @@
 .mm-menu_offcanvas {
-  padding-top: 72px;
+    @include media-breakpoint-down(xs) {
+        padding-top: 50px;
+    }
+
+    padding-top: 58px;
 }

@@ -5,7 +5,11 @@
     <td>Available</td>
     <td>${{$item->price}}</td>
     <td>
-        <a class="btn btn-sm btn-primary" href="#">Book</a>
+        <form action="{{ route('trip.book',$item->tour->slug) }}" method="POST">
+            @csrf
+            <input type="hidden" name="depID" value="{{$item->id}}">
+            <button class="btn btn-sm btn-primary" type="submit">Book</button>
+        </form>
     </td>
 </tr>
 @empty

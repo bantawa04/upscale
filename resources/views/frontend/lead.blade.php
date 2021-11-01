@@ -114,6 +114,7 @@
     </div>
 </div>
 
+@if ($tours->count() > 0)
 <div class="section-trips">
     <div class="container">
         <div class="trip-list">
@@ -160,7 +161,7 @@
         </div>
     </div>
 </div>
-
+@endif
 <div class="section-footer">
     <div class="container">
         <div class="text-center">
