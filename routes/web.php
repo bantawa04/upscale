@@ -131,7 +131,7 @@ Route::middleware('web')->group(function () {
     });
 
     Route::prefix('ajax')->group(function () {
-        Route::get('load-departures', 'FrontendController@ajaxDepartures');
+        Route::post('load-departures', 'FrontendController@ajaxDepartures');
     });
 
     Route::name('sub-page.')->prefix('page')->group(function () {
