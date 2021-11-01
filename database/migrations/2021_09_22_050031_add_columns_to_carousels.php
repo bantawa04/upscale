@@ -34,7 +34,7 @@ class AddColumnsToCarousels extends Migration
         });  
         Schema::table('settings', function (Blueprint $table) {
             $table->string('cover')->after('meta_description')->nullable();
-            $table->integer('fileId')->after('cover')->nullable();
+            $table->string('fileId')->after('cover')->nullable();
         });  
     }
 

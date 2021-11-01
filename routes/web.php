@@ -10,13 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::group(['prefix' => 'manage/laravel-filemanager', 'middleware' => ['auth']], function () {
-//     \UniSharp\LaravelFilemanager\Lfm::routes();
-// });
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'manage/laravel-filemanager', 'middleware' => ['auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
-
 Route::prefix('manage')->group(function () {
     Auth::routes(['register' => false]);
 
@@ -131,7 +127,7 @@ Route::middleware('web')->group(function () {
     });
 
     Route::prefix('ajax')->group(function () {
-        Route::post('load-departures', 'FrontendController@ajaxDepartures');
+        Route::get('load-departures', 'FrontendController@ajaxDepartures');
     });
 
     Route::name('sub-page.')->prefix('page')->group(function () {
@@ -141,5 +137,7 @@ Route::middleware('web')->group(function () {
     Route::prefix('newsletter')->group(function () {
         Route::post('/', 'NewsletterController@store');
     });
-
+    Route::get('site-map', function () {
+        return view('frontend.sitemap');
+    });
 });
