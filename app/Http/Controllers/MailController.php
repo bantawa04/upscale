@@ -7,12 +7,24 @@ use Illuminate\Http\Request;
 use App\Mail\Contact;
 use App\Mail\Enquiry;
 use App\Mail\Lead;
+use App\Setting;
+use Illuminate\Support\Facades\View;
 use Mail;
 use Session;
 use App\Tour;
 
 class MailController extends Controller
 {
+    public function __construct()
+    {
+        $setting = Setting::firstOrFail();
+        $metaImages = (object) [
+            'ogTag' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL') . '/tr:n-OGTag', $setting->cover),
+            'twitter' => str_replace(env('IMAGE_KIT_URL'), env('IMAGE_KIT_URL') . '/tr:n-twitter', $setting->cover)
+        ];
+        View::share('metaImages', $metaImages);
+    }
+    
     public function fromContact(Request $request)
     {
         $this->validate($request, [
@@ -20,7 +32,6 @@ class MailController extends Controller
             'email' => 'required|email',
             'subject' => 'required',
             'messageBody' => 'required',
-            'answer'      => 'required'
         ]);
         
         $token = $request->input('g-recaptcha-response');
@@ -130,9 +141,23 @@ class MailController extends Controller
     public function getLocation($ipAddress)
     {
 
-        $IPdata   = file_get_contents("http://api.ipstack.com/{$ipAddress}?access_key=6410177f4d950c7fa7b795a6bf27ac63");
-        $IPdata   = json_decode($IPdata);
-        $user_info = "IP: {$IPdata->ip} <br> [ Country: <b>{$IPdata->country_name}</b> | City: {$IPdata->city} ]";
+        // $url = "http://api.ipstack.com/{$ipAddress}?access_key=6410177f4d950c7fa7b795a6bf27ac63";
+        $url = "http://www.geoplugin.net/php.gp?ip={$ipAddress}&lang=en";
+        if (ini_get('allow_url_fopen')) {
+            $IPdata   = file_get_contents($url);
+        } else {
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_USERAGENT, 'geoPlugin PHP Class v1.1');
+			$IPdata = curl_exec($ch);
+			curl_close ($ch);
+        }
+        
+        $IPdata = unserialize($IPdata);
+        $user_info = "
+        IP: {$ipAddress} <br> 
+        [ Country: <b>{$IPdata['geoplugin_countryName']}</b> |  Region: {$IPdata['geoplugin_regionName']} | City: {$IPdata['geoplugin_city']} ]";
         return $user_info;
     }
 }
