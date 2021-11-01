@@ -36,7 +36,10 @@
 @import "footerV2";
 
 .navbar-gap {
-    padding-top: 60px;
+    @include media-breakpoint-down(xs) {
+        padding-top: 46px;
+      }
+    padding-top: 54px;
 }
 
 .banner {

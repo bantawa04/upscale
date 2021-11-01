@@ -30,6 +30,13 @@
         'xxl': map_get($grid-breakpoints, 'xxl'),
       )
     );
+    .trip-highlight__item{
+      @extend .col-sm-6 , .col-lg-auto , .px-4 , .my-4;
+      @include media-breakpoint-down(xs) {
+        margin-top: 8px !important;
+        margin-bottom: 8px !important;
+      }
+    }
 
     .icon {
       font-size: rem-calc(32px);
