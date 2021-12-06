@@ -11,7 +11,7 @@
                 <div class="card-body">
                     {!! Form::open( ['route'=> 'links.store', 'method' =>'POST'] ) !!}
 
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                         {{ Form::label('name', 'Name:')}}
                         <select name="para1" id="" class="form-control">
                             @foreach ($options as $item)
@@ -21,7 +21,7 @@
                         </select>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                         {{ Form::label('name', 'Name:')}}
                         <select name="para2" id="" class="form-control">
                             @foreach ($options as $item)
@@ -30,19 +30,19 @@
                         </select>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                         {{ Form::label('title', 'Title:')}}
                         {{ Form::text('title', null, array("class"=>'form-control')) }}
                     </div>
 
-                    {{-- <div class="col-12 mb-3">
-                        {{ Form::label('description', 'Description:')}}
-                        {{ Form::textarea('description', null, array("class"=>'form-control')) }}
-                    </div> --}}
+                    <div class="col-12 mb-3">
+                        {{ Form::label('content', 'Content:')}}
+                        {{ Form::textarea('content', null, array("class"=>'form-control', 'id' => 'content')) }}
+                    </div>
 
                     <h3>SEO Entities</h3>
 
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                         {{ Form::label('meta_title', 'Meta Title:')}}
                         {{ Form::text('meta_title', null, array("class"=>'form-control')) }}
                     </div>
@@ -62,4 +62,20 @@
 
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="https://cdn.tiny.cloud/1/8t3cusqbsgxjxtrx0cesy6fo1sdkesg3rsg41aky7y8m430h/tinymce/5/tinymce.min.js"></script>
+<script>
+        tinymce.init({
+          selector: 'textarea#content',
+          height: 300,
+          menubar: false,
+          plugins: [
+            'lists',
+          ],
+          toolbar: 
+          'bullist numlist outdent indent | bold italic underline strikethrough' +
+          'help',
+        });
+</script>
 @endsection

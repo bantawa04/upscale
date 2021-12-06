@@ -34,6 +34,13 @@
 </div>
 
 <div class="container">
+    @if($stuff->content)
+    <div class="row mt-4">
+         <div class="col">
+            {!! $category->content !!}
+        </div>
+    </div>
+    @endif
     <div class="trips row">
         @foreach ($results as $item)
         <div class="col-md-4 my-4">
