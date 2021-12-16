@@ -115,18 +115,26 @@
         </li>
         <li>
             <a href="{{ route('byCategory','heli-tour') }}">Heli Tour</a>
-            @foreach ($ht as $item)
+            <ul>
+                @foreach ($ht as $item)
+                <li>
+                    <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
+                </li>
+                @endforeach
+            </ul>
+        </li>
         <li>
-            <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
+            <a href="#">About UA</a>
+            <ul>
+                <li>
+                    <a href="{{ route('page.about-us') }}">About Us</a>
+                </li>
+                <li>
+                    <a href="{{ route('blog.posts') }}">Travel Blog</a>
+                </li>
+            </ul>
         </li>
-        @endforeach
-        </li>
-        <li>
-            <a href="{{ route('blog.posts') }}">Travel Blog</a>
-        </li>
-        <li>
-            <a href="{{ route('page.about-us') }}">About</a>
-        </li>
+
         <li>
             <a href="{{ route('page.contact') }}">Contact</a>
         </li>
@@ -287,13 +295,19 @@
                     @endforeach
                     </ul>
                 </li>
-                <li class="nav-item mx-3">
-                    <a href="{{ route('blog.posts') }}" class="nav-link">Travel&nbsp;Blog</a>
+                <li class="nav-item dropdown mx-3">
+                    <a href="#" class="nav-link dropdown-toggle">About UA</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ route('page.about-us') }}"class="dropdown-item" >About Us</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('blog.posts') }}" class="dropdown-item">Travel Blog</a>
+                        </li>
+                    </ul>
                 </li>
 
-                <li class="nav-item mx-3">
-                    <a href="{{ route('page.about-us') }}" class="nav-link rounded-pill link-contact px-3">About</a>
-                </li>
+
                 <li class="nav-item mx-3">
                     <a href="{{ route('page.contact') }}" class="nav-link rounded-pill link-contact px-3">Contact</a>
                 </li>
