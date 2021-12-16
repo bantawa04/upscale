@@ -295,4 +295,11 @@ class FrontendController extends Controller
         $tours = Tour::where('status', 1)->paginate(12);
         return view('frontend.packages')->withResults($tours);
     }
+
+    public function planTrip()
+    {
+        $tours = Tour::where('status', 1)->get();
+        return view('frontend.planTrip')->withTours($tours);
+    }  
+
 }

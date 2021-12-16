@@ -62,5 +62,8 @@
     background-color: #278e5f !important;
 }
 .datepicker--day-name{
-    color: #2b9b68;
+    color: #2b9b68 !important;
+}
+.datepicker--cell.-current-{
+    color: $primary !important;
 }
