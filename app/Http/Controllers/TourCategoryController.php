@@ -67,6 +67,7 @@ class TourCategoryController extends Controller
         $category = new TourCategory;
         $category->name = $request->name;
         $category->description = $request->description;
+        $category->content = $request->content;
         $category->path = $request->path;
         $category->thumb = $request->thumb;
         $category->thumb1 = $request->thumb1;
@@ -118,6 +119,7 @@ class TourCategoryController extends Controller
         $category = TourCategory::findOrFail($id);
         $category->name = $request->name;
         $category->description = $request->description;
+        $category->content = $request->content;
         $category->meta_title = $request->meta_title;
         $category->meta_description = $request->meta_description;
         if (!empty($request->featured)) {

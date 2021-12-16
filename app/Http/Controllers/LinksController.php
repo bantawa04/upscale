@@ -53,7 +53,7 @@ class LinksController extends Controller
         $link->para_1 = $request->para1;
         $link->para_2 = $request->para2;
         $link->title = $request->title;
-        // $link->description = $request->description;
+        $link->content = $request->content;
         $link->meta_title = $request->meta_title;
         $link->meta_description = $request->meta_description;
         $link->save();
@@ -104,7 +104,7 @@ class LinksController extends Controller
         $link->para_1 = $request->para1;
         $link->para_2 = $request->para2;
         $link->title = $request->title;
-        // $link->description = $request->description;
+        $link->content = $request->content;
         $link->meta_title = $request->meta_title;
         $link->meta_description = $request->meta_description;
         $link->save();
