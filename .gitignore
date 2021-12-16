@@ -5,6 +5,7 @@
 /public/img/*
 /public/sitemap.xml
 composer.lock
+package-lock.json
 .env
 .env.backup
 .phpunit.result.cache
