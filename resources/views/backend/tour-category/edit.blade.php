@@ -17,7 +17,10 @@
 
             {{ Form::label('description', 'Description:')}}
             {{ Form::textarea('description', null, array("class"=>'form-control mb-3')) }}
-
+            
+            {{ Form::label('content', 'Content:')}}
+            {{ Form::textarea('content', null, array("class"=>'form-control mb-3', 'id' => 'content')) }}
+            
             @include('backend.partials._media')
             @include('backend.partials.metaTags')
             {{ Form::submit('Update', ['class'=> 'btn btn-success btn-block mt-3'])}}
@@ -27,3 +30,20 @@
     </div>
 </div>
 @endsection
+@section('scripts')
+<script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+@endsection
+@section('styles')
+<style>
+.ck-editor__editable_inline {
+    min-height: 400px;
+}
+</style>
+@stop
