@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Mail\Contact;
 use App\Mail\Enquiry;
 use App\Mail\Lead;
+use App\Mail\PlanTrip;
 use App\Setting;
 use Illuminate\Support\Facades\View;
 use Mail;
@@ -24,7 +25,7 @@ class MailController extends Controller
         ];
         View::share('metaImages', $metaImages);
     }
-    
+
     public function fromContact(Request $request)
     {
         $this->validate($request, [
@@ -33,7 +34,7 @@ class MailController extends Controller
             'subject' => 'required',
             'messageBody' => 'required',
         ]);
-        
+
         $token = $request->input('g-recaptcha-response');
         if (strlen($token) > 0) {
             $user_info = $this->getLocation($request->ip());
@@ -49,8 +50,7 @@ class MailController extends Controller
             Mail::send(new Contact($data));
             Session::flash('success', 'Email sent sucessfully!');
             return redirect()->back();
-        }
-        else{
+        } else {
             Session::flash('error', 'Verification failed !');
             return redirect()->back();
         }
@@ -138,6 +138,89 @@ class MailController extends Controller
         return view('frontend.thank-you');
     }
 
+    public function planTripPost(Request $request)
+    {
+        try {
+            $data = array(
+                'subject' => 'New trip plan request',
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->telephone,
+                'country' => $request->country,
+            );
+            //travel type
+            switch ($request->travelType) {
+                case '1':
+                    $data['travelType'] = 'Solo';
+                    break;
+                case '2':
+                    $data['travelType'] = 'Couple/2 person';
+                    break;
+                case '3':
+                    $data['travelType'] = 'Family';
+                    break;
+                case '4':
+                    $data['travelType'] = 'Group';
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+            // if ($request->adult) {
+                $data['adult'] = $request->adult;
+            // }
+            // if ($request->children) {
+                $data['children'] = $request->children;
+            // }
+            //travel date
+            switch ($request->travelDate) {
+                case '1':
+                    $data['travelDate'] = 'I have fixed travel date.';
+                    break;
+                case '2':
+                    $data['travelDate'] = 'This is my approx. travel date';
+                    break;
+                case '3':
+                    $data['travelDate'] = 'We are still planning';
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+
+            // if ($request->startDate) {
+                $data['startDate'] = $request->startDate;
+            // }
+            // if ($request->endDate) {
+                $data['endDate'] = $request->endDate;
+            // }
+
+            if ($request->haveTrip) {
+                $data['haveTrip'] = "I have already fixed my tour destination.";
+                $tour = Tour::where('id', '=', $request->tripNameSelect)->first(['name', 'days']);
+                $data['tripName'] = $tour->days . ' Days(s) - ' . $tour->name;
+            } else {
+                $data['haveTrip'] = "I need guidence on planning my trip.";
+                $data['tripName'] = $request->tripNameInput;
+            }
+            $data['description'] = $request->description;
+
+            $data['user_info'] = $this->getLocation($request->ip());;
+            Mail::send(new PlanTrip($data));
+            //return json response of success and status 200
+            return response()->json(['status'=>'success', 'message' => 'Request sent successfully!'], 200);
+        } catch (\Throwable $th) {
+            $e=[];
+            $e['message']=$th->getMessage();
+            $e['file']=$th->getFile();
+            $e['line']=$th->getLine();
+            $e['trace']=$th->getTrace();
+            return $e;
+            //return json response of error and status 500
+            return response()->json(['error' => 'Something went wrong!'], 500);
+        }
+    }
+
     public function getLocation($ipAddress)
     {
 
@@ -146,14 +229,14 @@ class MailController extends Controller
         if (ini_get('allow_url_fopen')) {
             $IPdata   = file_get_contents($url);
         } else {
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_USERAGENT, 'geoPlugin PHP Class v1.1');
-			$IPdata = curl_exec($ch);
-			curl_close ($ch);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'geoPlugin PHP Class v1.1');
+            $IPdata = curl_exec($ch);
+            curl_close($ch);
         }
-        
+
         $IPdata = unserialize($IPdata);
         $user_info = "
         IP: {$ipAddress} <br> 

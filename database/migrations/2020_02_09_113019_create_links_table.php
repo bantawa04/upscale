@@ -21,6 +21,7 @@ class CreateLinksTable extends Migration
             $table->text('description');
             $table->string('meta_title');
             $table->text('meta_description');
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }

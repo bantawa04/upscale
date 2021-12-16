@@ -137,7 +137,13 @@ Route::middleware('web')->group(function () {
     Route::prefix('newsletter')->group(function () {
         Route::post('/', 'NewsletterController@store');
     });
+
+    Route::get('plan-trip','FrontendController@planTrip')->name('planTrip');
+
     Route::get('site-map', function () {
         return view('frontend.sitemap');
     });
+
+    //handel post route
+    Route::post('/planTrip', 'MailController@planTripPost')->name('planTripPost');
 });

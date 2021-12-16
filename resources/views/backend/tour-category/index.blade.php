@@ -56,6 +56,11 @@
                         {{ Form::textarea('description', null, array("class"=>'form-control')) }}
                     </div>
 
+                    <div class="col-12 mb-3">
+                        {{ Form::label('content', 'Content:')}}
+                        {{ Form::textarea('content', null, array("class"=>'form-control', 'id' => 'content')) }}
+                    </div>
+                    
                     <div class="col-12">
                         @include('backend.partials._media')
                     </div>
@@ -106,4 +111,19 @@
         })
     });
 </script>
+<script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 @endsection
+@section('styles')
+<style>
+.ck-editor__editable_inline {
+    min-height: 400px;
+}
+</style>
+@stop
