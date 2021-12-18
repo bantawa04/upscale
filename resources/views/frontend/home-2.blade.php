@@ -128,9 +128,6 @@
                             <div class="article-title font-weight-bold">
                                 <a href="{{ route('blog.singlePost',[$post->category->slug, $post->slug]) }}">{{$post->title}}</a>
                             </div>
-                            <div class="article-description">
-                                {!!substr($post->meta_description, 0, 80) !!}{!! strlen($post->meta_description) > 80 ? '...' : "" !!}
-                            </div>
                             <div>
                                 <a href="{{ route('blog.singlePost',[$post->category->slug, $post->slug]) }}"
                                     class="detail-link">

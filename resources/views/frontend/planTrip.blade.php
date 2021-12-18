@@ -210,7 +210,7 @@
                                             <select class="form-control" id="tripNameSelect" name="tripNameSelect">
                                                 <option value="">Select trip</option>
                                                 @foreach ($tours as $tour)
-                                                <option value="{{$tour->id}}">{{$tour->days.' Day(s)'.$tour->name}}</option>
+                                                <option value="{{$tour->id}}">{{$tour->days.' Day(s)'.$tour->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
