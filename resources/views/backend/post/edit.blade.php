@@ -39,7 +39,11 @@
                             @enderror
                         </div>
                         <div class="col-6">
-                            {{ Form::select('tags', $tags , null, ['placeholder' => 'Tags', 'class' => 'form-control select2'])}}
+                            <select class="tags form-control" name="tags[]" multiple="multiple" id="tags">
+                                @foreach($tags as $tag)
+                                <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                @endforeach
+                            </select>
                             @error('tags')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror

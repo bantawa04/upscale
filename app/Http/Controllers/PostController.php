@@ -53,7 +53,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        // DB::beginTransaction();
+        // dd($request->all());
 
         try {
             $this->validate($request, [
@@ -86,7 +87,7 @@ class PostController extends Controller
             // dd($request->all());
             $post->tags()->sync($request->tags, false);
             
-            DB::commit();
+            // DB::commit();
             return redirect()->route('post.show', $post->id);
         } catch (\Exception $th) {
             DB::rollback();

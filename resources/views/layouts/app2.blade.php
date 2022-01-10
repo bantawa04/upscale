@@ -10,7 +10,7 @@
 
     <meta name="title" content="@yield('mtitle','Upscale Adventures|Proper Holidays, Pure Adventures')">
     <meta name="description"
-        content="@yield('description','Upscale Adventures is a unique and independent travel partner; we wish to Empower, Educate, and Encourage you to have real-life experiences.')">
+        content="@yield('description','Start your dream trip on your preferred travel style Be It leisure Holidays or any adventure we stay upscale & help you get the most out of the tours.')">
     <meta name="robots" content="@yield('robot','index, follow')">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="English">
@@ -21,7 +21,7 @@
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="@yield('title','Upscale Adventures|Proper Holidays, Pure Adventures')">
     <meta itemprop="description"
-        content="@yield('description','Upscale Adventures is a unique and independent travel partner; we wish to Empower, Educate, and Encourage you to have real-life experiences.')">
+        content="@yield('description','Start your dream trip on your preferred travel style Be It leisure Holidays or any adventure we stay upscale & help you get the most out of the tours.')">
     <meta itemprop="image" content="@yield('ogImage',asset('apple-icon-180x180.png"'))">  
 
     <link rel="apple-touch-icon" sizes="57x57" href="{{env('IMAGE_KIT_URL')}}/apple-icon-57x57.png">
