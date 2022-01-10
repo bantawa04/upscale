@@ -3,7 +3,7 @@
 <meta name="description" content="{{$description ? $description : 'Start your dream trip on your preferred travel style Be It leisure Holidays or any adventure we stay upscale & help you get the most out of the tours.'}}">
 <!-- OG Tags-->
 <meta property="og:type" content="product">
-<meta property="og:title" content="{{$mtitle ? $mtitle.'|Upscale Adventures' : 'Upscale Adventures|Proper Holidays, Pure Adventures'}}">
+<meta property="og:title" content="{{$mtitle ? $mtitle : 'Upscale Adventures|Proper Holidays, Pure Adventures'}}">
 <meta property="og:description" content="{{$description ? $description : 'Start your dream trip on your preferred travel style Be It leisure Holidays or any adventure we stay upscale & help you get the most out of the tours.'}}">
 <meta property="og:url" content="{{url()->current()}}">
 <meta property="og:image" content="{{$og ? $og : $metaImages->ogTag }}">
