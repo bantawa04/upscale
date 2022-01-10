@@ -88,6 +88,9 @@
                 padding: 0 20px;
                 position: relative;
                 .fieldset-content {
+                    .noShow{
+                        visibility: hidden;
+                    }
                     .travelType {
                         @extend .my-3;
                         @extend .px-2;

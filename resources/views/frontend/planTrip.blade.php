@@ -35,7 +35,7 @@
                                     </div>
                                     <div class=" col-6 col-md-3">
                                         <div class="travelType text-center">
-                                            <input type="radio" name="travelType" id="travelTypeSolo" value="1">
+                                            <input type="radio" name="travelType" id="travelTypeSolo" value="1" class="noShow">
                                             <label for="travelTypeSolo">
                                                 <div class="travelTypeImage">
                                                     <i class="fas fa-user single fa-5x"></i>
@@ -46,7 +46,7 @@
                                     </div>
                                     <div class=" col-6 col-md-3">
                                         <div class="travelType text-center">
-                                            <input type="radio" name="travelType" id="travelTypeCouple" value="2">
+                                            <input type="radio" name="travelType" id="travelTypeCouple" value="2" class="noShow">
                                             <label for="travelTypeCouple">
                                                 <div class="travelTypeImage">
                                                     <i class="fas fa-user single fa-5x"></i>
@@ -57,7 +57,7 @@
                                     </div>
                                     <div class=" col-6 col-md-3">
                                         <div class="travelType text-center">
-                                            <input type="radio" name="travelType" id="travelTypeFamily" value="3">
+                                            <input type="radio" name="travelType" id="travelTypeFamily" value="3" class="noShow">
                                             <label for="travelTypeFamily">
                                                 <div class="travelTypeImage">
                                                     <i class="fas fa-user single fa-5x"></i>
@@ -68,7 +68,7 @@
                                     </div>
                                     <div class=" col-6 col-md-3">
                                         <div class="travelType text-center">
-                                            <input type="radio" name="travelType" id="travelTypeGroup" value="4">
+                                            <input type="radio" name="travelType" id="travelTypeGroup" value="4" class="noShow">
                                             <label for="travelTypeGroup">
                                                 <div class="travelTypeImage">
                                                     <i class="fas fa-user single fa-5x"></i>
@@ -112,8 +112,7 @@
 
                                     <div class=" col-12 col-md-4">
                                         <div class="travelDate text-center">
-                                            <input type="radio" name="travelDate" id="travelDatehave" value="1"
-                                                >
+                                            <input type="radio" name="travelDate" id="travelDatehave" value="1" class="noShow" >
                                             <label for="travelDatehave">
                                                 <div class="travelDateImage">
                                                     <i class="far fa-calendar-check fa-5x"></i>
@@ -125,7 +124,7 @@
                                     <div class=" col-12 col-md-4">
                                         <div class="travelDate text-center">
                                             <input type="radio" name="travelDate" id="travelDateapprox"
-                                                value="2" >
+                                                value="2" class="noShow">
                                             <label for="travelDateapprox">
                                                 <div class="travelDateImage">
                                                     <i class="far fa-calendar-alt fa-5x"></i>
@@ -137,7 +136,7 @@
                                     <div class=" col-12 col-md-4">
                                         <div class="travelDate text-center">
                                             <input type="radio" name="travelDate" id="travelDateplanning"
-                                                value="3" >
+                                                value="3"class="noShow" >
                                             <label for="travelDateplanning">
                                                 <div class="travelDateImage">
                                                     <i class="far fa-calendar-times fa-5x"></i>
