@@ -194,7 +194,7 @@
                 <li class="nav-item dropdown mx-3">
                     <a href="{{ route('byCategory','climbing') }}" class="nav-link dropdown-toggle">Peak Climbing</a>
                     <ul class="dropdown-menu">
-                        @foreach ($tibet as $item)
+                        @foreach ($climb as $item)
                         <li>
                             <a href="{{ route('trip.show',$item->slug) }}"
                                 class="dropdown-item">{{$item->name}}</a>
