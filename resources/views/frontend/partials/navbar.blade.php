@@ -4,67 +4,12 @@
             <a href="/">Home</a>
         </li>
         <li>
-            <a href="{{ route('country', 'nepal') }}">Nepal</a>
+            <a href="{{ route('byCategory', 'trekking') }}">Trekking</a>
             <ul>
                 <li>
-                    <a href="{{ route('countryCategory',['nepal','trekking']) }}">Trekking</a>
+                    <a href="{{ route('categoryRegion',['trekking','annapurna-region']) }}">Annapurna Region</a>
                     <ul>
-                        <li>
-                            <a href="{{ route('categoryRegion',['trekking','annapurna-region']) }}">Annapurna Region</a>
-                            <ul>
-                                @foreach ($as as $item)
-                                <li>
-                                    <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="" {{ route('categoryRegion',['trekking','everest-region']) }}">Everest Region</a>
-                            <ul>
-                                @foreach ($es as $item)
-                                <li>
-                                    <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="{{ route('categoryRegion',['trekking','manaslu-region']) }}">Manaslu Region</a>
-                            <ul>
-                                @foreach ($ms as $item)
-                                <li>
-                                    <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="{{ route('categoryRegion',['trekking','langtang-region']) }}">Langtang Region</a>
-                            <ul>
-                                @foreach ($ls as $item)
-                                <li>
-                                    <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="{{ route('categoryRegion',['trekking','off-beaten-path']) }}">Off Beaten Path</a>
-                            <ul>
-                                @foreach ($off as $item)
-                                <li>
-                                    <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="{{ route('byCategory','climbing') }}">Peak Climbing</a>
-                    <ul>
-                        @foreach ($climb as $item)
+                        @foreach ($as as $item)
                         <li>
                             <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
                         </li>
@@ -72,9 +17,9 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="{{ route('byCategory','excursion') }}">Excursion</a>
+                    <a href=" {{ route('categoryRegion',['trekking','everest-region']) }}">Everest Region</a>
                     <ul>
-                        @foreach ($ex as $item)
+                        @foreach ($es as $item)
                         <li>
                             <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
                         </li>
@@ -82,31 +27,41 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="{{ route('byCategory', 'nature-wildlife') }}">Nature &amp; Wildlife</a>
+                    <a href="{{ route('categoryRegion',['trekking','manaslu-region']) }}">Manaslu Region</a>
                     <ul>
-                        @foreach ($na as $item)
+                        @foreach ($ms as $item)
                         <li>
                             <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
                         </li>
                         @endforeach
                     </ul>
+                </li>
                 <li>
+                    <a href="{{ route('categoryRegion',['trekking','langtang-region']) }}">Langtang Region</a>
+                    <ul>
+                        @foreach ($ls as $item)
+                        <li>
+                            <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ route('categoryRegion',['trekking','off-beaten-path']) }}">Off Beaten Path</a>
+                    <ul>
+                        @foreach ($off as $item)
+                        <li>
+                            <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </li>
             </ul>
         </li>
         <li>
-            <a href="{{ route('country', 'tibet') }}">Tibet</a>
+            <a href="{{ route('byCategory','climbing') }}">Peak Climbing</a>
             <ul>
-                @foreach ($tibet as $item)
-                <li>
-                    <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
-                </li>
-                @endforeach
-            </ul>
-        </li>
-        <li>
-            <a href="{{ route('country', 'bhutan') }}">Bhutan</a>
-            <ul>
-                @foreach ($bhutan as $item)
+                @foreach ($climb as $item)
                 <li>
                     <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
                 </li>
@@ -117,6 +72,21 @@
             <a href="{{ route('byCategory','heli-tour') }}">Heli Tour</a>
             <ul>
                 @foreach ($ht as $item)
+                <li>
+                    <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
+                </li>
+                @endforeach
+            </ul>
+        </li>
+        <li>
+            <a href="#">Short Tours</a>
+            <ul>
+                @foreach ($ex as $item)
+                <li>
+                    <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
+                </li>
+                @endforeach
+                @foreach ($na as $item)
                 <li>
                     <a href="{{ route('trip.show',$item->slug) }}">{{$item->name}}</a>
                 </li>
@@ -151,83 +121,30 @@
         </button>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mx-auto flex-grow-1 justify-content-around">
-                <li class="nav-item mx-3">
-                    <a href="{{ url('') }}" class="nav-link">Home</a>
+                <li class="nav-item mx-1">
+                    <a href="{{ url('/') }}" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item dropdown mx-3">
-                    <a href="{{ route('country', 'nepal') }}" class="nav-link dropdown-toggle">Nepal</a>
+                <li class="nav-item dropdown mx-1">
+                    <a href="{{ route('byCategory','trekking') }}" class="nav-link dropdown-toggle">Trekking</a>
                     <ul class="dropdown-menu dropright">
                         <li>
-                            <a href="{{ route('countryCategory',['nepal','trekking']) }}"
-                                class="dropdown-item dropdown-toggle">Trekking</a>
-                            <ul class="dropdown-menu dropright">
+                            <a href="{{ route('categoryRegion',['trekking','annapurna-region']) }}"
+                                class="dropdown-item dropdown-toggle">Annapurna Region</a>
+                            <ul class="dropdown-menu">
+                                @foreach ($as as $item)
                                 <li>
-                                    <a href="{{ route('categoryRegion',['trekking','annapurna-region']) }}"
-                                        class="dropdown-item dropdown-toggle">Annapurna Region</a>
-                                    <ul class="dropdown-menu">
-                                        @foreach ($as as $item)
-                                        <li>
-                                            <a href="{{ route('trip.show',$item->slug) }}"
-                                                class="dropdown-item">{{$item->name}}</a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
+                                    <a href="{{ route('trip.show',$item->slug) }}"
+                                        class="dropdown-item">{{$item->name}}</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('categoryRegion',['trekking','everest-region']) }}"
-                                        class="dropdown-item dropdown-toggle">Everest Region</a>
-                                    <ul class="dropdown-menu">
-                                        @foreach ($es as $item)
-                                        <li>
-                                            <a href="{{ route('trip.show',$item->slug) }}"
-                                                class="dropdown-item">{{$item->name}}</a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="{{ route('categoryRegion',['trekking','manaslu-region']) }}"
-                                        class="dropdown-item dropdown-toggle">Manaslu Region</a>
-                                    <ul class="dropdown-menu">
-                                        @foreach ($ms as $item)
-                                        <li>
-                                            <a href="{{ route('trip.show',$item->slug) }}"
-                                                class="dropdown-item">{{$item->name}}</a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="{{ route('categoryRegion',['trekking','langtang-region']) }}"
-                                        class="dropdown-item dropdown-toggle">Langtang Region</a>
-                                    <ul class="dropdown-menu">
-                                        @foreach ($ls as $item)
-                                        <li>
-                                            <a href="{{ route('trip.show',$item->slug) }}"
-                                                class="dropdown-item">{{$item->name}}</a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="{{ route('categoryRegion',['trekking','off-beaten-path']) }}"
-                                        class="dropdown-item dropdown-toggle">Off Beaten Path</a>
-                                    <ul class="dropdown-menu">
-                                        @foreach ($off as $item)
-                                        <li>
-                                            <a href="{{ route('trip.show',$item->slug) }}"
-                                                class="dropdown-item">{{$item->name}}</a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
+                                @endforeach
                             </ul>
                         </li>
+
                         <li>
-                            <a href="{{ route('byCategory','climbing') }}"
-                                class="dropdown-item dropdown-toggle">Peak Climbing</a>
+                            <a href="{{ route('categoryRegion',['trekking','everest-region']) }}"
+                                class="dropdown-item dropdown-toggle">Everest Region</a>
                             <ul class="dropdown-menu">
-                                @foreach ($climb as $item)
+                                @foreach ($es as $item)
                                 <li>
                                     <a href="{{ route('trip.show',$item->slug) }}"
                                         class="dropdown-item">{{$item->name}}</a>
@@ -236,10 +153,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="{{ route('byCategory','excursion') }}"
-                                class="dropdown-item dropdown-toggle">Excursion</a>
+                            <a href="{{ route('categoryRegion',['trekking','manaslu-region']) }}"
+                                class="dropdown-item dropdown-toggle">Manaslu Region</a>
                             <ul class="dropdown-menu">
-                                @foreach ($ex as $item)
+                                @foreach ($ms as $item)
                                 <li>
                                     <a href="{{ route('trip.show',$item->slug) }}"
                                         class="dropdown-item">{{$item->name}}</a>
@@ -248,58 +165,73 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="{{ route('byCategory','nature-wildlife') }}"
-                                class="dropdown-item dropdown-toggle">Nature & Wildlife</a>
+                            <a href="{{ route('categoryRegion',['trekking','langtang-region']) }}"
+                                class="dropdown-item dropdown-toggle">Langtang Region</a>
                             <ul class="dropdown-menu">
-                                @foreach ($na as $item)
+                                @foreach ($ls as $item)
                                 <li>
                                     <a href="{{ route('trip.show',$item->slug) }}"
                                         class="dropdown-item">{{$item->name}}</a>
                                 </li>
                                 @endforeach
                             </ul>
+                        </li>
                         <li>
+                            <a href="{{ route('categoryRegion',['trekking','off-beaten-path']) }}"
+                                class="dropdown-item dropdown-toggle">Off Beaten Path</a>
+                            <ul class="dropdown-menu">
+                                @foreach ($off as $item)
+                                <li>
+                                    <a href="{{ route('trip.show',$item->slug) }}"
+                                        class="dropdown-item">{{$item->name}}</a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </li>
+
                     </ul>
                 </li>
-                <li class="nav-item dropdown mx-3">
-                    <a href="{{ route('country', 'tibet') }}" class="nav-link dropdown-toggle">Tibet</a>
+                <li class="nav-item dropdown mx-1">
+                    <a href="{{ route('byCategory','climbing') }}" class="nav-link dropdown-toggle">Peak Climbing</a>
                     <ul class="dropdown-menu">
-                        @foreach ($tibet as $item)
+                        @foreach ($climb as $item)
                         <li>
-                            <a href="{{ route('trip.show',$item->slug) }}"
-                                class="dropdown-item">{{$item->name}}</a>
+                            <a href="{{ route('trip.show',$item->slug) }}" class="dropdown-item">{{$item->name}}</a>
                         </li>
                         @endforeach
 
                     </ul>
                 </li>
-                <li class="nav-item dropdown mx-3">
-                    <a href="{{ route('country', 'bhutan') }}" class="nav-link dropdown-toggle">Bhutan</a>
+                <li class="nav-item dropdown mx-1">
+                    <a href="{{ route('byCategory', 'heli-tour') }}" class="nav-link dropdown-toggle">Heli Tour</a>
                     <ul class="dropdown-menu">
-                        @foreach ($bhutan as $item)
+                        @foreach ($ht as $item)
                         <li>
-                            <a href="{{ route('trip.show',$item->slug) }}"
-                                class="dropdown-item">{{$item->name}}</a>
+                            <a href="{{ route('trip.show',$item->slug) }}" class="dropdown-item">{{$item->name}}</a>
                         </li>
                         @endforeach
                     </ul>
                 </li>
-                <li class="nav-item dropdown mx-3">
-                    <a href="{{ route('byCategory', 'heli-tour') }}" class="nav-link dropdown-toggle">Heli Tour</a>
+                <li class="nav-item dropdown mx-1">
+                    <a href="#" class="nav-link dropdown-toggle">Short Tours</a>
                     <ul class="dropdown-menu">
-                    @foreach ($ht as $item)
-                    <li>
-                        <a href="{{ route('trip.show',$item->slug) }}"
-                            class="dropdown-item">{{$item->name}}</a>
-                    </li>
-                    @endforeach
+                        @foreach ($ex as $item)
+                        <li>
+                            <a href="{{ route('trip.show',$item->slug) }}" class="dropdown-item">{{$item->name}}</a>
+                        </li>
+                        @endforeach
+                        @foreach ($na as $item)
+                        <li>
+                            <a href="{{ route('trip.show',$item->slug) }}" class="dropdown-item">{{$item->name}}</a>
+                        </li>
+                        @endforeach
                     </ul>
                 </li>
-                <li class="nav-item dropdown mx-3">
+                <li class="nav-item dropdown mx-1">
                     <a href="#" class="nav-link dropdown-toggle">About UA</a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="{{ route('page.about-us') }}"class="dropdown-item" >About Us</a>
+                            <a href="{{ route('page.about-us') }}" class="dropdown-item">About Us</a>
                         </li>
                         <li>
                             <a href="{{ route('blog.posts') }}" class="dropdown-item">Travel Blog</a>
@@ -308,8 +240,11 @@
                 </li>
 
 
-                <li class="nav-item mx-3">
+                <li class="nav-item mx-1">
                     <a href="{{ route('page.contact') }}" class="nav-link rounded-pill link-contact px-3">Contact</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a href="{{ route('planTrip') }}" class="nav-link navBtn  px-3">Plan Trip</a>
                 </li>
             </ul>
         </div>

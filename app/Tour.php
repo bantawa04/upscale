@@ -5,11 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use DB;
+use Laravel\Scout\Searchable;
 
 class Tour extends Model
 {
     protected $table='tours';
     use Sluggable;
+    use Searchable;
 
     /**
      * Return the sluggable configuration array for this model.
@@ -119,5 +121,10 @@ class Tour extends Model
     public function getImage($tag){
         $url = $this->slides[0]->path;
         return str_replace('tr:n-tSlide',$tag, $url);
+    }
+    
+    public function isPublished()
+    {
+        return $this->status === 1;
     }
 }

@@ -15,7 +15,8 @@
     <meta name="language" content="English">
     <meta name="revisit-after" content="1 days">
     <meta name="author" content="Upscale Adventures">
-    
+    <link rel="alternate" hreflang="x-default" href="{{ url()->current()}}/" />
+    <link rel=“canonical”  href="{{ url()->current()}}/" />
     <link rel="apple-touch-icon" sizes="57x57" href="{{env('IMAGE_KIT_URL')}}/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="{{env('IMAGE_KIT_URL')}}/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="{{env('IMAGE_KIT_URL')}}/apple-icon-72x72.png">
@@ -45,18 +46,22 @@
     <!-- Styles -->
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
     @stack('styles')
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153503827-1"></script>
+    <!-- Global site tag (gtag.js) - Google Ads: 10864276212 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-10864276212"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-153503827-1');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'AW-10864276212');
     </script>
 </head>
 
 <body class="template-{{ $viewName }}">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WV4PK97"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     @if (Route::currentRouteName() != 'page.lead')
     @include('frontend.partials.navbar')
     @endif
@@ -66,6 +71,9 @@
     @endif
 </body>
 <script src="{{env('IMAGE_KIT_URL')}}/js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
+<script src="https://ik.imagekit.io/azq00gyzbcp/js/agolia.js"></script>
 @stack('scripts')
 
 </html>

@@ -24,7 +24,7 @@
                 </div>
                 <hr class="footer-divider">
                 <div class="row">
-                    <div class="col-sm-6 col-lg-3 my-4 footer-content">
+                    <div class="col-sm-6 col-lg-4 my-4 footer-content">
                         <div class="footer-heading-2">Travel Style</div>
                         @foreach ($categories as $item)
                         <div class="footer-link-wrapper">
@@ -32,7 +32,7 @@
                         </div>
                         @endforeach
                     </div>
-                    <div class="col-sm-6 col-lg-3 my-4 footer-content">
+                    <div class="col-sm-6 col-lg-4 my-4 footer-content">
                         <div class="footer-heading-2">About</div>
                         <div><a href="{{ url('about-us') }}">About us</a></div>
                         {{-- <div class="footer-link-wrapper"><a href="#">Awards</a></div> --}}
@@ -45,19 +45,7 @@
                         {{-- <div class="footer-link-wrapper"><a href="#">Reviews</a></div> --}}
                         <div class="footer-link-wrapper"><a href="{{ route('blog.posts') }}">Travel Blog</a></div>
                     </div>
-                    <div class="col-sm-6 col-lg-3 my-4 footer-content">
-                        <div class="footer-heading-2">Useful links</div>
-                        <div class="footer-link-wrapper"><a href="{{ route('destination') }}">All Destinations</a></div>
-                        <div class="footer-link-wrapper"><a href="{{ route('activities') }}">All Activities</a></div>
-                        @foreach ($right as $item)
-                        <div class="footer-link-wrapper"><a
-                                href="{{ route('sub-page.get',$item->slug) }}">{{$item->title}}</a></div>
-                        @endforeach
-                        {{-- <div class="footer-link-wrapper"><a href="#">Private Booking vs Group Join</a></div>
-                        <div class="footer-link-wrapper"><a href="#">Travel Insurances</a></div>
-                        <div class="footer-link-wrapper"><a href="#">Privacy &amp; Disclaimer</a></div> --}}
-                    </div>
-                    <div class="col-sm-6 col-lg-3 my-4 footer-content footer-details p-3">
+                    <div class="col-sm-6 col-lg-4 my-4 footer-content footer-details p-3">
                         <img src="{{ env('IMAGE_KIT_URL')}}/images/logo.png" class="img-fluid pr-4"
                             alt="Upscale Adventures">
                         <div class="footer-address mt-3">
@@ -117,7 +105,7 @@
                     </a>
                 </div>
 
-                <div class="alert" role="alert" id="notification">
+                <div class="alert" role="alert" id="notification" style="display: none">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -132,7 +120,8 @@
         </div>
     </div>
 </div>
+@push('scripts')
 <script>
 function checkSubscription(){localStorage.getItem("subscribed")&&(document.getElementById("newsletter").style.display="none")}document.getElementById("submitNewsletter").onclick=function(e){e.preventDefault();let t=document.getElementById("firstName").value,n=document.getElementById("lastName").value,o=document.getElementById("email").value;if(t&&n&&o){let e=window.location.origin,i=document.querySelector('meta[name="csrf-token"]').content;fetch(e+"/newsletter",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json, text-plain, */*","X-Requested-With":"XMLHttpRequest","X-CSRF-TOKEN":i},credentials:"same-origin",body:JSON.stringify({fName:t,lName:n,email:o})}).then(e=>e.json()).then(e=>{if(200===e.status){localStorage.setItem("subscribed",!0);let t=document.getElementById("notification");t.classList.toggle("alert-secondary"),t.style.display="block",t.insertAdjacentHTML("afterbegin","<strong>"+e.statement+"</strong>"),checkSubscription(),setTimeout(function(){t.style.display="none"},3e3)}else notification.classList.toggle("alert-danger"),notification.insertAdjacentHTML("afterbegin","<strong>"+e.statement+"</strong>")}).catch(e=>{console.log(e)})}},window.onload=checkSubscription;
-
 </script>
+@endpush

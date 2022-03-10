@@ -120,6 +120,10 @@
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 <script src="https://cdn.tiny.cloud/1/8t3cusqbsgxjxtrx0cesy6fo1sdkesg3rsg41aky7y8m430h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
+    $(function(){
+         $('#tags').select2();
+    });
+    $('.select2-multi').select2().val({{ json_encode($post->tags()->pluck('tags.id')->toArray() )}}).trigger('change');
     var editor_config = {
       path_absolute : "/",
       selector: "textarea#my-editor",

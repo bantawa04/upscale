@@ -41,6 +41,7 @@
                         </div>
                     </div>
                 </div>
+                @break
                 @endif
                 @endforeach
             </div>
