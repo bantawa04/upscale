@@ -41,6 +41,17 @@ class TourController extends Controller
         $this->countries = $this->selectOption(Country::all());
         $this->locations = $this->selectOption(Location::all());
     }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function shouldBeSearchable()
+    {
+        return $this->isPublished();
+    }
+    
     /**
      * Display a listing of the resource.
      *

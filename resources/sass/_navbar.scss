@@ -21,6 +21,24 @@
   .nav-link {
     color: #ffffff;
   }
+  .navBtn{
+    background-color: #32B67A;
+    border-radius: 800px;
+    color: white;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    &--scrolled{
+      border: 2px solid white;
+      color: white;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      border-radius: 800px;
+    }
+  }
+  .dropdown-item:focus, .dropdown-item:hover {
+    background-color: #e4e8ec !important;
+  }
+
 }
 
 .mm-wrapper_opened {

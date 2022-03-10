@@ -121,10 +121,10 @@
         </button>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mx-auto flex-grow-1 justify-content-around">
-                <li class="nav-item mx-3">
-                    <a href="{{ url('') }}" class="nav-link">Home</a>
+                <li class="nav-item mx-1">
+                    <a href="{{ url('/') }}" class="nav-link">Home</a>
                 </li>
-                <li class="nav-item dropdown mx-3">
+                <li class="nav-item dropdown mx-1">
                     <a href="{{ route('byCategory','trekking') }}" class="nav-link dropdown-toggle">Trekking</a>
                     <ul class="dropdown-menu dropright">
                         <li>
@@ -139,7 +139,7 @@
                                 @endforeach
                             </ul>
                         </li>
-                        
+
                         <li>
                             <a href="{{ route('categoryRegion',['trekking','everest-region']) }}"
                                 class="dropdown-item dropdown-toggle">Everest Region</a>
@@ -188,54 +188,50 @@
                                 @endforeach
                             </ul>
                         </li>
-                    
+
                     </ul>
                 </li>
-                <li class="nav-item dropdown mx-3">
+                <li class="nav-item dropdown mx-1">
                     <a href="{{ route('byCategory','climbing') }}" class="nav-link dropdown-toggle">Peak Climbing</a>
                     <ul class="dropdown-menu">
                         @foreach ($climb as $item)
                         <li>
-                            <a href="{{ route('trip.show',$item->slug) }}"
-                                class="dropdown-item">{{$item->name}}</a>
+                            <a href="{{ route('trip.show',$item->slug) }}" class="dropdown-item">{{$item->name}}</a>
                         </li>
                         @endforeach
 
                     </ul>
                 </li>
-                <li class="nav-item dropdown mx-3">
+                <li class="nav-item dropdown mx-1">
                     <a href="{{ route('byCategory', 'heli-tour') }}" class="nav-link dropdown-toggle">Heli Tour</a>
                     <ul class="dropdown-menu">
-                    @foreach ($ht as $item)
-                    <li>
-                        <a href="{{ route('trip.show',$item->slug) }}"
-                            class="dropdown-item">{{$item->name}}</a>
-                    </li>
-                    @endforeach
+                        @foreach ($ht as $item)
+                        <li>
+                            <a href="{{ route('trip.show',$item->slug) }}" class="dropdown-item">{{$item->name}}</a>
+                        </li>
+                        @endforeach
                     </ul>
                 </li>
-                <li class="nav-item dropdown mx-3">
+                <li class="nav-item dropdown mx-1">
                     <a href="#" class="nav-link dropdown-toggle">Short Tours</a>
                     <ul class="dropdown-menu">
                         @foreach ($ex as $item)
                         <li>
-                            <a href="{{ route('trip.show',$item->slug) }}"
-                                class="dropdown-item">{{$item->name}}</a>
+                            <a href="{{ route('trip.show',$item->slug) }}" class="dropdown-item">{{$item->name}}</a>
                         </li>
                         @endforeach
                         @foreach ($na as $item)
                         <li>
-                            <a href="{{ route('trip.show',$item->slug) }}"
-                                class="dropdown-item">{{$item->name}}</a>
+                            <a href="{{ route('trip.show',$item->slug) }}" class="dropdown-item">{{$item->name}}</a>
                         </li>
                         @endforeach
                     </ul>
                 </li>
-                <li class="nav-item dropdown mx-3">
+                <li class="nav-item dropdown mx-1">
                     <a href="#" class="nav-link dropdown-toggle">About UA</a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="{{ route('page.about-us') }}"class="dropdown-item" >About Us</a>
+                            <a href="{{ route('page.about-us') }}" class="dropdown-item">About Us</a>
                         </li>
                         <li>
                             <a href="{{ route('blog.posts') }}" class="dropdown-item">Travel Blog</a>
@@ -244,8 +240,11 @@
                 </li>
 
 
-                <li class="nav-item mx-3">
+                <li class="nav-item mx-1">
                     <a href="{{ route('page.contact') }}" class="nav-link rounded-pill link-contact px-3">Contact</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a href="{{ route('planTrip') }}" class="nav-link navBtn  px-3">Plan Trip</a>
                 </li>
             </ul>
         </div>

@@ -24,7 +24,7 @@
           },
           "telephone": "+977-9851062726"
         }
-        </script>
+    </script>     
 @endpush
 @section('content')
 

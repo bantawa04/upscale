@@ -36,6 +36,8 @@
 @import "footerV2";
 @import "page_plan_trip";
 
+@import "agolia";
+
 .navbar-gap {
     @include media-breakpoint-down(xs) {
         padding-top: 46px;

@@ -16,9 +16,9 @@
                 <div class="message-secondary">See the world beyond ordinary</div>
                 <div class="message-primary">Where do you like to go ?</div>
             </div>
-            <form action="{{ route('page.search') }}" class="search-wrapper" method="GET">
+            <form action="{{ route('page.search') }}" class="search-wrapper" method="GET" id="searchForm">
                 @csrf
-                <input name="q" placeholder="Search by destination or travel type" class="form-control">
+                <input name="q" placeholder="Search by destination or travel type" class="form-control" id="aa-search-input">
                 <button class="btn btn-primary btn-search">
                     <span class="icon fa fa-search"></span>
                 </button>
