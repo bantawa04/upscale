@@ -108,6 +108,10 @@
         <li>
             <a href="{{ route('page.contact') }}">Contact</a>
         </li>
+        
+        <li>
+            <a href="{{ route('planTrip') }}">Plan Trip</a>
+        </li>
     </ul>
 </nav>
 <nav id="navbar" class="navbar navbar-expand-xl navbar-dark fixed-top">
